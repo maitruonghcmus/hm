@@ -1,0 +1,8 @@
+D:\OneDrive\Study\2015-2017 HCMUS\HK1\NMCNPM\Project\HotelManagement\HM.DataModels\bin\Debug\HM.DataModels.dll
+D:\OneDrive\Study\2015-2017 HCMUS\HK1\NMCNPM\Project\HotelManagement\HM.DataModels\bin\Debug\HM.DataModels.pdb
+D:\OneDrive\Study\2015-2017 HCMUS\HK1\NMCNPM\Project\HotelManagement\HM.DataModels\obj\Debug\HM.DataModels.csprojResolveAssemblyReference.cache
+D:\OneDrive\Study\2015-2017 HCMUS\HK1\NMCNPM\Project\HotelManagement\HM.DataModels\obj\Debug\HM.DataModels.dll
+D:\OneDrive\Study\2015-2017 HCMUS\HK1\NMCNPM\Project\HotelManagement\HM.DataModels\obj\Debug\HM.DataModels.pdb
+D:\OneDrive\Study\2015-2017 HCMUS\HK1\NMCNPM\Project\HotelManagement\HM.DataModels\bin\Debug\MongoDB.Bson.dll
+D:\OneDrive\Study\2015-2017 HCMUS\HK1\NMCNPM\Project\HotelManagement\HM.DataModels\bin\Debug\MongoDB.Driver.Core.dll
+D:\OneDrive\Study\2015-2017 HCMUS\HK1\NMCNPM\Project\HotelManagement\HM.DataModels\bin\Debug\MongoDB.Driver.dll
