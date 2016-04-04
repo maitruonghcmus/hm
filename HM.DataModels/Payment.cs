@@ -5,8 +5,8 @@ namespace HM.DataModels
     public class Payment
     {
         public Guid Id { get; set; }
-        public Customer Customer { get; set; }
-        public Order Order { get; set; }
+        public Guid CustomerId { get; set; }
+        public Guid OrderId { get; set; }
         
         /// <summary>
         /// Số lượng (giờ)
@@ -17,7 +17,10 @@ namespace HM.DataModels
         /// </summary>
         public long Amount { get; set; }
 
-        public OrderDetail[] OrderDetails { get; set; }
+        /// <summary>
+        /// Danh sách những chi tiết hóa đơn cho một lần thanh toán
+        /// </summary>
+        public Guid[] OrderDetailIds { get; set; }
         
         /// <summary>
         /// Tiền dịch vụ (của orderdetails)
@@ -47,5 +50,12 @@ namespace HM.DataModels
         /// Tổng tiền = Amount + ServiceCharge + OtherCharge + DiscountTotal + VAT
         /// </summary>
         public long Total { get; set; }
+
+        public Guid HotelId { get; set; }
+        public bool? Inactive { get; set; }
+        public Guid CreatedBy { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public Guid ModifiedBy { get; set; }
+        public DateTime? ModifiedOn { get; set; }
     }
 }

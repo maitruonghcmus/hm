@@ -9,23 +9,23 @@ namespace HM.DataModels
         /// <summary>
         /// Khách hàng
         /// </summary>
-        public Customer Customer { get; set; }
+        public Guid CustomerId { get; set; }
 
         /// <summary>
         /// Phòng
         /// </summary>
-        public Room Room { get; set; }
+        public Guid RoomId { get; set; }
 
         /// <summary>
         /// Giờ vào lấy phòng (giờ tạo order)
         /// </summary>
         public DateTime CheckinDate { get; set; }
 
-        public Hotel Hotel { get; set; }
+        public Guid HotelId { get; set; }
         public bool? Inactive { get; set; }
-        public User CreatedBy { get; set; }
+        public Guid CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        public User ModifiedBy { get; set; }
+        public Guid ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
     }
 }

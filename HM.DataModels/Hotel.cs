@@ -21,9 +21,9 @@ namespace HM.DataModels
         public string ContactMail { get; set; }
 
         public bool? Inactive { get; set; }
-        public User CreatedBy { get; set; }
+        public Guid CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        public User ModifiedBy { get; set; }
+        public Guid ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
     }
 }

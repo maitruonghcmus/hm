@@ -16,12 +16,12 @@ namespace HM.DataModels
         /// <summary>
         /// Phân quyền
         /// </summary>
-        public Role Role { get; set; }
+        public Guid RoleId { get; set; }
 
         /// <summary>
         /// Khách sạn của user
         /// </summary>
-        public Hotel Hotel { get; set; }
+        public Guid HotelId { get; set; }
 
         /// <summary>
         /// Bị xóa ? True = bị xóa, false hoặc null là chưa bị xóa
@@ -31,7 +31,7 @@ namespace HM.DataModels
         /// <summary>
         /// Tạo bởi user nào
         /// </summary>
-        public User CreatedBy { get; set; }
+        public Guid CreatedBy { get; set; }
         
         /// <summary>
         /// Thời gian tạo
@@ -41,7 +41,7 @@ namespace HM.DataModels
         /// <summary>
         /// Sửa bởi user nào
         /// </summary>
-        public User ModifiedBy { get; set; }
+        public Guid ModifiedBy { get; set; }
         
         /// <summary>
         /// Thời gian sửa
