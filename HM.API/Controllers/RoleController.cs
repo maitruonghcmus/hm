@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using HM.DataModels;
 using System.Threading.Tasks;
+using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace HM.API.Controllers
 {
@@ -18,7 +20,7 @@ namespace HM.API.Controllers
             IsSuccess = false
         };
 
-        [HttpGet]
+       
         public Result<IEnumerable<Role>> Get(string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)
@@ -27,14 +29,14 @@ namespace HM.API.Controllers
             return DBContext<Role>.Instance.Read(new Role());
         }
 
-        [HttpGet]
-        public Result<Role> Get(Guid id, string apiKey)
-        {
-            if (apiKey != DbUtils.ApiKey)
-                return null;
+       
+        //public Result<Role> Get(ObjectId id, string apiKey)
+        //{
+        //    if (apiKey != DbUtils.ApiKey)
+        //        return null;
 
-            return DBContext<Role>.Instance.Read(id, new Role());
-        }
+        //    return DBContext<Role>.Instance.Read(id, new Role());
+        //}
 
         [HttpPost]
         public Result<Role> Post( string apiKey)
@@ -50,7 +52,7 @@ namespace HM.API.Controllers
             //{
                 oldRole = new Role
                 {
-                    Id = new Guid("4b9524b5-a47f-534a-9b67-703af874a203"),
+                    Id = new ObjectId(),
                     Name = "Admin"
                 };
             //}
@@ -59,7 +61,7 @@ namespace HM.API.Controllers
             //{
                 newRole = new Role
                 {
-                    Id = new Guid("4b9524b5-a47f-534a-9b67-703af874a203"),
+                    Id = new ObjectId(),
                     Name = "Quản lý"
                 };
             //}
@@ -80,7 +82,7 @@ namespace HM.API.Controllers
             {
                 role = new Role
                 {
-                    Id = Guid.NewGuid(),
+                    Id = new ObjectId(),
                     Name = "Admin"
                 };
             }
@@ -90,7 +92,7 @@ namespace HM.API.Controllers
         }
 
         [HttpDelete]
-        public Result<Role> Delete(Guid id, string apiKey)
+        public Result<Role> Delete(ObjectId id, string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)
                 return ErrorPermissionResult;
