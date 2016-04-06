@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 
 namespace HM.DataModels
 {
@@ -7,12 +8,12 @@ namespace HM.DataModels
     /// </summary>
     public class Customer
     {
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
 
         /// <summary>
         /// Loại khách hàng
         /// </summary>
-        public CustomerType CustomerType { get; set; }
+        public ObjectId CustomerTypeId { get; set; }
         public string Name { get; set; }
         /// <summary>
         /// CMND, Hộ chiếu
@@ -21,11 +22,11 @@ namespace HM.DataModels
         public string Phone { get; set; }
         public string Address { get; set; }
 
-        public Hotel Hotel { get; set; }
+        public ObjectId HotelId { get; set; }
         public bool? Inactive { get; set; }
-        public User CreatedBy { get; set; }
+        public ObjectId CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        public User ModifiedBy { get; set; }
+        public ObjectId ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
     }
 }

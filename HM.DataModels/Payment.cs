@@ -1,12 +1,13 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 
 namespace HM.DataModels
 {
     public class Payment
     {
-        public Guid Id { get; set; }
-        public Customer Customer { get; set; }
-        public Order Order { get; set; }
+        public ObjectId Id { get; set; }
+        public ObjectId CustomerId { get; set; }
+        public ObjectId OrderId { get; set; }
         
         /// <summary>
         /// Số lượng (giờ)
@@ -47,5 +48,12 @@ namespace HM.DataModels
         /// Tổng tiền = Amount + ServiceCharge + OtherCharge + DiscountTotal + VAT
         /// </summary>
         public long Total { get; set; }
+
+        public ObjectId HotelId { get; set; }
+        public bool? Inactive { get; set; }
+        public ObjectId CreatedBy { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public ObjectId ModifiedBy { get; set; }
+        public DateTime? ModifiedOn { get; set; }
     }
 }

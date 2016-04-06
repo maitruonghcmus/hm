@@ -1,11 +1,12 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
 
 namespace HM.DataModels
 {
     public class RoomType
     {
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
 
         /// <summary>
         /// Tên loại phòng
@@ -25,11 +26,11 @@ namespace HM.DataModels
         /// </summary>
         public Dictionary<int, long> Price { get; set; }
 
-        public Hotel Hotel { get; set; }
+        public ObjectId HotelId { get; set; }
         public bool? Inactive { get; set; }
-        public User CreatedBy { get; set; }
+        public ObjectId CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        public User ModifiedBy { get; set; }
+        public ObjectId ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
     }
 }
