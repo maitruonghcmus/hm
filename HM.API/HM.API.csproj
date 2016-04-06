@@ -49,17 +49,20 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MongoDB.Bson, Version=2.2.0.262, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\MongoDB.Bson.dll</HintPath>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>C:\Users\11611\Downloads\Compressed\CSharpDriver-2.2.0\MongoDB.Bson.dll</HintPath>
     </Reference>
-    <Reference Include="MongoDB.Driver, Version=2.2.0.262, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\MongoDB.Driver.dll</HintPath>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>C:\Users\11611\Downloads\Compressed\CSharpDriver-2.2.0\MongoDB.Driver.dll</HintPath>
     </Reference>
-    <Reference Include="MongoDB.Driver.Core, Version=2.2.0.262, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\MongoDB.Driver.Core.dll</HintPath>
+    <Reference Include="MongoDB.Driver.Core">
+      <HintPath>C:\Users\11611\Downloads\Compressed\CSharpDriver-2.2.0\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.GridFS">
+      <HintPath>C:\Users\11611\Downloads\Compressed\CSharpDriver-2.2.0\MongoDB.Driver.GridFS.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Legacy">
+      <HintPath>C:\Users\11611\Downloads\Compressed\CSharpDriver-2.2.0\MongoDB.Driver.Legacy.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
