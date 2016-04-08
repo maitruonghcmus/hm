@@ -62,7 +62,7 @@
     <Compile Include="RoomType.cs" />
     <Compile Include="ExtraService.cs" />
     <Compile Include="User.cs" />
-    <Compile Include="Utils\CurrencyUtils.cs" />
+    <Compile Include="Utils\Utils.cs" />
     <Compile Include="Utils\DateTimeUtils.cs" />
   </ItemGroup>
   <ItemGroup />
