@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using HM.API.Models;
 using HM.DataModels;
 using MongoDB.Driver;
-using System.Threading.Tasks;
 using MongoDB.Bson;
-using System.Reflection;
-using Newtonsoft.Json;
-using FluentAssertions;
-using MongoDB.Driver.Core;
 using HM.DataModels.Utils;
 
 namespace HM.API
@@ -31,8 +25,10 @@ namespace HM.API
         #region Insert - Replace - Update - Delete
 
         /// <summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// Hàm thêm một object
+        /// </summary>
+        /// <param name="entity">Object cần thêm</param>
+        /// <returns>Object nếu thêm thành công</returns>
         public virtual Result<T> Insert(T entity)
         {
             var result = new Result<T>();
@@ -56,10 +52,10 @@ namespace HM.API
         }
 
         /// <summary>
-        /// Replace a document
+        /// Hàm thay thế một object
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">Object cần thay thế</param>
+        /// <returns>Object nếu thay thế thành công</returns>
         public virtual Result<T> Replace(T entity)
         {
             var result = new Result<T>();
@@ -67,7 +63,8 @@ namespace HM.API
             {
                 var idproperty = entity.GetType().GetProperty("Id");
                 var idValue = BsonValue.Create(idproperty.GetValue(entity));
-                var re = _MongoDatabase.GetCollection<T>(_CollectionName).ReplaceOne(Builders<T>.Filter.Eq("_id", idValue), entity);
+                _MongoDatabase.GetCollection<T>(_CollectionName).ReplaceOne(Builders<T>.Filter.Eq("_id", idValue), entity);
+                result.Data = entity;
             }
             catch (Exception ex)
             {
@@ -77,11 +74,11 @@ namespace HM.API
         }
 
         /// <summary>
-        /// update document
+        /// Hàm update các field của một object
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="update">for example </param>
-        /// <returns></returns>
+        /// <param name="id">Id của object cần update</param>
+        /// <param name="fieldValues">Danh sách các field của object</param>
+        /// <returns>Object nếu update thành công</returns>
         public virtual Result<T> Update(BsonValue id, Dictionary<string, BsonValue> fieldValues)
         {
             var result = new Result<T>();
@@ -98,7 +95,7 @@ namespace HM.API
                 }
 
                 _MongoDatabase.GetCollection<T>(_CollectionName).UpdateOne(Builders<T>.Filter.Eq("_id", id), update);
-                result.Data = GetObject(id).Data;
+                result.Data = this.GetObject(id).Data;
             }
             catch (Exception ex)
             {
@@ -108,10 +105,10 @@ namespace HM.API
         }
 
         /// <summary>
-        /// set an entity inactive
+        /// Hàm xóa một object (Thay đổi giá trị Inactive)
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="id">Id của object cần xóa</param>
+        /// <returns>Object nếu xóa thành công</returns>
         public virtual Result<T> Delete(BsonValue id)
         {
             var result = new Result<T>();
@@ -121,7 +118,7 @@ namespace HM.API
                 update = update.Set("Inactive", true);
 
                 _MongoDatabase.GetCollection<T>(_CollectionName).UpdateOne(Builders<T>.Filter.Eq("_id", id), update);
-                result.Data = GetObject(id).Data;
+                result.Data = this.GetObject(id).Data;
             }
             catch (Exception ex)
             {
@@ -131,9 +128,9 @@ namespace HM.API
         }
 
         /// <summary>
-        /// Get all entity from a collection
+        /// Hàm lấy danh sách tất cả object 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Danh sách tất cả object</returns>
         public virtual Result<IEnumerable<T>> GetObjects()
         {
             var result = new Result<IEnumerable<T>>();
@@ -149,10 +146,10 @@ namespace HM.API
         }
 
         /// <summary>
-        /// Get entity by id
+        /// Hàm lấy object theo Id
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Id của object cần lấy</param>
+        /// <returns>Object nếu tồn tại, null nếu không tồn tại</returns>
         public virtual Result<T> GetObject(BsonValue id)
         {
             var result = new Result<T>();
@@ -168,10 +165,11 @@ namespace HM.API
         }
 
         /// <summary>
-        /// Get entity by userId
+        /// Hàm lấy một Object theo một key (field)
         /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
+        /// <param name="fieldName">Tên field cần tìm</param>
+        /// <param name="fieldValue">Giá trị của field cần tìm</param>
+        /// <returns>Danh sách object nếu tồn tại, null nếu không tồn tại</returns>
         public virtual Result<IEnumerable<T>> GetObjectsByIndex(string fieldName, BsonValue fieldValue)
         {
             var result = new Result<IEnumerable<T>>();
@@ -190,10 +188,10 @@ namespace HM.API
 
         #region Utilities
         /// <summary>
-        /// get nextid by collection name
+        /// Hàm lấy Id tiếp theo của object (Id tự động tăng)
         /// </summary>
-        /// <param name="db"></param>
-        /// <param name="collectionName"></param>
+        /// <param name="mongodb">database</param>
+        /// <param name="collectionName">tên collection</param>
         /// <returns></returns>
         private static long GetNextId(IMongoDatabase mongodb, string collectionName)
         {

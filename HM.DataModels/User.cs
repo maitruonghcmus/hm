@@ -41,7 +41,7 @@ namespace HM.DataModels
         /// <summary>
         /// Sửa bởi user nào
         /// </summary>
-        public int ModifiedBy { get; set; }
+        public int? ModifiedBy { get; set; }
         
         /// <summary>
         /// Thời gian sửa

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HM.DataModels.Utils
+﻿namespace HM.DataModels.Utils
 {
     public static class CurrencyUtils
     {
@@ -22,6 +16,7 @@ namespace HM.DataModels.Utils
     public static class MessageUtils
     {
         public const string ERR_PERMISSION = "ERR_PERMISSION";
+        public const string ERR_LOGIN_REQUIRED = "ERR_LOGIN_REQUIRED";
         public const string ERR_NO_FIELD_TO_UPDATE = "ERR_NO_FIELD_TO_UPDATE";
     }
 }

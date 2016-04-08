@@ -58,19 +58,13 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MongoDB.Bson">
-      <HintPath>C:\Users\11611\Downloads\Compressed\CSharpDriver-2.2.0\MongoDB.Bson.dll</HintPath>
+      <HintPath>..\..\Project\HotelManagement\HM.API\bin\MongoDB.Bson.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Driver">
-      <HintPath>C:\Users\11611\Downloads\Compressed\CSharpDriver-2.2.0\MongoDB.Driver.dll</HintPath>
+      <HintPath>..\..\Project\HotelManagement\HM.API\bin\MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Driver.Core">
-      <HintPath>C:\Users\11611\Downloads\Compressed\CSharpDriver-2.2.0\MongoDB.Driver.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver.GridFS">
-      <HintPath>C:\Users\11611\Downloads\Compressed\CSharpDriver-2.2.0\MongoDB.Driver.GridFS.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver.Legacy">
-      <HintPath>C:\Users\11611\Downloads\Compressed\CSharpDriver-2.2.0\MongoDB.Driver.Legacy.dll</HintPath>
+      <HintPath>..\..\Project\HotelManagement\HM.API\bin\MongoDB.Driver.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -231,7 +225,17 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\CustomerTypeController.cs" />
+    <Compile Include="Controllers\ExtraServiceController.cs" />
+    <Compile Include="Controllers\HotelController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\OrderDetailController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Controllers\RoomTypeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DBContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
