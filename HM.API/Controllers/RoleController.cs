@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using HM.DataModels;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 
 namespace HM.API.Controllers
 {
@@ -28,7 +29,7 @@ namespace HM.API.Controllers
         }
 
         [HttpGet]
-        public Result<Role> Get(Guid id, string apiKey)
+        public Result<Role> Get(ObjectId id, string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)
                 return null;
@@ -37,7 +38,7 @@ namespace HM.API.Controllers
         }
 
         [HttpPost]
-        public Result<Role> Post( string apiKey)
+        public async Task<Result<Role>> Post(string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)
                 return ErrorPermissionResult;
@@ -48,20 +49,20 @@ namespace HM.API.Controllers
 
             //if (oldRole == null)
             //{
-                oldRole = new Role
-                {
-                    Id = new Guid("4b9524b5-a47f-534a-9b67-703af874a203"),
-                    Name = "Admin"
-                };
+            oldRole = new Role
+            {
+                Id = new ObjectId(),
+                Name = "Admin"
+            };
             //}
 
             //if (newRole == null)
             //{
-                newRole = new Role
-                {
-                    Id = new Guid("4b9524b5-a47f-534a-9b67-703af874a203"),
-                    Name = "Quản lý"
-                };
+            newRole = new Role
+            {
+                Id = new ObjectId(),
+                Name = "Quản lý"
+            };
             //}
 
 #endif
@@ -80,7 +81,7 @@ namespace HM.API.Controllers
             {
                 role = new Role
                 {
-                    Id = Guid.NewGuid(),
+                    Id = new ObjectId(),
                     Name = "Admin"
                 };
             }
@@ -90,7 +91,7 @@ namespace HM.API.Controllers
         }
 
         [HttpDelete]
-        public Result<Role> Delete(Guid id, string apiKey)
+        public Result<Role> Delete(ObjectId id, string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)
                 return ErrorPermissionResult;

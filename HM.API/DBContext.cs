@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using System.Reflection;
 using Newtonsoft.Json;
+using FluentAssertions;
+using MongoDB.Driver.Core;
+
 
 namespace HM.API
 {
-    public class DBContext<DocumentT> where DocumentT : class
+    public class DBContext<TDocument> where TDocument : class
     {
-        public static DBContext<DocumentT> Instance = new DBContext<DocumentT>();
+        public static DBContext<TDocument> Instance = new DBContext<TDocument>();
 
         protected static IMongoClient client = new MongoClient(DbUtils.MongoServerUrl);
         protected static IMongoDatabase db = client.GetDatabase(DbUtils.MongoDatabaseName);
@@ -22,9 +25,9 @@ namespace HM.API
         /// </summary>
         /// <param name="doc">document bất kỳ</param>
         /// <returns></returns>
-        public Result<DocumentT> Create(DocumentT doc)
+        public Result<TDocument> Create(TDocument doc)
         {
-            var result = new Result<DocumentT>();
+            var result = new Result<TDocument>();
             try
             {
                 var collection = db.GetCollection<BsonDocument>(doc.GetType().ToString().Remove(0, 14));
@@ -45,12 +48,12 @@ namespace HM.API
         /// </summary>
         /// <param name="doc">document rỗng bất kỳ (chỉ dùng để lấy kiểu dữ liệu)</param>
         /// <returns>Danh sách document</returns>
-        public Result<IEnumerable<DocumentT>> Read(DocumentT doc)
+        public Result<IEnumerable<TDocument>> Read(TDocument doc)
         {
-            var result = new Result<IEnumerable<DocumentT>>();
+            var result = new Result<IEnumerable<TDocument>>();
             try
             {
-                var collection = db.GetCollection<DocumentT>(doc.GetType().ToString().Remove(0, 14));
+                var collection = db.GetCollection<TDocument>(doc.GetType().ToString().Remove(0, 14));
                 var documents = collection.Find(new BsonDocument()).ToList();
                 result.IsSuccess = true;
                 result.Data = documents;
@@ -69,13 +72,13 @@ namespace HM.API
         /// <param name="id">id của document cần tìm</param>
         /// <param name="doc">document rỗng bất kỳ (chỉ dùng để lấy kiểu dữ liệu)</param>
         /// <returns>Document cần tìm</returns>
-        public Result<DocumentT> Read(Guid id, DocumentT doc)
+        public Result<TDocument> Read(ObjectId id, TDocument doc)
         {
-            var result = new Result<DocumentT>();
+            var result = new Result<TDocument>();
             try
             {
-                var collection = db.GetCollection<DocumentT>(doc.GetType().ToString().Remove(0, 14));
-                var filter = Builders<DocumentT>.Filter.Eq("_id", id);
+                var collection = db.GetCollection<TDocument>(doc.GetType().ToString().Remove(0, 14));
+                var filter = Builders<TDocument>.Filter.Eq("_id", id);
                 var documents = collection.Find(filter).FirstOrDefault();
 
                 result.IsSuccess = true;
@@ -95,15 +98,23 @@ namespace HM.API
         /// <param name="oldDoc">document cần update</param>
         /// <param name="newDoc">document mới, chứa giá trị mới cần update cho document cũ</param>
         /// <returns>Document đã thay đổi giá trị</returns>
-        public Result<DocumentT> Update(DocumentT oldDoc, DocumentT newDoc)
+        public Result<TDocument> Update(TDocument oldDoc, TDocument newDoc)
         {
-            var result = new Result<DocumentT>();
+            var result = new Result<TDocument>();
             try
             {
-                var collection = db.GetCollection<DocumentT>(oldDoc.GetType().ToString().Remove(0, 14));
+                var collection = db.GetCollection<TDocument>(oldDoc.GetType().ToString().Remove(0, 14));
                 var oldDocId = oldDoc.GetType().GetProperty("Id");
-                var filter = Builders<DocumentT>.Filter.Eq("_id", oldDocId);
-                var documents = collection.ReplaceOne(filter, newDoc);
+                var filter = Builders<TDocument>.Filter.Eq("_id", oldDocId);
+                var documents = collection.ReplaceOneAsync(filter, newDoc);
+
+                var update = Builders<TDocument>.Update
+                    .Set("Name", "Trường Mai");
+
+                var aresult = collection.UpdateOneAsync(filter, update);
+
+                
+
 
                 result.IsSuccess = true;
                 result.Data = newDoc;
@@ -121,16 +132,16 @@ namespace HM.API
         /// </summary>
         /// <param name="id">id của document cần update</param>
         /// <returns></returns>
-        public Result<DocumentT> Detele(Guid id, DocumentT doc)
+        public Result<TDocument> Detele(ObjectId id, TDocument doc)
         {
-            var result = new Result<DocumentT>();
+            var result = new Result<TDocument>();
             try
             {
-                var collection = db.GetCollection<DocumentT>(doc.GetType().ToString().Remove(0, 14));
+                var collection = db.GetCollection<TDocument>(doc.GetType().ToString().Remove(0, 14));
 
-                var filter = Builders<DocumentT>.Filter.Eq("_id", id);
+                var filter = Builders<TDocument>.Filter.Eq("_id", id);
 
-                var update = Builders<DocumentT>.Update
+                var update = Builders<TDocument>.Update
                     .Set("Inactive", true)
                     .CurrentDate("ModifiedOn");
 
