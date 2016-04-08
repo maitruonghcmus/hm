@@ -18,7 +18,10 @@ namespace HM.DataModels
         /// </summary>
         public long Amount { get; set; }
 
-        public OrderDetail[] OrderDetails { get; set; }
+        /// <summary>
+        /// Danh sách những chi tiết hóa đơn cho một lần thanh toán
+        /// </summary>
+        public Guid[] OrderDetailIds { get; set; }
         
         /// <summary>
         /// Tiền dịch vụ (của orderdetails)

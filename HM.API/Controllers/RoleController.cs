@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using HM.DataModels;
 using System.Threading.Tasks;
+using MongoDB.Driver;
 using MongoDB.Bson;
 
 namespace HM.API.Controllers
@@ -19,7 +20,7 @@ namespace HM.API.Controllers
             IsSuccess = false
         };
 
-        [HttpGet]
+       
         public Result<IEnumerable<Role>> Get(string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)
@@ -34,11 +35,11 @@ namespace HM.API.Controllers
             if (apiKey != DbUtils.ApiKey)
                 return null;
 
-            return DBContext<Role>.Instance.Read(id, new Role());
-        }
+        //    return DBContext<Role>.Instance.Read(id, new Role());
+        //}
 
         [HttpPost]
-        public async Task<Result<Role>> Post(string apiKey)
+        public Result<Role> Post( string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)
                 return ErrorPermissionResult;
@@ -49,20 +50,20 @@ namespace HM.API.Controllers
 
             //if (oldRole == null)
             //{
-            oldRole = new Role
-            {
-                Id = new ObjectId(),
-                Name = "Admin"
-            };
+                oldRole = new Role
+                {
+                    Id = new ObjectId(),
+                    Name = "Admin"
+                };
             //}
 
             //if (newRole == null)
             //{
-            newRole = new Role
-            {
-                Id = new ObjectId(),
-                Name = "Quản lý"
-            };
+                newRole = new Role
+                {
+                    Id = new ObjectId(),
+                    Name = "Quản lý"
+                };
             //}
 
 #endif
