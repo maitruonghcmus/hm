@@ -9,32 +9,44 @@ using System.Reflection;
 using Newtonsoft.Json;
 using FluentAssertions;
 using MongoDB.Driver.Core;
-
+using HM.DataModels.Utils;
 
 namespace HM.API
 {
-    public class DBContext<TDocument> where TDocument : class
+    public class DBContext<T>
     {
-        public static DBContext<TDocument> Instance = new DBContext<TDocument>();
+        private static string mongoServerUrl = DbUtils.MongoServerUrl;
+        protected static IMongoClient client = new MongoClient(mongoServerUrl);
+        protected IMongoDatabase _MongoDatabase = client.GetDatabase(DbUtils.MongoDatabaseName);
+        protected string _CollectionName = string.Empty;
+        public int IDCurrent = 0;
 
-        protected static IMongoClient client = new MongoClient(DbUtils.MongoServerUrl);
-        protected static IMongoDatabase db = client.GetDatabase(DbUtils.MongoDatabaseName);
+        #region Constructors
+        public DBContext(string collectionName)
+        {
+            _CollectionName = collectionName;
+        }
+        #endregion
+
+        #region Insert - Replace - Update - Delete
 
         /// <summary>
-        /// Hàm thêm một Document vào db
-        /// </summary>
-        /// <param name="doc">document bất kỳ</param>
+        /// <param name="entity"></param>
         /// <returns></returns>
-        public Result<TDocument> Create(TDocument doc)
+        public virtual Result<T> Insert(T entity)
         {
-            var result = new Result<TDocument>();
+            var result = new Result<T>();
             try
             {
-                var collection = db.GetCollection<BsonDocument>(doc.GetType().ToString().Remove(0, 14));
-                collection.InsertOne(doc.ToBsonDocument());
+                var idproperty = entity.GetType().GetProperty("Id");
+                var idValue = BsonValue.Create(idproperty.GetValue(entity));
+                if (idproperty.CanRead && idproperty.CanWrite)
+                {
 
-                result.IsSuccess = true;
-                result.Data = doc;
+                    idproperty.SetValue(entity, IDCurrent = (int)GetNextId(_MongoDatabase, _CollectionName), null);
+                    _MongoDatabase.GetCollection<T>(_CollectionName).InsertOne(entity);
+                    result.Data = entity;
+                }
             }
             catch (Exception ex)
             {
@@ -44,219 +56,154 @@ namespace HM.API
         }
 
         /// <summary>
-        /// Hàm lấy danh sách Document của một collection
+        /// Replace a document
         /// </summary>
-        /// <param name="doc">document rỗng bất kỳ (chỉ dùng để lấy kiểu dữ liệu)</param>
-        /// <returns>Danh sách document</returns>
-        public Result<IEnumerable<TDocument>> Read(TDocument doc)
-        {
-            var result = new Result<IEnumerable<TDocument>>();
-            try
-            {
-                var collection = db.GetCollection<TDocument>(doc.GetType().ToString().Remove(0, 14));
-                var documents = collection.Find(new BsonDocument()).ToList();
-                result.IsSuccess = true;
-                result.Data = documents;
-            }
-            catch (Exception ex)
-            {
-                result.Code = ex.Message;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Hàm tìm một Document theo id
-        /// </summary>
-        /// <param name="id">id của document cần tìm</param>
-        /// <param name="doc">document rỗng bất kỳ (chỉ dùng để lấy kiểu dữ liệu)</param>
-        /// <returns>Document cần tìm</returns>
-        public Result<TDocument> Read(ObjectId id, TDocument doc)
-        {
-            var result = new Result<TDocument>();
-            try
-            {
-                var collection = db.GetCollection<TDocument>(doc.GetType().ToString().Remove(0, 14));
-                var filter = Builders<TDocument>.Filter.Eq("_id", id);
-                var documents = collection.Find(filter).FirstOrDefault();
-
-                result.IsSuccess = true;
-                result.Data = documents;
-            }
-            catch (Exception ex)
-            {
-                result.Code = ex.Message;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Hàm update một Document bất kỳ
-        /// </summary>
-        /// <param name="oldDoc">document cần update</param>
-        /// <param name="newDoc">document mới, chứa giá trị mới cần update cho document cũ</param>
-        /// <returns>Document đã thay đổi giá trị</returns>
-        public Result<TDocument> Update(TDocument oldDoc, TDocument newDoc)
-        {
-            var result = new Result<TDocument>();
-            try
-            {
-                var collection = db.GetCollection<TDocument>(oldDoc.GetType().ToString().Remove(0, 14));
-                var oldDocId = oldDoc.GetType().GetProperty("Id");
-                var filter = Builders<TDocument>.Filter.Eq("_id", oldDocId);
-                var documents = collection.ReplaceOneAsync(filter, newDoc);
-
-                var update = Builders<TDocument>.Update
-                    .Set("Name", "Trường Mai");
-
-                var aresult = collection.UpdateOneAsync(filter, update);
-
-                
-
-
-                result.IsSuccess = true;
-                result.Data = newDoc;
-            }
-            catch (Exception ex)
-            {
-                result.Code = ex.Message;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Hàm xóa một Document bất kỳ (update Inactive = true)
-        /// </summary>
-        /// <param name="id">id của document cần update</param>
+        /// <param name="entity"></param>
         /// <returns></returns>
-        public Result<TDocument> Detele(ObjectId id, TDocument doc)
+        public virtual Result<T> Replace(T entity)
         {
-            var result = new Result<TDocument>();
+            var result = new Result<T>();
             try
             {
-                var collection = db.GetCollection<TDocument>(doc.GetType().ToString().Remove(0, 14));
-
-                var filter = Builders<TDocument>.Filter.Eq("_id", id);
-
-                var update = Builders<TDocument>.Update
-                    .Set("Inactive", true)
-                    .CurrentDate("ModifiedOn");
-
-                collection.UpdateOne(filter, update);
-
-                result.IsSuccess = true;
-                result.Data = null;
+                var idproperty = entity.GetType().GetProperty("Id");
+                var idValue = BsonValue.Create(idproperty.GetValue(entity));
+                var re = _MongoDatabase.GetCollection<T>(_CollectionName).ReplaceOne(Builders<T>.Filter.Eq("_id", idValue), entity);
             }
             catch (Exception ex)
             {
                 result.Code = ex.Message;
             }
-
             return result;
         }
+
+        /// <summary>
+        /// update document
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="update">for example </param>
+        /// <returns></returns>
+        public virtual Result<T> Update(BsonValue id, Dictionary<string, BsonValue> fieldValues)
+        {
+            var result = new Result<T>();
+            try
+            {
+                if (fieldValues == null || fieldValues.Count == 0)
+                    result.Code = MessageUtils.ERR_NO_FIELD_TO_UPDATE;
+
+                UpdateDefinition<T> update = null;
+                foreach (var key in fieldValues.Keys)
+                {
+                    if (update == null) update = Builders<T>.Update.Set(key, fieldValues[key]);
+                    update = update.Set(key, fieldValues[key]);
+                }
+
+                _MongoDatabase.GetCollection<T>(_CollectionName).UpdateOne(Builders<T>.Filter.Eq("_id", id), update);
+                result.Data = GetObject(id).Data;
+            }
+            catch (Exception ex)
+            {
+                result.Code = ex.Message;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// set an entity inactive
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public virtual Result<T> Delete(BsonValue id)
+        {
+            var result = new Result<T>();
+            try
+            {
+                UpdateDefinition<T> update = null;
+                update = update.Set("Inactive", true);
+
+                _MongoDatabase.GetCollection<T>(_CollectionName).UpdateOne(Builders<T>.Filter.Eq("_id", id), update);
+                result.Data = GetObject(id).Data;
+            }
+            catch (Exception ex)
+            {
+                result.Code = ex.Message;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Get all entity from a collection
+        /// </summary>
+        /// <returns></returns>
+        public virtual Result<IEnumerable<T>> GetObjects()
+        {
+            var result = new Result<IEnumerable<T>>();
+            try
+            {
+                result.Data = _MongoDatabase.GetCollection<T>(_CollectionName).Find(Builders<T>.Filter.Empty).ToList();
+            }
+            catch (Exception ex)
+            {
+                result.Code = ex.Message;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Get entity by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public virtual Result<T> GetObject(BsonValue id)
+        {
+            var result = new Result<T>();
+            try
+            {
+                result.Data = _MongoDatabase.GetCollection<T>(_CollectionName).Find(Builders<T>.Filter.Eq("_id", id)).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                result.Code = ex.Message;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Get entity by userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public virtual Result<IEnumerable<T>> GetObjectsByIndex(string fieldName, BsonValue fieldValue)
+        {
+            var result = new Result<IEnumerable<T>>();
+            try
+            {
+                result.Data = _MongoDatabase.GetCollection<T>(_CollectionName).Find(Builders<T>.Filter.Eq(fieldName, fieldValue)).ToList();
+            }
+            catch (Exception ex)
+            {
+                result.Code = ex.Message;
+            }
+            return result;
+        }
+
+        #endregion
+
+        #region Utilities
+        /// <summary>
+        /// get nextid by collection name
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="collectionName"></param>
+        /// <returns></returns>
+        private static long GetNextId(IMongoDatabase mongodb, string collectionName)
+        {
+            var col = mongodb.GetCollection<BsonDocument>("_counters");
+            var result = col.FindOneAndUpdate(
+                Builders<BsonDocument>.Filter.Eq("_id", 1),
+                Builders<BsonDocument>.Update.Inc(collectionName, 1),
+                new FindOneAndUpdateOptions<BsonDocument> { IsUpsert = true, ReturnDocument = ReturnDocument.After });
+            return result.GetValue(collectionName).ToInt64();
+        }
+        #endregion
     }
-
-    //public class DBContext<T> where T : class
-    //{
-    //    public static DBContext<T> Instance = new DBContext<T>();
-
-    //    internal HotelManagementEntities db = new HotelManagementEntities();
-
-    //    /// <summary>
-    //    /// Thêm mới một object, object có thể là bất kỳ record nào trong các bảng có trong DB
-    //    /// </summary>
-    //    /// <param name="entity">object cần thêm</param>
-    //    /// <returns>true nếu thêm thành công, false nếu thêm thất bại</returns>
-    //    public bool Create(T entity)
-    //    {
-    //        var success = false;
-    //        try
-    //        {
-    //            db.Set<T>().Add(entity);
-    //            db.SaveChanges();
-    //            success = true;
-    //        }
-    //        catch (Exception e)
-    //        {
-    //        }
-    //        return success;
-    //    }
-
-    //    /// <summary>
-    //    /// Lấy tất cả các object, object có thể là bất kỳ record nào trong các bảng có trong DB
-    //    /// </summary>
-    //    /// <returns>danh sách các object</returns>
-    //    public IEnumerable<T> Read()
-    //    {
-    //        return db.Set<T>();
-    //    }
-
-    //    /// <summary>
-    //    /// Lấy một object theo id, object có thể là bất kỳ record nào trong các bảng có trong DB
-    //    /// </summary>
-    //    /// <param name="id">id của object</param>
-    //    /// <returns>object, null nếu không tìm thấy</returns>
-    //    public T Read(int id)
-    //    {
-    //        return db.Set<T>().Find(id);
-    //    }
-
-    //    /// <summary>
-    //    /// Update thông tin một object, object có thể là bất kỳ record nào trong các bảng có trong DB
-    //    /// </summary>
-    //    /// <param name="id">id của object cần update</param>
-    //    /// <param name="obj">object lưu trữ thông tin cần update</param>
-    //    /// <returns>true nếu thành công, false nếu thất bại</returns>
-    //    public bool Update(int id, T obj)
-    //    {
-    //        var result = false;
-    //        var objToUpdate = db.Set<T>().Find(id);
-    //        if (objToUpdate != null)
-    //        {
-    //            try
-    //            {
-    //                db.Entry(objToUpdate).CurrentValues.SetValues(obj);
-    //                db.SaveChanges();
-    //                result = true;
-    //            }
-    //            catch (Exception)
-    //            {
-    //            }
-    //        }
-
-    //        return result;
-    //    }
-
-    //    /// <summary>
-    //    /// Xóa một object theo id(không xóa thực, chỉ set inactive = true)
-    //    /// </summary>
-    //    /// <param name="id">id của object cần xóa</param>
-    //    /// <returns>true nếu thành công, false nếu thất bại</returns>
-    //    public bool Delete(int id)
-    //    {
-    //        var result = false;
-    //        var objToDelete = db.Set<T>().Find(id);
-    //        if (objToDelete != null)
-    //        {
-    //            try
-    //            {
-    //                var type = objToDelete.GetType();
-    //                var prop = type.GetProperty("Inactive");
-    //                prop.SetValue(objToDelete, true, null);
-
-    //                db.Entry(objToDelete).CurrentValues.SetValues(objToDelete);
-    //                db.SaveChanges();
-    //                result = true;
-    //            }
-    //            catch (Exception)
-    //            {
-    //            }
-    //        }
-
-    //        return result;
-    //    }
-    //}
 }
