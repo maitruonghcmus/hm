@@ -1,11 +1,10 @@
 ﻿using System;
-using MongoDB.Bson;
 
 namespace HM.DataModels
 {
     public class User
     {
-        public ObjectId Id { get; set; }
+        public int Id { get; set; }
         public string Username { get; set; }
         public string Fullname { get; set; }
 
@@ -17,12 +16,12 @@ namespace HM.DataModels
         /// <summary>
         /// Phân quyền
         /// </summary>
-        public ObjectId RoleId { get; set; }
+        public int RoleId { get; set; }
 
         /// <summary>
         /// Khách sạn của user
         /// </summary>
-        public ObjectId HotelId { get; set; }
+        public int HotelId { get; set; }
 
         /// <summary>
         /// Bị xóa ? True = bị xóa, false hoặc null là chưa bị xóa
@@ -32,7 +31,7 @@ namespace HM.DataModels
         /// <summary>
         /// Tạo bởi user nào
         /// </summary>
-        public ObjectId CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
         
         /// <summary>
         /// Thời gian tạo
@@ -42,7 +41,7 @@ namespace HM.DataModels
         /// <summary>
         /// Sửa bởi user nào
         /// </summary>
-        public ObjectId ModifiedBy { get; set; }
+        public int ModifiedBy { get; set; }
         
         /// <summary>
         /// Thời gian sửa

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using HM.DataModels;
-using System.Threading.Tasks;
-using MongoDB.Driver;
 using MongoDB.Bson;
 using HM.DataModels.Utils;
 
@@ -43,7 +37,7 @@ namespace HM.API.Controllers
             {
                 role = new Role
                 {
-                    Id = new ObjectId(),
+                    Id = 1,
                     Name = "Admin"
                 };
             }
@@ -61,7 +55,7 @@ namespace HM.API.Controllers
             var newRole = new Role();
 
 #if DEBUG
-            newRole.Id = new ObjectId("5704e9fa025e9738048354f9");
+            newRole.Id = 1;
             newRole.Name = "Quản lý";
 #endif
 

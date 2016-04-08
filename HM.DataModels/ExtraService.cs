@@ -1,4 +1,4 @@
-﻿using MongoDB.Bson;
+﻿
 using System;
 
 namespace HM.DataModels
@@ -8,7 +8,7 @@ namespace HM.DataModels
     /// </summary>
     public class ExtraService
     {
-        public ObjectId Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Tên dịch vụ, ví dụ: cocacola, pepsi, mì bò, giặt ủi, dọn phòng, nước suối
@@ -20,11 +20,11 @@ namespace HM.DataModels
         public string Unit { get; set; }
         public string Price { get; set; }
 
-        public ObjectId HotelId { get; set; }
+        public int HotelId { get; set; }
         public bool? Inactive { get; set; }
-        public ObjectId CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        public ObjectId ModifiedBy { get; set; }
+        public int ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
     }
 }

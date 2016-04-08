@@ -1,32 +1,31 @@
-﻿using MongoDB.Bson;
-using System;
+﻿using System;
 
 namespace HM.DataModels
 {
     public class Order
     {
-        public ObjectId Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Khách hàng
         /// </summary>
-        public ObjectId CustomerId { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Phòng
         /// </summary>
-        public ObjectId RoomId { get; set; }
+        public int RoomId { get; set; }
 
         /// <summary>
         /// Giờ vào lấy phòng (giờ tạo order)
         /// </summary>
         public DateTime CheckinDate { get; set; }
 
-        public ObjectId HotelId { get; set; }
+        public int HotelId { get; set; }
         public bool? Inactive { get; set; }
-        public ObjectId CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        public ObjectId ModifiedBy { get; set; }
+        public int ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
     }
 }

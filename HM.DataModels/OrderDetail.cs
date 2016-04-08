@@ -1,17 +1,16 @@
-﻿using MongoDB.Bson;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace HM.DataModels
 {
     public class OrderDetail
     {
-        public ObjectId Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Order mà tương ứng mà khách đã đặt (1 order - n order detail)
         /// </summary>
-        public ObjectId OrderId { get; set; }
+        public int OrderId { get; set; }
 
         /// <summary>
         /// Danh sách những dịch vụ trong một lần khách mua hàng
@@ -26,11 +25,11 @@ namespace HM.DataModels
         /// </summary>
         public long Total { get; set; }
 
-        public ObjectId HotelId { get; set; }
+        public int HotelId { get; set; }
         public bool? Inactive { get; set; }
-        public ObjectId CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        public ObjectId ModifiedBy { get; set; }
+        public int ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
     }
 }

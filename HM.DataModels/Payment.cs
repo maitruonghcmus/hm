@@ -1,13 +1,12 @@
-﻿using MongoDB.Bson;
-using System;
+﻿using System;
 
 namespace HM.DataModels
 {
     public class Payment
     {
-        public ObjectId Id { get; set; }
-        public ObjectId CustomerId { get; set; }
-        public ObjectId OrderId { get; set; }
+        public int Id { get; set; }
+        public int CustomerId { get; set; }
+        public int OrderId { get; set; }
         
         /// <summary>
         /// Số lượng (giờ)
@@ -52,11 +51,11 @@ namespace HM.DataModels
         /// </summary>
         public long Total { get; set; }
 
-        public ObjectId HotelId { get; set; }
+        public int HotelId { get; set; }
         public bool? Inactive { get; set; }
-        public ObjectId CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        public ObjectId ModifiedBy { get; set; }
+        public int ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
     }
 }

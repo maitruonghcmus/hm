@@ -1,11 +1,10 @@
-﻿using MongoDB.Bson;
-using System;
+﻿using System;
 
 namespace HM.DataModels
 {
     public class Hotel
     {
-        public ObjectId Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
 
         /// <summary>
@@ -22,9 +21,9 @@ namespace HM.DataModels
         public string ContactMail { get; set; }
 
         public bool? Inactive { get; set; }
-        public ObjectId CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        public ObjectId ModifiedBy { get; set; }
+        public int ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
     }
 }
