@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using System;
+﻿using System;
 
 namespace HM.DataModels
 {
@@ -8,7 +7,7 @@ namespace HM.DataModels
     /// </summary>
     public class CustomerType
     {
-        public ObjectId Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
 
         /// <summary>
@@ -19,11 +18,11 @@ namespace HM.DataModels
         /// </summary>
         public double Coefficient { get; set; }
 
-        public ObjectId HotelId { get; set; }
+        public int HotelId { get; set; }
         public bool? Inactive { get; set; }
-        public ObjectId CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        public ObjectId ModifiedBy { get; set; }
+        public int ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
     }
 }

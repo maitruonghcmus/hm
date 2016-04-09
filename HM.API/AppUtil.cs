@@ -49,7 +49,5 @@ namespace HM.API
         public const string RoomCollection = "Room";
         public const string RoomTypeCollection = "RoomType";
         public const string UserCollection = "User";
-
-
     }
 }

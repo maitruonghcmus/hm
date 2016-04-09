@@ -6,6 +6,7 @@ D:\OneDrive\Study\2015-2017 HCMUS\HK1\NMCNPM\Project\HotelManagement\HM.DataMode
 D:\OneDrive\Study\2015-2017 HCMUS\HK1\NMCNPM\Project\HotelManagement\HM.DataModels\bin\Debug\MongoDB.Bson.dll
 D:\OneDrive\Study\2015-2017 HCMUS\HK1\NMCNPM\Project\HotelManagement\HM.DataModels\bin\Debug\MongoDB.Driver.Core.dll
 D:\OneDrive\Study\2015-2017 HCMUS\HK1\NMCNPM\Project\HotelManagement\HM.DataModels\bin\Debug\MongoDB.Driver.dll
+<<<<<<< HEAD
 Y:\LienThong\CNPM\Git\HM.DataModels\bin\Debug\HM.DataModels.dll
 Y:\LienThong\CNPM\Git\HM.DataModels\bin\Debug\HM.DataModels.pdb
 Y:\LienThong\CNPM\Git\HM.DataModels\bin\Debug\MongoDB.Bson.dll
@@ -14,3 +15,10 @@ Y:\LienThong\CNPM\Git\HM.DataModels\bin\Debug\MongoDB.Driver.dll
 Y:\LienThong\CNPM\Git\HM.DataModels\obj\Debug\HM.DataModels.dll
 Y:\LienThong\CNPM\Git\HM.DataModels\obj\Debug\HM.DataModels.pdb
 Y:\LienThong\CNPM\Git\HM.DataModels\obj\Debug\HM.DataModels.csprojResolveAssemblyReference.cache
+=======
+D:\Truongmv\HCDH\NMCNPM\Git\HM.DataModels\bin\Debug\HM.DataModels.dll
+D:\Truongmv\HCDH\NMCNPM\Git\HM.DataModels\bin\Debug\HM.DataModels.pdb
+D:\Truongmv\HCDH\NMCNPM\Git\HM.DataModels\obj\Debug\HM.DataModels.csprojResolveAssemblyReference.cache
+D:\Truongmv\HCDH\NMCNPM\Git\HM.DataModels\obj\Debug\HM.DataModels.dll
+D:\Truongmv\HCDH\NMCNPM\Git\HM.DataModels\obj\Debug\HM.DataModels.pdb
+>>>>>>> b5c14057a3c3665f8fc4145e35b9e9a64541b7c7

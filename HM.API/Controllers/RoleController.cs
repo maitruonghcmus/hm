@@ -1,103 +1,74 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using HM.DataModels;
-using System.Threading.Tasks;
-using MongoDB.Driver;
 using MongoDB.Bson;
+using HM.DataModels.Utils;
 
 namespace HM.API.Controllers
 {
     public class RoleController : ApiController
     {
-        private readonly Result<Role> ErrorPermissionResult = new Result<Role>
-        {
-            Code = "ERR_PERMISSION",
-            Data = null,
-            IsSuccess = false
-        };
-
-       
-        public Result<IEnumerable<Role>> Get(string apiKey)
+        [HttpGet]
+        public Result<IEnumerable<Role>> GetAll(string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)
-                return null;
+                return new Result<IEnumerable<Role>> { Code = MessageUtils.ERR_PERMISSION };
 
-            return DBContext<Role>.Instance.Read(new Role());
+            return new DBContext<Role>(DbUtils.RoleCollection).GetObjects();
         }
 
-       
-        //public Result<Role> Get(ObjectId id, string apiKey)
-        //{
-        //    if (apiKey != DbUtils.ApiKey)
-        //        return null;
-
-        //    return DBContext<Role>.Instance.Read(id, new Role());
-        //}
-
-        [HttpPost]
-        public Result<Role> Post( string apiKey)
+        [HttpGet]
+        public Result<Role> GetById(string id, string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)
-                return ErrorPermissionResult;
+                return new Result<Role> { Code = MessageUtils.ERR_PERMISSION };
 
-            var oldRole = new Role(); var newRole = new Role();
-
-#if DEBUG
-
-            //if (oldRole == null)
-            //{
-                oldRole = new Role
-                {
-                    Id = new ObjectId(),
-                    Name = "Admin"
-                };
-            //}
-
-            //if (newRole == null)
-            //{
-                newRole = new Role
-                {
-                    Id = new ObjectId(),
-                    Name = "Quản lý"
-                };
-            //}
-
-#endif
-
-            return DBContext<Role>.Instance.Update(oldRole, newRole);
+            return new DBContext<Role>(DbUtils.RoleCollection).GetObject(id);
         }
 
         [HttpPut]
-        public Result<Role> Put(Role role, string apiKey)
+        public Result<Role> Create(Role role, string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)
-                return ErrorPermissionResult;
+                return new Result<Role> { Code = MessageUtils.ERR_PERMISSION };
 
 #if DEBUG
             if (role == null)
             {
                 role = new Role
                 {
-                    Id = new ObjectId(),
+                    Id = 1,
                     Name = "Admin"
                 };
             }
 #endif
 
-            return DBContext<Role>.Instance.Create(role);
+            return new DBContext<Role>(DbUtils.RoleCollection).Insert(role);
+        }
+
+        [HttpPost]
+        public Result<Role> Update(string apiKey)
+        {
+            if (apiKey != DbUtils.ApiKey)
+                return new Result<Role> { Code = MessageUtils.ERR_PERMISSION };
+
+            var newRole = new Role();
+
+#if DEBUG
+            newRole.Id = 1;
+            newRole.Name = "Quản lý";
+#endif
+
+            return new DBContext<Role>(DbUtils.RoleCollection).Replace(newRole);
         }
 
         [HttpDelete]
-        public Result<Role> Delete(ObjectId id, string apiKey)
+        public Result<Role> Delete(string id, string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)
-                return ErrorPermissionResult;
+                return new Result<Role> { Code = MessageUtils.ERR_PERMISSION };
 
-            return DBContext<Role>.Instance.Detele(id, new Role());
+            return new DBContext<Role>(DbUtils.RoleCollection).Delete(id);
         }
     }
 }
