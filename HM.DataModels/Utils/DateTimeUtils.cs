@@ -1,0 +1,4 @@
+﻿namespace HM.DataModels.Utils
+{
+
+}
