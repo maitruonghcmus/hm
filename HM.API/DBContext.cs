@@ -69,7 +69,7 @@ namespace HM.API
         /// <param name="id">id của document cần tìm</param>
         /// <param name="doc">document rỗng bất kỳ (chỉ dùng để lấy kiểu dữ liệu)</param>
         /// <returns>Document cần tìm</returns>
-        public Result<DocumentT> Read(Guid id, DocumentT doc)
+        public Result<DocumentT> Read(ObjectId id, DocumentT doc)
         {
             var result = new Result<DocumentT>();
             try
@@ -121,7 +121,7 @@ namespace HM.API
         /// </summary>
         /// <param name="id">id của document cần update</param>
         /// <returns></returns>
-        public Result<DocumentT> Detele(Guid id, DocumentT doc)
+        public Result<DocumentT> Detele(ObjectId id, DocumentT doc)
         {
             var result = new Result<DocumentT>();
             try
