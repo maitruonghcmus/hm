@@ -1,0 +1,5 @@
+D:\Truongmv\HCDH\NMCNPM\Git\HM.DataModels\bin\Debug\HM.DataModels.dll
+D:\Truongmv\HCDH\NMCNPM\Git\HM.DataModels\bin\Debug\HM.DataModels.pdb
+D:\Truongmv\HCDH\NMCNPM\Git\HM.DataModels\obj\Debug\HM.DataModels.dll
+D:\Truongmv\HCDH\NMCNPM\Git\HM.DataModels\obj\Debug\HM.DataModels.pdb
+D:\Truongmv\HCDH\NMCNPM\Git\HM.DataModels\obj\Debug\HM.DataModels.csprojResolveAssemblyReference.cache
