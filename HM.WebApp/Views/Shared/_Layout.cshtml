@@ -1,0 +1,428 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!--Import Google Icon Font-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+
+    <!--Import materialize.css-->
+
+    <link href="~/Content/additional.css" rel="stylesheet" />
+    <link href="~/Content/materialize.css" rel="stylesheet" />
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+    <header>
+        <nav class="top-nav">
+            <div class="container">
+                <div class="nav-wrapper"><a class="page-title">Tittle Goes Here</a></div>
+                
+            </div>
+        </nav>
+        <div class="container"><a href="#" data-activates="nav-main" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+        <ul id="nav-main" class="side-nav fixed">
+            <li class="bold"><a href="#!" class="waves-effect waves-teal"><i class="material-icons left" style="line-height:2.5;">domain</i>Trang Chủ</a></li>
+            <li class="bold"><a href="#!" class="waves-effect waves-teal"><i class="material-icons left" style="line-height:2.5;">local_hotel</i>Danh sách phòng</a></li>
+            <li class="bold"><a href="#!" class="waves-effect waves-teal"><i class="material-icons left" style="line-height:2.5;">attach_money</i>Thanh Toán</a></li>
+            <li class="bold"><a href="#!" class="waves-effect waves-teal"><i class="material-icons left" style="line-height:2.5;">timeline</i>Thống Kê</a></li>
+            <li class="bold"><a href="#!" class="waves-effect waves-teal"><i class="material-icons left" style="line-height:2.5;">help_outline</i>Trợ Giúp</a></li>
+            <li class="bold"><a href="#!" class="waves-effect waves-teal"><i class="material-icons left" style="line-height:2.5;">settings</i>Thiết Lập</a></li>
+
+        </ul>
+    </header>
+
+    <!-- Out of header-->
+    <main>
+        <!--Begin of ListKinds-->
+        <ul class="collapsible popout" data-collapsible="list_kinds">
+            
+            
+            <li>
+                <div class="collapsible-header active">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    Phòng Loại 1<span class="badge">1</span></div>
+                <div class="collapsible-body">
+                    <div class="row">
+                        <div class="col l3 m6 s12">
+                            <div class="card small">
+                                <div class="card-image waves-effect waves-block waves-light">
+                                    <img class="activator" src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRsnJreu_m_IA9RcUj8c3dQtBUO-mXTeZpnXDZhnGaHiVYG133O">
+                                </div>
+                                <div class="card-content">
+                                    <span class="card-title activator grey-text text-darken-4">Phòng 1
+                                   </span>
+                                    <br />
+                                    <a class="waves-effect waves-light btn-floating"><i class="material-icons">local_hotel</i></a>
+                                    <a class="waves-effect waves-light btn-floating"><i class="material-icons">attach_money</i></a>
+                                    <a class="waves-effect waves-light btn-floating"><i class="material-icons">edit</i></a>
+                                 
+
+                                </div>
+                                <div class="card-reveal">
+                                    <span class="card-title grey-text text-darken-4">Chi tiết<i class="material-icons right">expand_more</i></span>              
+                                    <ul class="collapsible" data-collapsible="accordion">
+                                        <li>
+                                            <div class="collapsible-header"><i class="material-icons">person</i>Anh A</div>
+                                            <div class="collapsible-body"><p>Địa chỉ: bla bla bla</p></div>
+                                        </li>
+                                        <li>
+                                            <div class="collapsible-header"><i class="material-icons">date_range</i>29/02</div> 
+                                        </li>
+                                        <li>
+                                            <div class="collapsible-header"><i class="material-icons">local_atm</i>200.000</div>
+                                 
+                                        </li>
+                                    </ul>
+                                 
+                                </div>
+                            </div>
+                        </div>
+                        <!----->
+                        <div class="col l3 m6 s12">
+                            <div class="card small">
+                                <div class="card-image waves-effect waves-block waves-light">
+                                    <img class="activator" src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRsnJreu_m_IA9RcUj8c3dQtBUO-mXTeZpnXDZhnGaHiVYG133O">
+                                </div>
+                                <div class="card-content">
+                                    <span class="card-title activator red-text text-accent-4">
+                                        Phòng 1
+                                    </span>
+                                    <br />
+                                    <a class="waves-effect waves-light btn-floating"><i class="material-icons">local_hotel</i></a>
+                                    <a class="waves-effect waves-light btn-floating"><i class="material-icons">attach_money</i></a>
+                                    <a class="waves-effect waves-light btn-floating"><i class="material-icons">edit</i></a>
+
+
+                                </div>
+                                <div class="card-reveal">
+                                    <span class="card-title grey-text text-darken-4">Chi tiết<i class="material-icons right">expand_more</i></span>
+                                    <ul class="collapsible" data-collapsible="accordion">
+                                        <li>
+                                            <div class="collapsible-header"><i class="material-icons">person</i>Anh A</div>
+                                            <div class="collapsible-body"><p>Địa chỉ: bla bla bla</p></div>
+                                        </li>
+                                        <li>
+                                            <div class="collapsible-header"><i class="material-icons">date_range</i>29/02</div>
+                                        </li>
+                                        <li>
+                                            <div class="collapsible-header"><i class="material-icons">local_atm</i>200.000</div>
+
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!---->
+                        <div class="col l3 m6 s12">
+                            <div class="card small">
+                                <div class="card-image waves-effect waves-block waves-light">
+                                    <img class="activator" src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRsnJreu_m_IA9RcUj8c3dQtBUO-mXTeZpnXDZhnGaHiVYG133O">
+                                </div>
+                                <div class="card-content">
+                                    <span class="card-title activator light-blue-text text-accent-4">  
+                                        Phòng 1
+                                    </span>
+                                    <br />
+                                    <a class="waves-effect waves-light btn-floating"><i class="material-icons">local_hotel</i></a>
+                                    <a class="waves-effect waves-light btn-floating"><i class="material-icons">attach_money</i></a>
+                                    <a class="waves-effect waves-light btn-floating"><i class="material-icons">edit</i></a>
+
+
+                                </div>
+                                <div class="card-reveal">
+                                    <span class="card-title grey-text text-darken-4">Chi tiết<i class="material-icons right">expand_more</i></span>
+                                    <ul class="collapsible" data-collapsible="accordion">
+                                        <li>
+                                            <div class="collapsible-header"><i class="material-icons">person</i>Anh A</div>
+                                            <div class="collapsible-body"><p>Địa chỉ: bla bla bla</p></div>
+                                        </li>
+                                        <li>
+                                            <div class="collapsible-header"><i class="material-icons">date_range</i>29/02</div>
+                                        </li>
+                                        <li>
+                                            <div class="collapsible-header"><i class="material-icons">local_atm</i>200.000</div>
+
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!----->
+                        
+                        
+
+                    </div>
+                    
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">star</i>
+                <i class="material-icons">star</i>Phòng Loại 2<span class="badge">1</span></div>
+                <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">star</i>Phòng Loại 3<span class="badge">1</span></div>
+                <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+            </li>
+        </ul>
+        <!--End of ListKinds-->
+
+        <!--Modal-->
+        <a class="modal-trigger waves-effect waves-light btn" href="#modalCreate">Modal Đặt phòng</a>
+
+        <!-- Modal Structure -->
+        <div id="modalCreate" class="modal extended">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="col l4 m12 s12">
+                   
+                        <div class="input-field col l6 m6 s6">
+
+                            <select>
+                                <option value="" disabled selected>Phòng</option>
+                                <option value="1"> 1</option>
+                                <option value="2"> 2</option>
+                                <option value="3"> 3</option>
+                            </select>
+                            <label>Phòng Số</label>
+                        </div>
+                        <div class="input-field col l6 m6 s6">
+
+                            <select>
+
+                                <option value="1"> A</option>
+                                <option value="2"> B</option>
+                                <option value="3"> C</option>
+                            </select>
+                            <label>Loại Phòng</label>
+                        </div>
+
+                        <div class="input-field col l12">
+
+                            <label for="datebook">Ngày đến</label>
+                            <input type="date" id="datebook" class="datepicker">
+
+                        </div>
+
+                        <div class="input-field col l12">
+                            <select>
+                                <option value="1"> Trong nước</option>
+                                <option value="2"> Ngoài nước</option>
+                            </select>
+                            <label>Loại Khách</label>
+                        </div>
+                        
+                    </div>
+                    <div class="col l8 m12 s12">
+                       
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input id="first_name" type="text" class="validate"><label for="first_name">Tên</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="last_name" type="text" class="validate"><label for="last_name">Họ</label>   
+                        </div>
+                        <div class="input-field col l6 m6 s12">
+                            <i class="material-icons prefix">fingerprint</i>
+                            <input id="cnmd" type="text" class="validate"><label for="cmnd">CMND</label>
+                        </div>
+                        <div class="input-field col l6 m6 s12">
+                            <i class="material-icons prefix">phone</i>
+                            <input id="phone" type="text" class="validate"><label for="phone">Điện Thoại</label>
+                        </div>
+                        <div class="input-field col l12 m12 s12">
+
+                                <i class="material-icons prefix">location_on</i>
+                                <input id="address"  type="text" class="validate">
+                                <label for="address">Địa chỉ</label>
+                          
+                        </div>
+
+                        
+                            <div class="col l6 offset-l6 s12 m12 right-align">
+                                <a class="waves-effect waves-light btn"><i class="material-icons">add</i></a>
+                                <a class="waves-effect waves-light btn"><i class="material-icons">replay</i></a>
+                            </div>
+                          
+                        
+                    
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l12">
+                        <table class="highlight" >
+                            <thead>
+                                <tr>
+                                    <th data-field="name">Khách hàng</th>
+                                    <th data-field="cmnd">CMND</th>
+                                    <th data-field="address">Địa chỉ</th>
+                                    <th data-field="action">Hành động</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>Alvin</td>
+                                    <td>321985566</td>
+                                    <td>227 Nguyễn Văn Cừ</td>
+                                    <td>
+                                        <a class="btn-floating btn-medium waves-effect waves-light red"><i class="material-icons">edit</i></a>
+                                        <a class="btn-floating btn-medium waves-effect waves-light red"><i class="material-icons">delete</i></a>
+                                    
+                                    </td>
+                                </tr>
+                             
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+             </div>
+           
+           
+            
+           
+        </div>
+           
+           
+
+        <!--End Modal-->
+
+
+
+        <!-- Modal Thanh Toán-->
+        <!--Modal-->
+        <a class="modal-trigger waves-effect waves-light btn" href="#modalPay">Modal Thanh Toán</a>
+
+        <!-- Modal Structure -->
+        <div id="modalPay" class="modal modal-fixed-footer extended">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="col l4 m12 s12">
+
+                        <div class="input-field col l6 m6 s6">
+
+                            <select>
+                                <option value="" disabled selected>Phòng</option>
+                                <option value="1"> 1</option>
+                                <option value="2"> 2</option>
+                                <option value="3"> 3</option>
+                            </select>
+                            <label>Phòng Số</label>
+                        </div>
+                        <div class="input-field col l6 m6 s6">
+
+                            <select>
+
+                                <option value="1"> A</option>
+                                <option value="2"> B</option>
+                                <option value="3"> C</option>
+                            </select>
+                            <label>Loại Phòng</label>
+                        </div>
+
+                        
+
+                    </div>
+                    <div class="col l8 m12 s12">
+
+                        <div class="input-field col l6 m6 s12">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input id="first_name" type="text" class="validate"><label for="first_name">Tên khách hàng</label>
+                        </div>
+                        <div class="input-field col l6 m6 s12">
+                            <i class="material-icons prefix">fingerprint</i>
+                            <input id="cnmd" type="text" class="validate"><label for="cmnd">CMND</label>
+                        </div>
+                      
+                        <div class="input-field col l12 m12 s12">
+
+                            <i class="material-icons prefix">location_on</i>
+                            <input id="address" type="text" class="validate">
+                            <label for="address">Địa chỉ</label>
+
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l12">
+                        <table class="highlight">
+                            <thead>
+                                <tr>
+                                    <th data-field="room">Phòng</th>
+                                    <th data-field="kind">Loại</th>
+                                    <th data-field="leasedays">Số ngày thuê</th>
+                                    <th data-field="cash">Thành tiền</th>
+                                    <th data-field="action"></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>P01</td>
+                                    <td>A</td>
+                                    <td>1</td>
+                                 
+                                   
+                                    <td>200.000</td>
+                                    <td><a class="btn-floating btn-medium waves-effect waves-light red"><i class="material-icons">delete</i></a></td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Hủy</a>
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Thanh Toán</a>
+               
+            </div>
+
+
+
+        </div>
+
+
+
+        <!--End Modal-->
+        <div id="main" style=" display:none">
+            @RenderBody()
+        </div> 
+
+</main>
+
+
+
+
+
+
+
+         
+
+        <!--Import materialize.js-->
+        <script src="~/Scripts/materialize.js"></script>
+
+  
+</body>
+</html>
+
