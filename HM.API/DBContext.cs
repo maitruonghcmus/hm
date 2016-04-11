@@ -76,10 +76,23 @@ namespace HM.API
         /// <summary>
         /// Hàm update các field của một object
         /// </summary>
+<<<<<<< HEAD
         /// <param name="id">Id của object cần update</param>
         /// <param name="fieldValues">Danh sách các field của object</param>
         /// <returns>Object nếu update thành công</returns>
+=======
+<<<<<<< HEAD
+        /// <param name="id">id của document cần tìm</param>
+        /// <param name="doc">document rỗng bất kỳ (chỉ dùng để lấy kiểu dữ liệu)</param>
+        /// <returns>Document cần tìm</returns>
+        public Result<DocumentT> Read(ObjectId id, DocumentT doc)
+=======
+        /// <param name="id"></param>
+        /// <param name="update">for example </param>
+        /// <returns></returns>
+>>>>>>> origin/develop
         public virtual Result<T> Update(BsonValue id, Dictionary<string, BsonValue> fieldValues)
+>>>>>>> b5c14057a3c3665f8fc4145e35b9e9a64541b7c7
         {
             var result = new Result<T>();
             try
@@ -130,8 +143,16 @@ namespace HM.API
         /// <summary>
         /// Hàm lấy danh sách tất cả object 
         /// </summary>
+<<<<<<< HEAD
         /// <returns>Danh sách tất cả object</returns>
+=======
+        /// <returns></returns>
+<<<<<<< HEAD
+        public Result<DocumentT> Detele(ObjectId id, DocumentT doc)
+=======
+>>>>>>> origin/develop
         public virtual Result<IEnumerable<T>> GetObjects()
+>>>>>>> b5c14057a3c3665f8fc4145e35b9e9a64541b7c7
         {
             var result = new Result<IEnumerable<T>>();
             try
