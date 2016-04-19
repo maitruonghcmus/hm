@@ -10,7 +10,7 @@ namespace HM.WebApp.Controllers
     {
         public ActionResult Index()
         {
-            return View("teet thay doi noi dung file truoc khi peush");
+            return View();
         }
 
         public ActionResult About()

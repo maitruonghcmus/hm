@@ -3,3 +3,9 @@
 ################################################################################
 
 /HM.API/bin
+/HM.API/obj/Debug
+/HM.DataModels/bin/Debug
+/HM.DataModels/obj/Debug
+/HM.WebApp/bin
+/HM.WebApp/obj/Debug
+/packages
