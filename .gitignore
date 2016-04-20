@@ -9,3 +9,6 @@
 /HM.WebApp/bin
 /HM.WebApp/obj/Debug
 /packages
+/HM.WebAppMVC/obj/Debug
+/HM.WebAppMVC/bin
+/HM.WebAppMVC/App_Data
