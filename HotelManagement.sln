@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HM.DataModels", "HM.DataModels\HM.DataModels.csproj", "{F5C4EAEE-7D95-4FD2-920D-1FE74A2389C6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HM.API", "HM.API\HM.API.csproj", "{5F4FBEE0-8A2D-46F0-B4F1-988D94A8A862}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HM.WebApp", "HM.WebApp\HM.WebApp.csproj", "{F854D62B-9F88-4F14-9BB5-BE8BCE7BBE11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{5F4FBEE0-8A2D-46F0-B4F1-988D94A8A862}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F4FBEE0-8A2D-46F0-B4F1-988D94A8A862}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F4FBEE0-8A2D-46F0-B4F1-988D94A8A862}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F854D62B-9F88-4F14-9BB5-BE8BCE7BBE11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F854D62B-9F88-4F14-9BB5-BE8BCE7BBE11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F854D62B-9F88-4F14-9BB5-BE8BCE7BBE11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F854D62B-9F88-4F14-9BB5-BE8BCE7BBE11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
