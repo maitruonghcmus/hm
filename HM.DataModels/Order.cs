@@ -19,7 +19,7 @@ namespace HM.DataModels
         /// <summary>
         /// Giờ vào lấy phòng (giờ tạo order)
         /// </summary>
-        public DateTime CheckinDate { get; set; }
+        public DateTime CheckInDate { get; set; }
 
         public int? HotelId { get; set; }
         public bool? Inactive { get; set; }

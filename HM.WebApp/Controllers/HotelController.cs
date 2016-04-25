@@ -11,7 +11,7 @@ namespace HM.WebApp.Controllers
     {
         public ActionResult Index()
         {
-            var hotels = DataService.Instance.GetObjects<IEnumerable<Hotel>>("Hotel", "GetAll");
+            var hotels = DataService.Instance.GetObjects<IEnumerable<Hotel>>(ApiUtils.HOTEL, ApiUtils.GETALL);
             ViewBag.Hotels = hotels;
 
             return View();
@@ -20,7 +20,7 @@ namespace HM.WebApp.Controllers
         [HttpGet]
         public JsonResult GetHotel(int id)
         {
-            var hotel = DataService.Instance.GetObject<Hotel>("Hotel", "GetById", id);
+            var hotel = DataService.Instance.GetObject<Hotel>(ApiUtils.HOTEL, ApiUtils.GETBYID, id);
             if (hotel != null)
             {
                 return Json(hotel, JsonRequestBehavior.AllowGet);
@@ -33,7 +33,7 @@ namespace HM.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var r = DataService.Instance.Post("Hotel", "Create", h);
+                var r = DataService.Instance.Post(ApiUtils.HOTEL, ApiUtils.CREATE, h);
             }
 
             return RedirectToAction("Index");
@@ -44,7 +44,7 @@ namespace HM.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var r = DataService.Instance.Post("Hotel", "Update", h);
+                var r = DataService.Instance.Post(ApiUtils.HOTEL, ApiUtils.UPDATE, h);
             }
 
             return RedirectToAction("Index");
@@ -52,7 +52,7 @@ namespace HM.WebApp.Controllers
 
         public ActionResult Delete(int id)
         {
-            var r = DataService.Instance.Delete<Hotel>("Hotel", "Delete", id);
+            var r = DataService.Instance.Delete<Hotel>(ApiUtils.HOTEL, ApiUtils.DELETE, id);
             return RedirectToAction("Index");
         }
     }

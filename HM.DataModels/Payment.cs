@@ -7,7 +7,11 @@ namespace HM.DataModels
         public int Id { get; set; }
         public int CustomerId { get; set; }
         public int OrderId { get; set; }
-        
+
+        /// <summary>
+        /// Giờ ra
+        /// </summary>
+        public DateTime CheckOutDate { get; set; }
         /// <summary>
         /// Số lượng (giờ)
         /// </summary>
