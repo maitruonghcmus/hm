@@ -29,7 +29,7 @@ namespace HM.API.Controllers
             return new DBContext<Customer>(DbUtils.CustomerCollection).GetObject(id);
         }
 
-        [HttpPut]
+        [HttpPost]
         public Result<Customer> Create(Customer cus, string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)

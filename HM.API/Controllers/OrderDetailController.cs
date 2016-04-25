@@ -29,7 +29,7 @@ namespace HM.API.Controllers
             return new DBContext<OrderDetail>(DbUtils.OrderDetailCollection).GetObject(id);
         }
 
-        [HttpPut]
+        [HttpPost]
         public Result<OrderDetail> Create(OrderDetail od, string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)

@@ -29,7 +29,7 @@ namespace HM.API.Controllers
             return new DBContext<Payment>(DbUtils.PaymentCollection).GetObject(id);
         }
 
-        [HttpPut]
+        [HttpPost]
         public Result<Payment> Create(Payment pm, string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)

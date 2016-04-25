@@ -25,24 +25,11 @@ namespace HM.API.Controllers
             return new DBContext<User>(DbUtils.UserCollection).GetObject(id);
         }
 
-        [HttpPut]
+        [HttpPost]
         public Result<User> Create(User user, string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)
                 return new Result<User> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
-
-            //#if DEBUG
-            //            if (user == null)
-            //                user = new User
-            //                {
-            //                    Username = "debugmode",
-            //                    Password = "1",
-            //                    Fullname = "User Created In Debug Mode",
-            //                    RoleId = 0,
-            //                    CreatedBy = 1,
-            //                    CreatedOn = DateTime.Now,
-            //                };
-            //#endif
 
             return new DBContext<User>(DbUtils.UserCollection).Insert(user);
         }

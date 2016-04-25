@@ -29,7 +29,7 @@ namespace HM.API.Controllers
             return new DBContext<ExtraService>(DbUtils.ExtraServiceCollection).GetObject(id);
         }
 
-        [HttpPut]
+        [HttpPost]
         public Result<ExtraService> Create(ExtraService ex, string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)

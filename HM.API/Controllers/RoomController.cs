@@ -29,7 +29,7 @@ namespace HM.API.Controllers
             return new DBContext<Room>(DbUtils.RoomCollection).GetObject(id);
         }
 
-        [HttpPut]
+        [HttpPost]
         public Result<Room> Create(Room room, string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)

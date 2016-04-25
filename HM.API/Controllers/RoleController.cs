@@ -25,16 +25,11 @@ namespace HM.API.Controllers
             return new DBContext<Role>(DbUtils.RoleCollection).GetObject(id);
         }
 
-        [HttpPut]
+        [HttpPost]
         public Result<Role> Create(Role role, string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)
                 return new Result<Role> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
-
-#if DEBUG
-            if (role == null)
-                role = new Role { Name = "TEST" };
-#endif
 
             return new DBContext<Role>(DbUtils.RoleCollection).Insert(role);
         }
@@ -44,11 +39,6 @@ namespace HM.API.Controllers
         {
             if (apiKey != DbUtils.ApiKey)
                 return new Result<Role> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
-
-#if DEBUG
-            role.Id = 2;
-            role.Name = "Quản lý";
-#endif
 
             return new DBContext<Role>(DbUtils.RoleCollection).Replace(role);
         }

@@ -29,7 +29,7 @@ namespace HM.API.Controllers
             return new DBContext<Hotel>(DbUtils.HotelCollection).GetObject(id);
         }
 
-        [HttpPut]
+        [HttpPost]
         public Result<Hotel> Create(Hotel hotel, string apiKey)
         {
             if (apiKey != DbUtils.ApiKey)
