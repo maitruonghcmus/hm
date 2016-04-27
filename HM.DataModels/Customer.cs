@@ -36,7 +36,7 @@ namespace HM.DataModels
         /// <summary>
         /// Trạng thái đang hoạt động/đã xóa
         /// </summary>
-        public bool? Inactive { get; set; }
+        public bool Inactive { get; set; }
         /// <summary>
         /// Được tạo bởi người dùng nào
         /// </summary>

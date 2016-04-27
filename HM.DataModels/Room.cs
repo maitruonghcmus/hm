@@ -29,7 +29,7 @@ namespace HM.DataModels
         public int Status { get; set; }
 
         public int? HotelId { get; set; }
-        public bool? Inactive { get; set; }
+        public bool Inactive { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
         public int? ModifiedBy { get; set; }

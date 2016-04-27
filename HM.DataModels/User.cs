@@ -26,7 +26,7 @@ namespace HM.DataModels
         /// <summary>
         /// Bị xóa ? True = bị xóa, false hoặc null là chưa bị xóa
         /// </summary>
-        public bool? Inactive { get; set; }
+        public bool Inactive { get; set; }
         
         /// <summary>
         /// Tạo bởi user nào

@@ -79,10 +79,23 @@ namespace HM.WebApp
         }
 
         //TODO: Định nghĩa hàm thống kê doanh thu theo loại phòng
-        public Dictionary<RoomType, double> RevenueByRoomType(int hotelId)
+        public Dictionary<RoomType, double> RevenueByRoomType(int hotelId, DateTime fromDate, DateTime toDate)
         {
-            //double: danh thu (số tiền)
+            var payments = DataService.Instance
+                            .GetObjects<IEnumerable<Payment>>(ApiUtils.PAYMENT, ApiUtils.GETALL)
+                            .Where(a => a.HotelId == hotelId && a.CheckOutDate >= fromDate && a.CheckOutDate <= toDate);
+
             return null;
+        }
+        
+        public RoomType GetRoomTypeFromPayment(int paymentId)
+        {
+            var payment = DataService.Instance.GetObject<Payment>(ApiUtils.PAYMENT, ApiUtils.GETBYID, paymentId);
+            var order = DataService.Instance.GetObject<Order>(ApiUtils.ORDER, ApiUtils.GETBYID, payment?.OrderId ?? 0);
+            var room = DataService.Instance.GetObject<Room>(ApiUtils.ROOM, ApiUtils.GETBYID, order?.RoomId ?? 0);
+            var roomtype = DataService.Instance.GetObject<RoomType>(ApiUtils.ROOMTYPE, ApiUtils.GETBYID, room?.RoomTypeId ?? 0);
+
+            return roomtype;
         }
 
         //TODO: định nghĩa hàm thống kê doanh thu theo ngày
@@ -98,7 +111,7 @@ namespace HM.WebApp
             //double: doanh thu
             return null;
         }
-             
+
         //TODO: định nghĩa hàm tính doanh thu theo tháng
         public Dictionary<int, double> RevenueByMonth(int hotelId)
         {

@@ -24,7 +24,7 @@ namespace HM.DataModels
         /// <summary>
         /// Danh sách những chi tiết hóa đơn cho một lần thanh toán
         /// </summary>
-        public Guid[] OrderDetailIds { get; set; }
+        public int[] OrderDetailIds { get; set; }
         
         /// <summary>
         /// Tiền dịch vụ (của orderdetails)
@@ -56,7 +56,7 @@ namespace HM.DataModels
         public long Total { get; set; }
 
         public int? HotelId { get; set; }
-        public bool? Inactive { get; set; }
+        public bool Inactive { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
         public int? ModifiedBy { get; set; }
