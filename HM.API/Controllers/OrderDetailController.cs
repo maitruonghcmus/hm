@@ -12,46 +12,46 @@ namespace HM.API.Controllers
     public class OrderDetailController : ApiController
     {
         [HttpGet]
-        public Result<IEnumerable<OrderDetail>> GetAll(string apiKey)
+        public Result<IEnumerable<OrderDetail>> GetAll()
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<IEnumerable<OrderDetail>> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<IEnumerable<OrderDetail>> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<OrderDetail>(DbUtils.OrderDetailCollection).GetObjects();
         }
 
         [HttpGet]
-        public Result<OrderDetail> GetById(int id, string apiKey)
+        public Result<OrderDetail> GetById(int id)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<OrderDetail> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<OrderDetail> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<OrderDetail>(DbUtils.OrderDetailCollection).GetObject(id);
         }
 
         [HttpPost]
-        public Result<OrderDetail> Create(OrderDetail od, string apiKey)
+        public Result<OrderDetail> Create(OrderDetail od)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<OrderDetail> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<OrderDetail> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<OrderDetail>(DbUtils.OrderDetailCollection).Insert(od);
         }
 
         [HttpPost]
-        public Result<OrderDetail> Update(OrderDetail od, string apiKey)
+        public Result<OrderDetail> Update(OrderDetail od)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<OrderDetail> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<OrderDetail> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<OrderDetail>(DbUtils.OrderDetailCollection).Replace(od);
         }
 
         [HttpDelete]
-        public Result<OrderDetail> Delete(int id, string apiKey)
+        public Result<OrderDetail> Delete(int id)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<OrderDetail> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<OrderDetail> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<OrderDetail>(DbUtils.OrderDetailCollection).Delete(id);
         }

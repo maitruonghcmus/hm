@@ -12,46 +12,46 @@ namespace HM.API.Controllers
     public class CustomerTypeController : ApiController
     {
         [HttpGet]
-        public Result<IEnumerable<CustomerType>> GetAll(string apiKey)
+        public Result<IEnumerable<CustomerType>> GetAll()
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<IEnumerable<CustomerType>> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<IEnumerable<CustomerType>> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<CustomerType>(DbUtils.CustomerTypeCollection).GetObjects();
         }
 
         [HttpGet]
-        public Result<CustomerType> GetById(int id, string apiKey)
+        public Result<CustomerType> GetById(int id)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<CustomerType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<CustomerType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<CustomerType>(DbUtils.CustomerTypeCollection).GetObject(id);
         }
 
         [HttpPost]
-        public Result<CustomerType> Create(CustomerType type, string apiKey)
+        public Result<CustomerType> Create(CustomerType type)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<CustomerType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<CustomerType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<CustomerType>(DbUtils.CustomerTypeCollection).Insert(type);
         }
 
         [HttpPost]
-        public Result<CustomerType> Update(CustomerType type, string apiKey)
+        public Result<CustomerType> Update(CustomerType type)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<CustomerType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<CustomerType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<CustomerType>(DbUtils.CustomerTypeCollection).Replace(type);
         }
 
         [HttpDelete]
-        public Result<CustomerType> Delete(int id, string apiKey)
+        public Result<CustomerType> Delete(int id)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<CustomerType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<CustomerType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<CustomerType>(DbUtils.CustomerTypeCollection).Delete(id);
         }

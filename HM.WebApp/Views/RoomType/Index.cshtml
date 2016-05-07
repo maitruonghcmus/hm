@@ -4,8 +4,6 @@
     var roomtypes = ViewBag.RoomTypes as IEnumerable<HM.DataModels.RoomType>;
 }
 
-<h2>Index</h2>
-
 <div id="content">
     <section>
         <div class="section-body">
@@ -54,9 +52,9 @@
                                                     </div>
                                                     <div class="tile-text">
                                                         @foreach (var p in item.Price)
-	                                                    {
-		                                                     @p.Key <label>h : </label> @(p.Value * 1000) <label>đ</label> <br />
-	                                                    }
+                                                        {
+                                                            @p.Key <label>h : </label> @(p.Value * 1000) <label>đ</label> <br />
+                                                        }
                                                         <small>Giá phòng</small>
 
                                                     </div>
@@ -81,6 +79,6 @@
     </section>
 </div>
 
-@Html.Partial("_RoomTypeDetailPartial")
+@Html.Partial("_AddRoomTypePartial")
 
 <button type="button" class="btn ink-reaction btn-floating-action btn-lg btn-primary fix-floating-btn" data-toggle="modal" data-target="#detail"><i class="md md-add"></i></button>

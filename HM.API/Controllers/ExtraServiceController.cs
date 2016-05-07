@@ -12,46 +12,46 @@ namespace HM.API.Controllers
     public class ExtraServiceController : ApiController
     {
         [HttpGet]
-        public Result<IEnumerable<ExtraService>> GetAll(string apiKey)
+        public Result<IEnumerable<ExtraService>> GetAll()
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<IEnumerable<ExtraService>> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<IEnumerable<ExtraService>> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<ExtraService>(DbUtils.ExtraServiceCollection).GetObjects();
         }
 
         [HttpGet]
-        public Result<ExtraService> GetById(int id, string apiKey)
+        public Result<ExtraService> GetById(int id)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<ExtraService> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<ExtraService> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<ExtraService>(DbUtils.ExtraServiceCollection).GetObject(id);
         }
 
         [HttpPost]
-        public Result<ExtraService> Create(ExtraService ex, string apiKey)
+        public Result<ExtraService> Create(ExtraService ex)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<ExtraService> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<ExtraService> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<ExtraService>(DbUtils.ExtraServiceCollection).Insert(ex);
         }
 
         [HttpPost]
-        public Result<ExtraService> Update(ExtraService ex, string apiKey)
+        public Result<ExtraService> Update(ExtraService ex)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<ExtraService> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<ExtraService> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<ExtraService>(DbUtils.ExtraServiceCollection).Replace(ex);
         }
 
         [HttpDelete]
-        public Result<ExtraService> Delete(int id, string apiKey)
+        public Result<ExtraService> Delete(int id)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<ExtraService> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<ExtraService> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<ExtraService>(DbUtils.ExtraServiceCollection).Delete(id);
         }

@@ -32,7 +32,7 @@ namespace HM.DataModels
         /// <summary>
         /// KH thuộc về KS nào
         /// </summary>
-        public int? HotelId { get; set; }
+        public int HotelId { get; set; }
         /// <summary>
         /// Trạng thái đang hoạt động/đã xóa
         /// </summary>

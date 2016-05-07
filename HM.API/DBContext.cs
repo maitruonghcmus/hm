@@ -195,12 +195,26 @@ namespace HM.API
         /// <returns></returns>
         private static long GetNextId(IMongoDatabase mongodb, string collectionName)
         {
-            var col = mongodb.GetCollection<BsonDocument>("_counters");
-            var result = col.FindOneAndUpdate(
-                Builders<BsonDocument>.Filter.Eq("_id", 1),
-                Builders<BsonDocument>.Update.Inc(collectionName, 1),
-                new FindOneAndUpdateOptions<BsonDocument> { IsUpsert = true, ReturnDocument = ReturnDocument.After });
-            return result.GetValue(collectionName).ToInt64();
+            //var col = mongodb.GetCollection<BsonDocument>("_counters");
+            //var result = col.FindOneAndUpdate(
+            //    Builders<BsonDocument>.Filter.Eq("_id", 1),
+            //    Builders<BsonDocument>.Update.Inc(collectionName, 1),
+            //    new FindOneAndUpdateOptions<BsonDocument> { IsUpsert = true, ReturnDocument = ReturnDocument.After });
+            //return result.GetValue(collectionName).ToInt64();
+
+            var col = mongodb.GetCollection<BsonDocument>(collectionName);
+            var builder = Builders<BsonDocument>.Sort;
+            var sort = builder.Descending("_id");
+            try
+            {
+                var cursorToResults = col.Find<BsonDocument>(new BsonDocument()).Sort(sort);
+                var recordwithMax_id_Value = cursorToResults.First();
+                return recordwithMax_id_Value.GetValue("_id").ToInt64() + 1;
+            }
+            catch (Exception)
+            {
+                return 1;
+            }
         }
         #endregion
     }
