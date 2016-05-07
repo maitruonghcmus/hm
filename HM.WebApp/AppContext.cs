@@ -16,7 +16,14 @@ namespace HM.WebApp
 
         public int GetLoginUserId()
         {
+
             return 0;
+        }
+
+        public int GetHotelId(int userId)
+        {
+            var hotelId = DataService.Instance.GetObject<User>(ApiUtils.USER, ApiUtils.GETBYID, userId).HotelId;
+            return hotelId;
         }
 
         public User GetLoginUser()

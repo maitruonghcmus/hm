@@ -1,0 +1,68 @@
+﻿@{ 
+    var hotelId = ViewBag.HotelId ?? 1;
+    var loginedUser = ViewBag.UserId ?? 1;
+}
+
+<div class="modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="detail" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="formModalLabel">Thông tin Loại Phòng</h4>
+            </div>
+            <form class="form-horizontal" role="form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label for="ctmText" class="control-label">Tên loại phòng</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" id="roomTypeName" class="form-control" placeholder="Loại phòng">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label for="ctmText" class="control-label">Giá phòng</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" id="roomTypePrice" class="form-control" placeholder="Giá tiền">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="addRoomType();"><i class="fa fa-check"></i> Thêm</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+    function addRoomType() {
+        var name = $("#roomTypeName").val();
+        var price = $("#roomTypePrice").val();
+
+        $.ajax({
+            url: "@Url.Action("CreateRoomType", "RoomType")",
+            data: {
+                r: {
+                    Id: 0,
+                    Name: name,
+                    MaxCustomer : 10,
+                    Price: { 1 : 70, 2 : 100, 3 : 100 },
+                    HotelId : @hotelId,
+                    CreatedBy : @loginedUser,
+                    CreatedOn : '@(DateTime.Now.ToString("yyyy-MM-dd HH:mm"))'
+                }
+            },
+            type: "POST",
+            success: function () {
+                location.reload();
+            },
+            error: function () {
+                console.log("Create Roomtype Error");
+                alert("Lỗi");
+            }
+        });
+    }
+</script>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HM.DataModels;
 
 namespace HM.WebApp.Controllers
 {
@@ -10,19 +11,22 @@ namespace HM.WebApp.Controllers
     {
         public ActionResult Index()
         {
-            return View();
-        }
+            //var newCustomer = AppContext.Instance.Top5NewestCustomers(AppContext.Instance.GetHotelId(AppContext.Instance.GetLoginUserId()));
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+            var newCustomer = new List<Customer>();
 
-            return View();
-        }
+#if DEBUG
+            if (newCustomer == null || newCustomer.Count() == 0)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    newCustomer.Add(new Customer { Id = i, Name = "Nhan" + i.ToString()  });
+                }
+            }
+#endif
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+
+            ViewBag.NewCustomer = newCustomer;
 
             return View();
         }

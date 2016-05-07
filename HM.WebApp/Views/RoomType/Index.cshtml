@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    var roomtypes = ViewBag.RoomTypes as IEnumerable<HM.DataModels.RoomType>;
+}
+
+<h2>Index</h2>
+
+<div id="content">
+    <section>
+        <div class="section-body">
+            <div class="row">
+
+                @{
+                    if (roomtypes != null && roomtypes.Count() > 0)
+                    {
+                        foreach (var item in roomtypes)
+                        {
+                            <div class="col-md-4 col-xs-12 col-sm-6">
+                                <div class="card style-primary">
+                                    <div class="card-head">
+                                        <div class="tools">
+                                            <div class="btn-group">
+
+                                                <a class="btn btn-icon-toggle" data-toggle="modal" data-target="#detail"><i class="fa fa-cog"></i></a>
+                                                <a class="btn btn-icon-toggle btn-collapse"><i class="fa fa-angle-down"></i></a>
+
+                                            </div>
+                                        </div>
+                                        <header>@item.Name</header>
+                                    </div><!--end .card-head -->
+                                    <div class="card-body style-default-bright" style="display: block;">
+                                        <ul class="list">
+
+                                            <li class="tile">
+                                                <a class="tile-content ink-reaction">
+                                                    <div class="tile-icon">
+                                                        <i class="fa fa-bed"></i>
+                                                    </div>
+                                                    <div class="tile-text">
+                                                        Số phòng: 100
+                                                        <small></small>
+                                                    </div>
+                                                </a>
+                                                <a class="btn btn-flat ink-reaction" data-toggle="modal" data-target="#listroom">
+                                                    <i class="fa fa-search"></i>
+                                                </a>
+
+                                            </li>
+                                            <li class="tile">
+                                                <a class="tile-content ink-reaction">
+                                                    <div class="tile-icon">
+                                                        <i class="fa fa-money"></i>
+                                                    </div>
+                                                    <div class="tile-text">
+                                                        @foreach (var p in item.Price)
+	                                                    {
+		                                                     @p.Key <label>h : </label> @(p.Value * 1000) <label>đ</label> <br />
+	                                                    }
+                                                        <small>Giá phòng</small>
+
+                                                    </div>
+                                                </a>
+                                                <a class="btn btn-flat ink-reaction" data-toggle="modal" data-target="#detail">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+
+
+                                            </li>
+
+                                        </ul>
+                                    </div><!--end .card-body -->
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+
+            </div>
+        </div><!--end .section-body -->
+    </section>
+</div>
+
+@Html.Partial("_RoomTypeDetailPartial")
+
+<button type="button" class="btn ink-reaction btn-floating-action btn-lg btn-primary fix-floating-btn" data-toggle="modal" data-target="#detail"><i class="md md-add"></i></button>

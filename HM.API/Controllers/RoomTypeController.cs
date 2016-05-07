@@ -12,10 +12,10 @@ namespace HM.API.Controllers
     public class RoomTypeController : ApiController
     {
         [HttpGet]
-        public Result<IEnumerable<RoomType>> GetAll(string apiKey)
+        public Result<IEnumerable<RoomType>> GetAll()
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<IEnumerable<RoomType>> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<IEnumerable<RoomType>> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<RoomType>(DbUtils.RoomTypeCollection).GetObjects();
         }
@@ -23,26 +23,23 @@ namespace HM.API.Controllers
         [HttpGet]
         public Result<RoomType> GetById(int id, string apiKey)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<RoomType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<RoomType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<RoomType>(DbUtils.RoomTypeCollection).GetObject(id);
         }
 
         [HttpPost]
-        public Result<RoomType> Create(RoomType type, string apiKey)
+        public Result<RoomType> Create(RoomType type)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<RoomType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
-
             return new DBContext<RoomType>(DbUtils.RoomTypeCollection).Insert(type);
         }
 
         [HttpPost]
         public Result<RoomType> Update(RoomType type, string apiKey)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<RoomType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<RoomType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<RoomType>(DbUtils.RoomTypeCollection).Replace(type);
         }
@@ -50,8 +47,8 @@ namespace HM.API.Controllers
         [HttpDelete]
         public Result<RoomType> Delete(int id, string apiKey)
         {
-            if (apiKey != DbUtils.ApiKey)
-                return new Result<RoomType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
+            //if (apiKey != DbUtils.ApiKey)
+            //    return new Result<RoomType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
 
             return new DBContext<RoomType>(DbUtils.RoomTypeCollection).Delete(id);
         }
