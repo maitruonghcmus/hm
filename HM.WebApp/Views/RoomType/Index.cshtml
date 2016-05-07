@@ -1,84 +1,198 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     var roomtypes = ViewBag.RoomTypes as IEnumerable<HM.DataModels.RoomType>;
 }
 
-<div id="content">
-    <section>
-        <div class="section-body">
-            <div class="row">
-
-                @{
-                    if (roomtypes != null && roomtypes.Count() > 0)
-                    {
-                        foreach (var item in roomtypes)
-                        {
-                            <div class="col-md-4 col-xs-12 col-sm-6">
-                                <div class="card style-primary">
-                                    <div class="card-head">
-                                        <div class="tools">
-                                            <div class="btn-group">
-
-                                                <a class="btn btn-icon-toggle" data-toggle="modal" data-target="#detail"><i class="fa fa-cog"></i></a>
-                                                <a class="btn btn-icon-toggle btn-collapse"><i class="fa fa-angle-down"></i></a>
-
-                                            </div>
-                                        </div>
-                                        <header>@item.Name</header>
-                                    </div><!--end .card-head -->
-                                    <div class="card-body style-default-bright" style="display: block;">
-                                        <ul class="list">
-
-                                            <li class="tile">
-                                                <a class="tile-content ink-reaction">
-                                                    <div class="tile-icon">
-                                                        <i class="fa fa-bed"></i>
-                                                    </div>
-                                                    <div class="tile-text">
-                                                        Số phòng: 100
-                                                        <small></small>
-                                                    </div>
-                                                </a>
-                                                <a class="btn btn-flat ink-reaction" data-toggle="modal" data-target="#listroom">
-                                                    <i class="fa fa-search"></i>
-                                                </a>
-
-                                            </li>
-                                            <li class="tile">
-                                                <a class="tile-content ink-reaction">
-                                                    <div class="tile-icon">
-                                                        <i class="fa fa-money"></i>
-                                                    </div>
-                                                    <div class="tile-text">
-                                                        @foreach (var p in item.Price)
-                                                        {
-                                                            @p.Key <label>h : </label> @(p.Value * 1000) <label>đ</label> <br />
-                                                        }
-                                                        <small>Giá phòng</small>
-
-                                                    </div>
-                                                </a>
-                                                <a class="btn btn-flat ink-reaction" data-toggle="modal" data-target="#detail">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-
-
-                                            </li>
-
-                                        </ul>
-                                    </div><!--end .card-body -->
-                                </div>
+<section>
+    <div class="section-body contain-lg">
+        <!-- BEGIN ROOMTYPE -->
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="card style-primary">
+                    <div class="card-head">
+                        <div class="tools">
+                            <div class="btn-group">
+                                <a class="btn btn-icon-toggle" data-toggle="offcanvas" href="#offcanvas-add-roomtype"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-icon-toggle"><i class="fa fa-trash"></i></a>
                             </div>
-                        }
-                    }
-                }
+                        </div>
+                        <header>Loại 1</header>
+                    </div><!--end .card-head -->
+                    <div class="card-body style-default-bright" style="display: block;">
+                        <ul class="list">
+                            <li class="tile">
+                                <a class="tile-content ink-reaction" data-toggle="offcanvas" href="#offcanvas-room">
+                                    <div class="tile-icon">
+                                        <i class="fa fa-building-o"></i>
+                                    </div>
+                                    <div class="tile-text">
+                                        Tổng số phòng: 9
+                                        <small></small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="tile">
+                                <a class="tile-content ink-reaction">
+                                    <div class="tile-icon">
+                                        <i class="fa fa-users"></i>
+                                    </div>
+                                    <div class="tile-text">
+                                        Số khách tối đa: 4
+                                        <small></small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="tile">
+                                <a class="tile-content ink-reaction">
+                                    <div class="tile-icon">
+                                        <i class="fa fa-money"></i>
+                                    </div>
+                                    <div class="tile-text">
+                                        Giá phòng: 170k
+                                        <small></small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="tile">
+                                <a class="tile-content ink-reaction">
+                                    <div class="tile-icon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </div>
+                                    <div class="tile-text">
+                                        Giá theo giờ
+                                        <small>70k/h - 90k/2h - 100k/3h</small>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div><!--end .card-body -->
+                </div>
+            </div><!--end .col -->
+        </div><!--end .row -->
+        <!-- END ROOMTYPE -->
+        <!-- BEGIN OFFCANVAS RIGHT -->
+        <div class="offcanvas">
+            <!-- BEGIN OFFCANVAS ADD ROOMTYPE -->
+            <div id="offcanvas-add-roomtype" class="offcanvas-pane width-8">
+                <div class="offcanvas-head">
+                    <header>Thêm loại phòng</header>
+                    <div class="offcanvas-tools">
+                        <a class="btn btn-icon-toggle btn-default-light pull-right" data-dismiss="offcanvas">
+                            <i class="md md-close"></i>
+                        </a>
+                    </div>
+                    <br />
+                    <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+                        <a class="btn btn-primary" role="button">Thêm</a>
+                        <a class="btn btn-default" role="button">Nhập lại</a>
+                    </div>
+                </div>
+                <div class="offcanvas-body">
+                    <form class="form" role="form">
 
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="editTitle">
+                            <label for="editTitle">Tên loại phòng</label>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="editTitle">
+                            <label for="editTitle">Số khách tối đa</label>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="editTitle">
+                            <label for="editTitle">Giá phòng/ngày</label>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="editTitle">
+                            <label for="editTitle">Giá phòng/h</label>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="editTitle">
+                            <label for="editTitle">Giá phòng/2h</label>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="editTitle">
+                            <label for="editTitle">Giá phòng/3h</label>
+                        </div>
+
+                    </form>
+                </div>
             </div>
-        </div><!--end .section-body -->
-    </section>
-</div>
+            <!-- END OFFCANVAS ADD ROOMTYPE -->
+            <!-- BEGIN OFFCANVAS ROOM -->
+            <div id="offcanvas-room" class="offcanvas-pane width-8">
+                <div class="offcanvas-head">
+                    <header>Danh sách phòng</header>
+                    <div class="offcanvas-tools">
+                        <a class="btn btn-icon-toggle btn-default-light pull-right" data-dismiss="offcanvas">
+                            <i class="md md-close"></i>
+                        </a>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="editTitle" placeholder="Tên phòng">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="editTitle" placeholder="Ghi chú">
+                    </div>
+                    <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+                        <a class="btn btn-primary" role="button">Thêm</a>
+                        <a class="btn btn-default" role="button">Nhập lại</a>
+                    </div>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body no-padding">
+                                <ul class="list divider-full-bleed">
+                                    <li class="tile">
+                                        <a class="tile-content ink-reaction" href="#2">
+                                            <div class="tile-text">101</div>
+                                        </a>
+                                        <a class="btn btn-flat ink-reaction">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a class="btn btn-flat ink-reaction">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </li>
+                                    <li class="tile">
+                                        <a class="tile-content ink-reaction" href="#2">
+                                            <div class="tile-text">101</div>
+                                        </a>
+                                        <a class="btn btn-flat ink-reaction">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a class="btn btn-flat ink-reaction">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </li>
+                                    <li class="tile">
+                                        <a class="tile-content ink-reaction" href="#2">
+                                            <div class="tile-text">101</div>
+                                        </a>
+                                        <a class="btn btn-flat ink-reaction">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a class="btn btn-flat ink-reaction">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div><!--end .card-body -->
+                        </div><!--end .card -->
+                    </div><!--end .col -->
+                </div>
+            </div>
+            <!-- END OFFCANVAS ROOM -->
+        </div><!--end .offcanvas-->
+        <!-- END OFFCANVAS RIGHT -->
+    </div><!--end .section-body -->
+</section>
 
-@Html.Partial("_AddRoomTypePartial")
-
-<button type="button" class="btn ink-reaction btn-floating-action btn-lg btn-primary fix-floating-btn" data-toggle="modal" data-target="#detail"><i class="md md-add"></i></button>
+<button type="button" class="btn ink-reaction btn-floating-action btn-lg btn-primary fix-floating-btn" data-toggle="offcanvas" href="#offcanvas-add-roomtype"><i class="md md-add"></i></button>
