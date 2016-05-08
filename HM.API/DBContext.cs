@@ -114,8 +114,11 @@ namespace HM.API
             var result = new Result<T>();
             try
             {
-                UpdateDefinition<T> update = null;
-                update = update.Set("Inactive", true);
+                //UpdateDefinition<T> update = null;
+                //update = update.Set("Inactive", true);
+
+                var builder = Builders<T>.Update;
+                var update = builder.Set("Inactive", true);
 
                 _MongoDatabase.GetCollection<T>(_CollectionName).UpdateOne(Builders<T>.Filter.Eq("_id", id), update);
                 result.Data = this.GetObject(id).Data;

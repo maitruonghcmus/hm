@@ -21,7 +21,7 @@ namespace HM.API.Controllers
         }
 
         [HttpGet]
-        public Result<RoomType> GetById(int id, string apiKey)
+        public Result<RoomType> GetById(int id)
         {
             //if (apiKey != DbUtils.ApiKey)
             //    return new Result<RoomType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
@@ -36,7 +36,7 @@ namespace HM.API.Controllers
         }
 
         [HttpPost]
-        public Result<RoomType> Update(RoomType type, string apiKey)
+        public Result<RoomType> Update(RoomType type)
         {
             //if (apiKey != DbUtils.ApiKey)
             //    return new Result<RoomType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
@@ -45,7 +45,7 @@ namespace HM.API.Controllers
         }
 
         [HttpDelete]
-        public Result<RoomType> Delete(int id, string apiKey)
+        public Result<RoomType> Delete(int id)
         {
             //if (apiKey != DbUtils.ApiKey)
             //    return new Result<RoomType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };

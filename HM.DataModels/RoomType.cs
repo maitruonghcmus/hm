@@ -23,7 +23,7 @@ namespace HM.DataModels
         /// long: giá tương ứng
         /// Ví dụ: 1h giá 70k, 2h giá 90k, 1 đêm giá 150k
         /// </summary>
-        public Dictionary<int, long> Price { get; set; }
+        public long[] Price { get; set; }
 
         public int HotelId { get; set; }
         public bool Inactive { get; set; }
