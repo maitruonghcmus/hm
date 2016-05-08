@@ -6,70 +6,87 @@
 <section>
     <div class="section-body contain-lg">
         <!-- BEGIN ROOMTYPE -->
-        <div class="row">
-            <div class="col-md-4 col-sm-6">
-                <div class="card style-primary">
-                    <div class="card-head">
-                        <div class="tools">
-                            <div class="btn-group">
-                                <a class="btn btn-icon-toggle" data-toggle="offcanvas" href="#offcanvas-add-roomtype"><i class="fa fa-pencil"></i></a>
-                                <a class="btn btn-icon-toggle"><i class="fa fa-trash"></i></a>
-                            </div>
+        @{
+            foreach (var item in roomtypes)
+            {
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card style-primary">
+                            <div class="card-head">
+                                <div class="tools">
+                                    <div class="btn-group">
+                                        <a class="btn btn-icon-toggle" data-toggle="offcanvas" href="#offcanvas-add-roomtype"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-icon-toggle"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </div>
+                                <header>@item.Name</header>
+                            </div><!--end .card-head -->
+                            <div class="card-body style-default-bright" style="display: block;">
+                                <ul class="list">
+                                    <li class="tile">
+                                        <a class="tile-content ink-reaction" data-toggle="offcanvas" href="#offcanvas-room">
+                                            <div class="tile-icon">
+                                                <i class="fa fa-building-o"></i>
+                                            </div>
+                                            <div class="tile-text">
+                                                Tổng số phòng: 9
+                                                <small></small>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="tile">
+                                        <a class="tile-content ink-reaction">
+                                            <div class="tile-icon">
+                                                <i class="fa fa-users"></i>
+                                            </div>
+                                            <div class="tile-text">
+                                                Số khách tối đa: @item.MaxCustomer
+                                                <small></small>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="tile">
+                                        <a class="tile-content ink-reaction">
+                                            <div class="tile-icon">
+                                                <i class="fa fa-money"></i>
+                                            </div>
+                                            <div class="tile-text">
+                                                Giá phòng: @item.Price.LastOrDefault().Value.ToString("#,##0")
+                                                <small></small>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="tile">
+                                        <a class="tile-content ink-reaction">
+                                            <div class="tile-icon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                            <div class="tile-text">
+                                                Giá theo giờ
+                                                @foreach (var p in item.Price)
+                                                {                                                  
+                                                    if (p.Key == 24)
+                                                    {
+                                                        continue;
+                                                    }
+                                                    <label>@p.Key h: @p.Value.ToString("#,##0")</label>
+                                                }
+                                                <small></small>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div><!--end .card-body -->
                         </div>
-                        <header>Loại 1</header>
-                    </div><!--end .card-head -->
-                    <div class="card-body style-default-bright" style="display: block;">
-                        <ul class="list">
-                            <li class="tile">
-                                <a class="tile-content ink-reaction" data-toggle="offcanvas" href="#offcanvas-room">
-                                    <div class="tile-icon">
-                                        <i class="fa fa-building-o"></i>
-                                    </div>
-                                    <div class="tile-text">
-                                        Tổng số phòng: 9
-                                        <small></small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="tile">
-                                <a class="tile-content ink-reaction">
-                                    <div class="tile-icon">
-                                        <i class="fa fa-users"></i>
-                                    </div>
-                                    <div class="tile-text">
-                                        Số khách tối đa: 4
-                                        <small></small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="tile">
-                                <a class="tile-content ink-reaction">
-                                    <div class="tile-icon">
-                                        <i class="fa fa-money"></i>
-                                    </div>
-                                    <div class="tile-text">
-                                        Giá phòng: 170k
-                                        <small></small>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="tile">
-                                <a class="tile-content ink-reaction">
-                                    <div class="tile-icon">
-                                        <i class="fa fa-clock-o"></i>
-                                    </div>
-                                    <div class="tile-text">
-                                        Giá theo giờ
-                                        <small>70k/h - 90k/2h - 100k/3h</small>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div><!--end .card-body -->
-                </div>
-            </div><!--end .col -->
-        </div><!--end .row -->
+                    </div><!--end .col -->
+                </div><!--end .row -->
         <!-- END ROOMTYPE -->
+            }
+        }
+
+
+
+
         <!-- BEGIN OFFCANVAS RIGHT -->
         <div class="offcanvas">
             <!-- BEGIN OFFCANVAS ADD ROOMTYPE -->
@@ -83,7 +100,7 @@
                     </div>
                     <br />
                     <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                        <a class="btn btn-primary" role="button">Thêm</a>
+                        <a class="btn btn-primary" role="button" onclick="addRoomType();">Thêm</a>
                         <a class="btn btn-default" role="button">Nhập lại</a>
                     </div>
                 </div>
@@ -91,32 +108,32 @@
                     <form class="form" role="form">
 
                         <div class="form-group">
-                            <input type="text" class="form-control" id="editTitle">
+                            <input type="text" class="form-control" id="txtRoomTypeName">
                             <label for="editTitle">Tên loại phòng</label>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" id="editTitle">
+                            <input type="text" class="form-control" id="txtRoomTypeMaxCustomer">
                             <label for="editTitle">Số khách tối đa</label>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" id="editTitle">
+                            <input type="text" class="form-control" id="txtRoomTypePriceDay">
                             <label for="editTitle">Giá phòng/ngày</label>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" id="editTitle">
+                            <input type="text" class="form-control" id="txtRoomTypePriceHour1">
                             <label for="editTitle">Giá phòng/h</label>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" id="editTitle">
+                            <input type="text" class="form-control" id="txtRoomTypePriceHour2">
                             <label for="editTitle">Giá phòng/2h</label>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" id="editTitle">
+                            <input type="text" class="form-control" id="txtRoomTypePriceHour3">
                             <label for="editTitle">Giá phòng/3h</label>
                         </div>
 
@@ -192,7 +209,56 @@
             <!-- END OFFCANVAS ROOM -->
         </div><!--end .offcanvas-->
         <!-- END OFFCANVAS RIGHT -->
+
+
     </div><!--end .section-body -->
 </section>
 
 <button type="button" class="btn ink-reaction btn-floating-action btn-lg btn-primary fix-floating-btn" data-toggle="offcanvas" href="#offcanvas-add-roomtype"><i class="md md-add"></i></button>
+
+<script>
+    function addRoomType() {
+        var Id = 0;
+        var Name = $("#txtRoomTypeName").val();
+        var MaxCustomer = parseInt($("#txtRoomTypeMaxCustomer").val());
+        var PriceDay = parseInt($("#txtRoomTypePriceDay").val());
+        var Price1 = parseInt($("#txtRoomTypePriceHour1").val());
+        var Price2 = parseInt($("#txtRoomTypePriceHour2").val());
+        var Price3 = parseInt($("#txtRoomTypePriceHour3").val());
+        var HotelId = 1;
+        var Creater = 1;
+        var CreateDay = "@(DateTime.Now.ToString())"
+
+        //var roomtype = {
+        //    Id: Id,
+        //    Name: Name,
+        //    MaxCustomer: MaxCustomer,
+        //    Price: Price,
+        //    HotelId: HotelId,
+        //    CreatedBy: Creater,
+        //    CreatedOn: CreateDay,
+        //}
+        //console.log(roomtype);
+
+        $.ajax({
+            url: "@Url.Action("CreateRoomType","RoomType")",
+            data: {
+                id: Id,
+                name: Name,
+                maxCustomer: MaxCustomer,
+                price1: Price1,
+                price2: Price2,
+                price3: Price3,
+                price24: PriceDay,
+            },
+            type: "POST",
+            success: function () {
+                location.reload();
+            },
+            error: function () {
+                console.log(data);
+                alert("loi khong tao duoc roi");
+            }
+        });
+    }
+</script>
