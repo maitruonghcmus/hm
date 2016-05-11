@@ -11,33 +11,6 @@ namespace HM.WebApp
     {
         public static AppContext Instance = new AppContext();
 
-        #region User
-
-
-        public int GetLoginUserId()
-        {
-
-            return 0;
-        }
-
-        public int GetHotelId(int userId)
-        {
-            var hotelId = DataService.Instance.GetObject<User>(ApiUtils.USER, ApiUtils.GETBYID, userId).HotelId;
-            return hotelId;
-        }
-
-        public User GetLoginUser()
-        {
-            return this.GetUserById(this.GetLoginUserId());
-        }
-
-        public User GetUserById(int id)
-        {
-            return DataService.Instance.GetObject<User>(ApiUtils.USER, ApiUtils.GETBYID, id);
-        }
-
-        #endregion
-
         #region Reporting - Charting
 
         /// <summary>
@@ -47,7 +20,7 @@ namespace HM.WebApp
         /// <returns></returns>
         public IEnumerable<Customer> Top5NewestCustomers(int hotelId)
         {
-            var customers = DataService.Instance
+            var customers = HttpClientHelper.Instance
                             .GetObjects<IEnumerable<Customer>>(ApiUtils.CUSTOMER, ApiUtils.GETALL)
                             .Where(a => a.HotelId == hotelId)
                             .OrderByDescending(a => a.CreatedOn)
@@ -62,7 +35,7 @@ namespace HM.WebApp
         /// <returns></returns>
         public IEnumerable<Customer> Top5CusomerCheckedOut(int hotelId)
         {
-            var payments = DataService.Instance
+            var payments = HttpClientHelper.Instance
                             .GetObjects<IEnumerable<Payment>>(ApiUtils.PAYMENT, ApiUtils.GETALL)
                             .Where(a => a.HotelId == hotelId)
                             .OrderByDescending(a => a.CheckOutDate)
@@ -72,7 +45,7 @@ namespace HM.WebApp
             var customers = new List<Customer>();
 
             payments.ToList().ForEach(a =>
-                customers.Add(DataService.Instance.GetObject<Customer>(ApiUtils.CUSTOMER, ApiUtils.GETBYID, a))
+                customers.Add(HttpClientHelper.Instance.GetObject<Customer>(ApiUtils.CUSTOMER, ApiUtils.GETBYID, a))
             );
 
             return customers;
@@ -88,7 +61,7 @@ namespace HM.WebApp
         //TODO: Định nghĩa hàm thống kê doanh thu theo loại phòng
         public Dictionary<RoomType, double> RevenueByRoomType(int hotelId, DateTime fromDate, DateTime toDate)
         {
-            var payments = DataService.Instance
+            var payments = HttpClientHelper.Instance
                             .GetObjects<IEnumerable<Payment>>(ApiUtils.PAYMENT, ApiUtils.GETALL)
                             .Where(a => a.HotelId == hotelId && a.CheckOutDate >= fromDate && a.CheckOutDate <= toDate);
 
@@ -97,10 +70,10 @@ namespace HM.WebApp
         
         public RoomType GetRoomTypeFromPayment(int paymentId)
         {
-            var payment = DataService.Instance.GetObject<Payment>(ApiUtils.PAYMENT, ApiUtils.GETBYID, paymentId);
-            var order = DataService.Instance.GetObject<Order>(ApiUtils.ORDER, ApiUtils.GETBYID, payment?.OrderId ?? 0);
-            var room = DataService.Instance.GetObject<Room>(ApiUtils.ROOM, ApiUtils.GETBYID, order?.RoomId ?? 0);
-            var roomtype = DataService.Instance.GetObject<RoomType>(ApiUtils.ROOMTYPE, ApiUtils.GETBYID, room?.RoomTypeId ?? 0);
+            var payment = HttpClientHelper.Instance.GetObject<Payment>(ApiUtils.PAYMENT, ApiUtils.GETBYID, paymentId);
+            var order = HttpClientHelper.Instance.GetObject<Order>(ApiUtils.ORDER, ApiUtils.GETBYID, payment?.OrderId ?? 0);
+            var room = HttpClientHelper.Instance.GetObject<Room>(ApiUtils.ROOM, ApiUtils.GETBYID, order?.RoomId ?? 0);
+            var roomtype = HttpClientHelper.Instance.GetObject<RoomType>(ApiUtils.ROOMTYPE, ApiUtils.GETBYID, room?.RoomTypeId ?? 0);
 
             return roomtype;
         }

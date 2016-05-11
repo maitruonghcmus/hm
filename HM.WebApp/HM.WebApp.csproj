@@ -206,6 +206,7 @@
     <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
+    <Compile Include="DataContext.cs" />
     <Compile Include="DataService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

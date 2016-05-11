@@ -14,18 +14,12 @@ namespace HM.API.Controllers
         [HttpGet]
         public Result<IEnumerable<RoomType>> GetAll()
         {
-            //if (apiKey != DbUtils.ApiKey)
-            //    return new Result<IEnumerable<RoomType>> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
-
             return new DBContext<RoomType>(DbUtils.RoomTypeCollection).GetObjects();
         }
 
         [HttpGet]
         public Result<RoomType> GetById(int id)
         {
-            //if (apiKey != DbUtils.ApiKey)
-            //    return new Result<RoomType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
-
             return new DBContext<RoomType>(DbUtils.RoomTypeCollection).GetObject(id);
         }
 
@@ -38,18 +32,12 @@ namespace HM.API.Controllers
         [HttpPost]
         public Result<RoomType> Update(RoomType type)
         {
-            //if (apiKey != DbUtils.ApiKey)
-            //    return new Result<RoomType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
-
             return new DBContext<RoomType>(DbUtils.RoomTypeCollection).Replace(type);
         }
 
         [HttpDelete]
         public Result<RoomType> Delete(int id)
         {
-            //if (apiKey != DbUtils.ApiKey)
-            //    return new Result<RoomType> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
-
             return new DBContext<RoomType>(DbUtils.RoomTypeCollection).Delete(id);
         }
     }

@@ -118,7 +118,8 @@ namespace HM.API
                 //update = update.Set("Inactive", true);
 
                 var builder = Builders<T>.Update;
-                var update = builder.Set("Inactive", true);
+                var update = builder.Set("Inactive", true)
+                                    .Set("ModifiedOn", DateTime.Now);
 
                 _MongoDatabase.GetCollection<T>(_CollectionName).UpdateOne(Builders<T>.Filter.Eq("_id", id), update);
                 result.Data = this.GetObject(id).Data;
@@ -198,13 +199,6 @@ namespace HM.API
         /// <returns></returns>
         private static long GetNextId(IMongoDatabase mongodb, string collectionName)
         {
-            //var col = mongodb.GetCollection<BsonDocument>("_counters");
-            //var result = col.FindOneAndUpdate(
-            //    Builders<BsonDocument>.Filter.Eq("_id", 1),
-            //    Builders<BsonDocument>.Update.Inc(collectionName, 1),
-            //    new FindOneAndUpdateOptions<BsonDocument> { IsUpsert = true, ReturnDocument = ReturnDocument.After });
-            //return result.GetValue(collectionName).ToInt64();
-
             var col = mongodb.GetCollection<BsonDocument>(collectionName);
             var builder = Builders<BsonDocument>.Sort;
             var sort = builder.Descending("_id");

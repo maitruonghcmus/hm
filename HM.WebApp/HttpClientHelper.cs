@@ -8,11 +8,11 @@ using System.Web;
 
 namespace HM.WebApp
 {
-    public class DataService
+    public class HttpClientHelper
     {
         private const string uri = "http://localhost:3333";
 
-        public static DataService Instance = new DataService();
+        public static HttpClientHelper Instance = new HttpClientHelper();
 
         public Result<T> Get<T>(string controller, string action)
         {
