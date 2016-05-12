@@ -21,7 +21,7 @@ namespace HM.WebApp
         public IEnumerable<Hotel> GetHotels()
         {
             var hotels = HttpClientHelper.Instance.GetObjects<IEnumerable<Hotel>>(ApiUtils.HOTEL, ApiUtils.GETALL);
-            return hotels?.Where(a => !a.Inactive).Select(a => a);
+            return hotels!=null ? hotels.Where(a => !a.Inactive).Select(a => a) : null ;
         }
 
         public Hotel GetHotel(int id)
@@ -64,7 +64,7 @@ namespace HM.WebApp
         public IEnumerable<User> GetUsers()
         {
             var us = HttpClientHelper.Instance.GetObjects<IEnumerable<User>>(ApiUtils.USER, ApiUtils.GETALL);
-            return us?.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+            return us !=null ? us.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
         }
 
         public User GetUser(int id)
@@ -102,7 +102,12 @@ namespace HM.WebApp
         public IEnumerable<RoomType> GetRoomTypes()
         {
             var roomtypes = HttpClientHelper.Instance.GetObjects<IEnumerable<RoomType>>(ApiUtils.ROOMTYPE, ApiUtils.GETALL);
-            return roomtypes?.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+ 
+            if(roomtypes!=null)
+            {
+               return roomtypes.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+            }
+            return null; 
         }
 
         public RoomType GetRoomType(int id)
@@ -139,7 +144,11 @@ namespace HM.WebApp
         public IEnumerable<Room> GetRooms()
         {
             var rooms = HttpClientHelper.Instance.GetObjects<IEnumerable<Room>>(ApiUtils.ROOM, ApiUtils.GETALL);
-            return rooms?.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+            if(rooms!=null)
+            {
+                return rooms.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+            }
+            return null;
         }
 
         public Room GetRoom(int id)
@@ -176,7 +185,11 @@ namespace HM.WebApp
         public IEnumerable<CustomerType> GetCustomerTypes()
         {
             var types = HttpClientHelper.Instance.GetObjects<IEnumerable<CustomerType>>(ApiUtils.CUSTOMERTYPE, ApiUtils.GETALL);
-            return types?.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+            if(types!=null)
+            {
+                return types.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+            }
+            return null;
         }
 
         public CustomerType GetCustomerType(int id)
@@ -213,7 +226,7 @@ namespace HM.WebApp
         public IEnumerable<Customer> GetCustomers()
         {
             var customers = HttpClientHelper.Instance.GetObjects<IEnumerable<Customer>>(ApiUtils.CUSTOMER, ApiUtils.GETALL);
-            return customers?.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+            return customers != null ? customers.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
         }
 
         public Customer GetCustomer(int id)
@@ -250,7 +263,7 @@ namespace HM.WebApp
         public IEnumerable<ExtraService> GetExtraServices()
         {
             var svs = HttpClientHelper.Instance.GetObjects<IEnumerable<ExtraService>>(ApiUtils.EXTRASERVICE, ApiUtils.GETALL);
-            return svs?.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+            return svs!=null ? svs.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) :null;
         }
 
         public ExtraService GetExtraService(int id)
@@ -287,7 +300,7 @@ namespace HM.WebApp
         public IEnumerable<Order> GetOrders()
         {
             var ords = HttpClientHelper.Instance.GetObjects<IEnumerable<Order>>(ApiUtils.ORDER, ApiUtils.GETALL);
-            return ords?.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+            return ords !=null ? ords.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
         }
 
         public Order GetOrder(int id)
@@ -324,7 +337,7 @@ namespace HM.WebApp
         public IEnumerable<Payment> GetPayments()
         {
             var pms = HttpClientHelper.Instance.GetObjects<IEnumerable<Payment>>(ApiUtils.PAYMENT, ApiUtils.GETALL);
-            return pms?.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+            return pms!=null ? pms.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
         }
 
         public Payment GetPayment(int id)

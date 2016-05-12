@@ -21,7 +21,10 @@ namespace HM.WebApp.Controllers
         public ActionResult CreateRoomType(RoomType roomType)
         {
             var createSuccess = DataContext.Instance.CreateRoomType(roomType);
-            if (createSuccess) return Json(true, JsonRequestBehavior.AllowGet);
+
+            if (createSuccess) 
+                return Json(true, JsonRequestBehavior.AllowGet);
+
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
