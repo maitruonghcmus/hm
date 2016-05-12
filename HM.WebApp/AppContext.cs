@@ -70,10 +70,18 @@ namespace HM.WebApp
         
         public RoomType GetRoomTypeFromPayment(int paymentId)
         {
-            var payment = HttpClientHelper.Instance.GetObject<Payment>(ApiUtils.PAYMENT, ApiUtils.GETBYID, paymentId);
-            var order = HttpClientHelper.Instance.GetObject<Order>(ApiUtils.ORDER, ApiUtils.GETBYID, payment?.OrderId ?? 0);
-            var room = HttpClientHelper.Instance.GetObject<Room>(ApiUtils.ROOM, ApiUtils.GETBYID, order?.RoomId ?? 0);
-            var roomtype = HttpClientHelper.Instance.GetObject<RoomType>(ApiUtils.ROOMTYPE, ApiUtils.GETBYID, room?.RoomTypeId ?? 0);
+            var payment = DataContext.Instance.GetPayment(paymentId);
+            //var order = HttpClientHelper.Instance.GetObject<Order>(ApiUtils.ORDER, ApiUtils.GETBYID, payment != null ? (payment.OrderId != null ? payment.OrderId : 0 )  : 0);
+            var orderId = payment!=null ? payment.OrderId : 0;
+            var order = DataContext.Instance.GetOrder(orderId);
+
+            var roomId = order !=null ? order.RoomId : 0;
+            //var room = HttpClientHelper.Instance.GetObject<Room>(ApiUtils.ROOM, ApiUtils.GETBYID, order?.RoomId ?? 0);
+            var room = DataContext.Instance.GetRoom(roomId);
+
+            var roomtypeId = room !=null ? room.RoomTypeId : 0;
+            //var roomtype = HttpClientHelper.Instance.GetObject<RoomType>(ApiUtils.ROOMTYPE, ApiUtils.GETBYID, room?.RoomTypeId ?? 0);
+            var roomtype = DataContext.Instance.GetRoomType(roomtypeId);
 
             return roomtype;
         }
