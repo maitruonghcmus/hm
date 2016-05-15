@@ -8,11 +8,11 @@ using System.Web;
 
 namespace HM.WebApp
 {
-    public class DataService
+    public class HttpClientHelper
     {
         private const string uri = "http://localhost:3333";
 
-        public static DataService Instance = new DataService();
+        public static HttpClientHelper Instance = new HttpClientHelper();
 
         public Result<T> Get<T>(string controller, string action)
         {
@@ -25,7 +25,7 @@ namespace HM.WebApp
                     client.BaseAddress = new Uri(uri);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    var response = client.GetAsync($"api/{controller}/{action}").Result;
+                    var response = client.GetAsync(string.Format("api/{0}/{1}", controller, action) ).Result;
 
                     if (response.IsSuccessStatusCode)
                         result = response.Content.ReadAsAsync<Result<T>>().Result;
@@ -52,7 +52,7 @@ namespace HM.WebApp
                     client.BaseAddress = new Uri(uri);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    var response = client.GetAsync($"api/{controller}/{action}/{id}").Result;
+                    var response = client.GetAsync(string.Format("api/{0}/{1}/{2}", controller, action, id.ToString())).Result;
 
                     if (response.IsSuccessStatusCode)
                         result = response.Content.ReadAsAsync<Result<T>>().Result;
@@ -81,7 +81,7 @@ namespace HM.WebApp
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     var requestParams = "?" + _param.Key + " = " + _param.Value;
 
-                    var response = client.GetAsync($"api/{controller}/{action}/{requestParams}").Result;
+                    var response = client.GetAsync(string.Format("api/{0}/{1}/{2}", controller,action, requestParams)).Result;
 
                     if (response.IsSuccessStatusCode)
                         result = response.Content.ReadAsAsync<Result<T>>().Result;
@@ -113,7 +113,7 @@ namespace HM.WebApp
                     }
                     requestParams = requestParams.Substring(0, requestParams.Length - 1);
 
-                    var response = client.GetAsync($"api/{controller}/{action}/{requestParams}").Result;
+                    var response = client.GetAsync(string.Format("api/{0}/{1}/{2}",controller,action,requestParams)).Result;
 
                     if (response.IsSuccessStatusCode)
                         result = response.Content.ReadAsAsync<Result<T>>().Result;
@@ -138,7 +138,7 @@ namespace HM.WebApp
                     client.BaseAddress = new Uri(uri);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    var response = client.PostAsJsonAsync($"api/{controller}/{action}", obj).Result;
+                    var response = client.PostAsJsonAsync(string.Format("api/{0}/{1}",controller,action), obj).Result;
 
                     if (response.IsSuccessStatusCode)
                         result = response.Content.ReadAsAsync<Result<T>>().Result;
@@ -164,7 +164,7 @@ namespace HM.WebApp
                     client.BaseAddress = new Uri(uri);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    var response = client.DeleteAsync($"api/{controller}/{action}/{id}").Result;
+                    var response = client.DeleteAsync(string.Format("api/{0}/{1}/{2}",controller,action,id.ToString())).Result;
                     if (response.IsSuccessStatusCode)
                         result = response.Content.ReadAsAsync<Result<T>>().Result;
                     else

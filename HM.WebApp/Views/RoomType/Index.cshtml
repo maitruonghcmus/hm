@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "Index";
-    var roomtypes = ViewBag.RoomTypes as IEnumerable<HM.DataModels.RoomType>
-    ;
+    var roomtypes = ViewBag.RoomTypes as IEnumerable<HM.DataModels.RoomType>;
 }
 
 <section>
@@ -27,7 +26,7 @@
                                 <div class="card-body style-default-bright" style="display: block;">
                                     <ul class="list">
                                         <li class="tile">
-                                            <a class="tile-content ink-reaction" data-toggle="offcanvas" href="#offcanvas-room">
+                                            <a class="tile-content ink-reaction" data-toggle="offcanvas" href="#offcanvas-room" onclick="openOffCanvasRoom(@item.Id);">
                                                 <div class="tile-icon">
                                                     <i class="fa fa-building-o"></i>
                                                 </div>
@@ -139,70 +138,7 @@
             </div>
             <!-- END OFFCANVAS ADD ROOMTYPE -->
             <!-- BEGIN OFFCANVAS ROOM -->
-            <div id="offcanvas-room" class="offcanvas-pane width-8">
-                <div class="offcanvas-head">
-                    <header>Danh sách phòng</header>
-                    <div class="offcanvas-tools">
-                        <a class="btn btn-icon-toggle btn-default-light pull-right" data-dismiss="offcanvas">
-                            <i class="md md-close"></i>
-                        </a>
-                    </div>
-                    <br />
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="editTitle" placeholder="Tên phòng">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="editTitle" placeholder="Ghi chú">
-                    </div>
-                    <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                        <a class="btn btn-primary" role="button">Thêm</a>
-                        <a class="btn btn-default" role="button">Nhập lại</a>
-                    </div>
-                </div>
-                <div class="offcanvas-body">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body no-padding">
-                                <ul class="list divider-full-bleed">
-                                    <li class="tile">
-                                        <a class="tile-content ink-reaction" href="#2">
-                                            <div class="tile-text">101</div>
-                                        </a>
-                                        <a class="btn btn-flat ink-reaction">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                        <a class="btn btn-flat ink-reaction">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </li>
-                                    <li class="tile">
-                                        <a class="tile-content ink-reaction" href="#2">
-                                            <div class="tile-text">101</div>
-                                        </a>
-                                        <a class="btn btn-flat ink-reaction">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                        <a class="btn btn-flat ink-reaction">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </li>
-                                    <li class="tile">
-                                        <a class="tile-content ink-reaction" href="#2">
-                                            <div class="tile-text">101</div>
-                                        </a>
-                                        <a class="btn btn-flat ink-reaction">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                        <a class="btn btn-flat ink-reaction">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div><!--end .card-body -->
-                        </div><!--end .card -->
-                    </div><!--end .col -->
-                </div>
-            </div>
+            @Html.Partial("_RoomPartial")
             <!-- END OFFCANVAS ROOM -->
         </div><!--end .offcanvas-->
         <!-- END OFFCANVAS RIGHT -->
@@ -218,6 +154,7 @@
         $("#btnAddRoomType").text("Thêm");
         //Gọi hàm xóa trắng các control (nếu trước đó đã bấm edit thì control sẽ còn dữ liệu nên phải xóa)
         clearControl();
+
     }
 
     function clearControl() {
@@ -278,7 +215,7 @@
         }
     }
 
-    var roomType = new Object(); //biến lưu trữ lại khi lấy từ dưới server lên, dùng cho trường hợp update
+    var editRoomType = new Object(); //biến lưu trữ lại khi lấy từ dưới server lên, dùng cho trường hợp update
 
     function editRoomType(roomTypeId) {
         //khi click nút này thì chuyển text của nút thêm thành nút Cập nhật
@@ -322,6 +259,25 @@
                     alert("Không lấy được loại phòng");
                 }
             });
+        }
+    }
+
+    var roomTypeId = 0;
+
+    function openOffCanvasRoom(id) {
+        roomTypeId = id;
+        if (id != null && id != "" && !isNaN(id)) {
+            $.ajax({
+                url: "@Url.Action("GetRoomList", "Room")",
+                data: { rtId: id },
+            type: "GET", // <== Method = GET
+            success: function () {
+                
+            },
+            error: function () {
+                alert("Không lấy được loại phòng");
+            }
+        });
         }
     }
 </script>

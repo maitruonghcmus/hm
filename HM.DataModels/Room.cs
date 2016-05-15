@@ -26,7 +26,7 @@ namespace HM.DataModels
         /// 1. Có khách
         /// -1. Cần dọn dẹp
         /// </summary>
-        public int Status { get; set; }
+        public int? Status { get; set; }
 
         public int HotelId { get; set; }
         public bool Inactive { get; set; }

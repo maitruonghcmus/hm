@@ -14,45 +14,30 @@ namespace HM.API.Controllers
         [HttpGet]
         public Result<IEnumerable<Order>> GetAll()
         {
-            //if (apiKey != DbUtils.ApiKey)
-            //    return new Result<IEnumerable<Order>> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
-
             return new DBContext<Order>(DbUtils.OrderCollection).GetObjects();
         }
 
         [HttpGet]
         public Result<Order> GetById(int id)
         {
-            //if (apiKey != DbUtils.ApiKey)
-            //    return new Result<Order> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
-
             return new DBContext<Order>(DbUtils.OrderCollection).GetObject(id);
         }
 
         [HttpPost]
         public Result<Order> Create(Order ord)
         {
-            //if (apiKey != DbUtils.ApiKey)
-            //    return new Result<Order> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
-
             return new DBContext<Order>(DbUtils.OrderCollection).Insert(ord);
         }
 
         [HttpPost]
         public Result<Order> Update(Order ord)
         {
-            //if (apiKey != DbUtils.ApiKey)
-            //    return new Result<Order> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
-
             return new DBContext<Order>(DbUtils.OrderCollection).Replace(ord);
         }
 
         [HttpDelete]
         public Result<Order> Delete(int id)
         {
-            //if (apiKey != DbUtils.ApiKey)
-            //    return new Result<Order> { Code = MessageUtils.ERR_LOGIN_REQUIRED };
-
             return new DBContext<Order>(DbUtils.OrderCollection).Delete(id);
         }
     }

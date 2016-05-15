@@ -11,75 +11,56 @@ namespace HM.WebApp.Controllers
     {
         public ActionResult Index()
         {
-            var hotelId = 1;
+            var roomtypes = new List<RoomType>();
+       
+            //var roomtypes = DataContext.Instance.GetRoomTypes();
+#if DEBUG
+           var roomtype1 = new RoomType {
+                Id =1,
+                MaxCustomer = 4,
+                Price = new long[] { 200000,300000,300000 },
+                Name = "A",
+            };
 
-            var roomtypes = DataService.Instance.GetObjects<IEnumerable<RoomType>>(ApiUtils.ROOMTYPE, ApiUtils.GETALL)
-                ?.Where(a => a.HotelId == hotelId && !a.Inactive)
-                ?.Select(a => a);
+           roomtypes.Add(roomtype1);
+#endif
             ViewBag.RoomTypes = roomtypes;
-
+           
             return View();
         }
 
         [HttpPost]
         public ActionResult CreateRoomType(RoomType roomType)
         {
-            //2 cái này trước mắt gán cứng, sau này có chức năng đăng nhập rồi gắn vô sau
-            roomType.HotelId = 1;
-            roomType.CreatedBy = 1;
+            var createSuccess = DataContext.Instance.CreateRoomType(roomType);
 
-            //2 cái này mặc định nên ko cần truyền từ trên, mà để dưới này gán giá trị cũng đc. Id mặc định = 0 để xuống dưới tự sinh
-            roomType.Id = 0;
-            roomType.CreatedOn = DateTime.Now;
-
-            var result = DataService.Instance.Post<RoomType>(ApiUtils.ROOMTYPE, ApiUtils.CREATE, roomType);
-            if (result.IsSuccess())
-            {
+            if (createSuccess) 
                 return Json(true, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
+
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult GetRoomType(int id)
         {
-            var room = DataService.Instance.GetObject<RoomType>(ApiUtils.ROOMTYPE, ApiUtils.GETBYID, id);
-            if (room != null && !room.Inactive)
-            {
-                return Json(room, JsonRequestBehavior.AllowGet);
-            }
-            return Json(null, JsonRequestBehavior.AllowGet);
+            var room = DataContext.Instance.GetRoomType(id);
+            return Json(room, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public ActionResult UpdateRoomType(RoomType editRoomType)
         {
-            var result = DataService.Instance.Post<RoomType>(ApiUtils.ROOMTYPE, ApiUtils.UPDATE, editRoomType);
-            if (result.IsSuccess())
-            {
-                return Json(true, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
+            var updateSuccess = DataContext.Instance.UpdateRoomType(editRoomType);
+            if (updateSuccess) return Json(true, JsonRequestBehavior.AllowGet);
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public ActionResult DeleteRoomType(int id)
         {
-            var result = DataService.Instance.Delete<RoomType>(ApiUtils.ROOMTYPE, ApiUtils.DELETE, id);
-            if (result.IsSuccess())
-            {
-                return Json(true, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
+            var deleteSuccess = DataContext.Instance.DeleteRoomType(id);
+            if (deleteSuccess) return Json(true, JsonRequestBehavior.AllowGet);
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
     }
 }
