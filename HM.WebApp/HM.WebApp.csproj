@@ -204,7 +204,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -618,6 +617,8 @@
     <Content Include="Content\assets\img\avatar8.jpg" />
     <Content Include="Content\assets\img\avatar9.jpg" />
     <Content Include="Content\assets\img\LICENSE.txt" />
+    <Content Include="Content\assets\js\alertify\css\alertify.css" />
+    <Content Include="Content\assets\js\alertify\js\alertify.js" />
     <Content Include="Content\assets\js\core\demo\Demo.js" />
     <Content Include="Content\assets\js\core\demo\DemoCalendar.js" />
     <Content Include="Content\assets\js\core\demo\DemoCharts.js" />
@@ -2012,8 +2013,11 @@
     <Content Include="Views\RoomType\Index.cshtml" />
     <Content Include="Views\Hotel\Index.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
-    <Content Include="Views\RoomType\_RoomPartial.cshtml" />
+    <Content Include="Views\RoomType\_ModalRoomPartial.cshtml" />
     <Content Include="Views\RoomType\_RoomListPartial.cshtml" />
+    <Content Include="Views\RoomType\_ModalAddRoomTypePartial.cshtml" />
+    <Content Include="Views\RoomType\_RoomTypePartial.cshtml" />
+    <Content Include="Views\Hotel\_ModalAddHotelPartail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

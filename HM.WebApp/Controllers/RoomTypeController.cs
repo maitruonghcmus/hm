@@ -11,22 +11,18 @@ namespace HM.WebApp.Controllers
     {
         public ActionResult Index()
         {
-            var roomtypes = new List<RoomType>();
-       
-            //var roomtypes = DataContext.Instance.GetRoomTypes();
-#if DEBUG
-           var roomtype1 = new RoomType {
-                Id =1,
-                MaxCustomer = 4,
-                Price = new long[] { 200000,300000,300000 },
-                Name = "A",
-            };
-
-           roomtypes.Add(roomtype1);
-#endif
+            var roomtypes = DataContext.Instance.GetRoomTypes();
             ViewBag.RoomTypes = roomtypes;
            
             return View();
+        }
+
+        public ActionResult LoadRoomTypePartial()
+        {
+            var roomtypes = DataContext.Instance.GetRoomTypes();
+            ViewBag.RoomTypes = roomtypes;
+
+            return PartialView("_RoomTypePartial");
         }
 
         [HttpPost]
@@ -60,6 +56,53 @@ namespace HM.WebApp.Controllers
         {
             var deleteSuccess = DataContext.Instance.DeleteRoomType(id);
             if (deleteSuccess) return Json(true, JsonRequestBehavior.AllowGet);
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult CreateRoom(Room r)
+        {
+            var createSuccess = DataContext.Instance.CreateRoom(r);
+            if (createSuccess)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetRoomList(int rtId)
+        {
+            var rooms = DataContext.Instance.GetRooms()?.Where(a=>a.RoomTypeId == rtId).Select(a=>a).ToList();
+            //var selected = rooms != null ? rooms.Where(a => a.RoomTypeId == rtId).Select(a => a) : null;
+
+            ViewBag.RoomList = rooms;
+            return PartialView("_RoomListPartial");
+        }
+
+        public ActionResult DeleteRoom(int rId)
+        {
+            var deleteSuccess = DataContext.Instance.DeleteRoom(rId);
+            if(deleteSuccess)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetRoomInfo(int rId)
+        {
+            var room = DataContext.Instance.GetRoom(rId);
+
+            return Json(room, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult UpdateRoom(Room r)
+        {
+            var updatesuccess = DataContext.Instance.UpdateRoom(r);
+            if(updatesuccess)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
             return Json(false, JsonRequestBehavior.AllowGet);
         }
     }

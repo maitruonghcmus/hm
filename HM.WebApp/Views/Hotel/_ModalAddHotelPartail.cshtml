@@ -1,0 +1,55 @@
+﻿<div class="modal right fade" id="modalAddHotel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel3">Thêm Khách Sạn</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <form class="form" role="form">
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtHotelName">
+                        <label for="txtHotelName">Tên khách sạn</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtHotelTaxCode">
+                        <label for="txtHotelTaxCode">Mã số thuế</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtHotelAddress">
+                        <label for="txtHotelAddress">Địa chỉ</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtHotelContact">
+                        <label for="txtHotelContact">Người liên hệ</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtHotelContactPhone">
+                        <label for="txtHotelContactPhone">Điện thoại</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtHotelContactMail">
+                        <label for="txtHotelContactMail">Email</label>
+                    </div>
+
+                    <br />
+                    <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+                        <a class="btn btn-primary" role="button" onclick="addHotel();" id="btnAddRoomType">Thêm</a>
+                        <a class="btn btn-default" role="button" onclick="clearControl();">Nhập lại</a>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div><!-- modal -->

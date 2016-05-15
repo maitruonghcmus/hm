@@ -1,160 +1,29 @@
 ﻿@{
     ViewBag.Title = "Index";
-    var roomtypes = ViewBag.RoomTypes as IEnumerable<HM.DataModels.RoomType>;
 }
 
 <section>
     <div class="section-body contain-lg">
         <!-- BEGIN ROOMTYPE -->
-        <div class="row">
-            @{
-                if (roomtypes?.Count() > 0)
-                {
-                    foreach (var item in roomtypes)
-                    {
-                        <div class="col-md-4 col-sm-6">
-                            <div class="card style-primary">
-                                <div class="card-head">
-                                    <div class="tools">
-                                        <div class="btn-group">
-                                            <a class="btn btn-icon-toggle" data-toggle="offcanvas" href="#offcanvas-add-roomtype" onclick="editRoomType(@item.Id);"><i class="fa fa-pencil"></i></a>
-                                            <a class="btn btn-icon-toggle" onclick="deleteRoomType(@item.Id);"><i class="fa fa-trash"></i></a>
-                                        </div>
-                                    </div>
-                                    <header>@item.Name</header>
-                                </div><!--end .card-head -->
-                                <div class="card-body style-default-bright" style="display: block;">
-                                    <ul class="list">
-                                        <li class="tile">
-                                            <a class="tile-content ink-reaction" data-toggle="offcanvas" href="#offcanvas-room" onclick="openOffCanvasRoom(@item.Id);">
-                                                <div class="tile-icon">
-                                                    <i class="fa fa-building-o"></i>
-                                                </div>
-                                                <div class="tile-text">
-                                                    Tổng số phòng: 0
-                                                    <small></small>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="tile">
-                                            <a class="tile-content ink-reaction">
-                                                <div class="tile-icon">
-                                                    <i class="fa fa-users"></i>
-                                                </div>
-                                                <div class="tile-text">
-                                                    Số khách tối đa: @item.MaxCustomer
-                                                    <small></small>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="tile">
-                                            <a class="tile-content ink-reaction">
-                                                <div class="tile-icon">
-                                                    <i class="fa fa-money"></i>
-                                                </div>
-                                                <div class="tile-text">
-                                                    Giá phòng: @item.Price.LastOrDefault().ToString("#,##0")
-                                                    <small></small>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="tile">
-                                            <a class="tile-content ink-reaction">
-                                                <div class="tile-icon">
-                                                    <i class="fa fa-clock-o"></i>
-                                                </div>
-                                                <div class="tile-text">
-                                                    Giá theo giờ <br />
-                                                    <small>
-                                                        @for (var i = 0; i < item.Price.Count() - 1; i++)
-                                                        {
-                                                            <label>@(i + 1)H: @item.Price[i].ToString("#,##0") đ </label> <br />
-                                                        }
-                                                    </small>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div><!--end .card-body -->
-                            </div>
-                        </div><!--end .col -->
-                    }
-                }
-            }
-        </div><!--end .row -->
+        <div id="roomTypeToLoadPartial">
+            @Html.Partial("_RoomTypePartial")
+        </div>
         <!-- END ROOMTYPE -->
         <!-- BEGIN OFFCANVAS RIGHT -->
-        <div class="offcanvas">
-            <!-- BEGIN OFFCANVAS ADD ROOMTYPE -->
-            <div id="offcanvas-add-roomtype" class="offcanvas-pane width-8">
-                <div class="offcanvas-head">
-                    <header>Thêm loại phòng</header>
-                    <div class="offcanvas-tools">
-                        <a class="btn btn-icon-toggle btn-default-light pull-right" data-dismiss="offcanvas">
-                            <i class="md md-close"></i>
-                        </a>
-                    </div>
-                    <br />
-                    <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                        <a class="btn btn-primary" role="button" onclick="addRoomType();" id="btnAddRoomType">Thêm</a>
-                        <a class="btn btn-default" role="button" onclick="clearControl();">Nhập lại</a>
-                    </div>
-                </div>
-                <div class="offcanvas-body">
-                    <form class="form" role="form">
-
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="txtRoomTypeName">
-                            <label for="txtRoomTypeName">Tên loại phòng</label>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="txtRoomTypeMaxCustomer">
-                            <label for="txtRoomTypeMaxCustomer">Số khách tối đa</label>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="txtRoomTypePriceDay">
-                            <label for="txtRoomTypePriceDay">Giá phòng/ngày</label>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="txtRoomTypePriceHour1">
-                            <label for="txtRoomTypePriceHour1">Giá phòng/h</label>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="txtRoomTypePriceHour2">
-                            <label for="txtRoomTypePriceHour2">Giá phòng/2h</label>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="txtRoomTypePriceHour3">
-                            <label for="txtRoomTypePriceHour3">Giá phòng/3h</label>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-            <!-- END OFFCANVAS ADD ROOMTYPE -->
-            <!-- BEGIN OFFCANVAS ROOM -->
-            @Html.Partial("_RoomPartial")
-            <!-- END OFFCANVAS ROOM -->
-        </div><!--end .offcanvas-->
+        @Html.Partial("_ModalAddRoomTypePartial")
+        @Html.Partial("_ModalRoomPartial")
         <!-- END OFFCANVAS RIGHT -->
     </div><!--end .section-body -->
 </section>
 
-<button type="button" onclick="openOffCanvasAddRoomType()" class="btn ink-reaction btn-floating-action btn-lg btn-primary fix-floating-btn" data-toggle="offcanvas" href="#offcanvas-add-roomtype"><i class="md md-add"></i></button>
+<button type="button" onclick="openModalAddRoomType()" class="btn ink-reaction btn-floating-action btn-lg btn-primary fix-floating-btn" data-toggle="modal" data-target="#modalAddRoomtype"><i class="md md-add"></i></button>
 
 <script>
 
-    function openOffCanvasAddRoomType() {
-        //trường hợp nút thêm đã bị sửa text thành nút "Cập nhật" thì đổi nó lại thành "Thêm"
+    function openModalAddRoomType() {
         $("#btnAddRoomType").text("Thêm");
-        //Gọi hàm xóa trắng các control (nếu trước đó đã bấm edit thì control sẽ còn dữ liệu nên phải xóa)
+        editRoomType = null;
         clearControl();
-
     }
 
     function clearControl() {
@@ -166,70 +35,19 @@
         $("#txtRoomTypePriceHour3").val("");
     }
 
-    //Trường hợp tạo mới và cập nhật dùng chung Offcanvas nên sẽ dùng chung hàm này
-    function addRoomType() {
-        var Name = $("#txtRoomTypeName").val();
-        var MaxCustomer = parseInt($("#txtRoomTypeMaxCustomer").val());
-        var PriceDay = parseInt($("#txtRoomTypePriceDay").val());
-        var Price1 = parseInt($("#txtRoomTypePriceHour1").val());
-        var Price2 = parseInt($("#txtRoomTypePriceHour2").val());
-        var Price3 = parseInt($("#txtRoomTypePriceHour3").val());
+    var editRoomType = null;
 
-        if (editRoomType == null) { //editRoomType ko có, nên là trường hợp tạo mới
-            $.ajax({
-                url: "@Url.Action("CreateRoomType","RoomType")",
-                data: roomType = {
-                    Name: Name,
-                    MaxCustomer: MaxCustomer,
-                    Price: [Price1, Price2, Price3, PriceDay]
-                },
-                type: "POST", //<== method = POST
-                success: function (data) {
-                    if (data == true) {
-                        location.reload();
-                    }
-                },
-                error: function () {
-                    alert("Tạo loại phòng lỗi");
-                }
-            });
-        }
-        else { // đã có editRoomType, nên trường hợp này là cập nhật
-            editRoomType.Name = Name;
-            editRoomType.MaxCustomer = MaxCustomer;
-            editRoomType.Price = [Price1, Price2, Price3, PriceDay];
+    function bindRoomType(roomTypeId) {
 
-            $.ajax({
-                url: "@Url.Action("UpdateRoomType","RoomType")",
-                data: editRoomType,
-                type: "POST", //<== method = POST
-                success: function (data) {
-                    if (data == true) {
-                        location.reload();
-                    }
-                },
-                error: function () {
-                    alert("Cập nhật loại phòng lỗi");
-                }
-            });
-        }
-    }
-
-    var editRoomType = new Object(); //biến lưu trữ lại khi lấy từ dưới server lên, dùng cho trường hợp update
-
-    function editRoomType(roomTypeId) {
-        //khi click nút này thì chuyển text của nút thêm thành nút Cập nhật
         $("#btnAddRoomType").text("Cập nhật");
 
         $.ajax({
             url: "@Url.Action("GetRoomType", "RoomType")",
             data: { id: roomTypeId },
-            type: "GET", // <== Method = GET
+            type: "GET",
             success: function (room) {
+                editRoomType = room;
 
-                editRoomType = room; //gán dữ liệu đã lấy được vào biến lưu trữ lại
-
-                //Sau khi get thành công, bind dữ liệu get được vào các control tương ứng
                 $("#txtRoomTypeName").val(room.Name);
                 $("#txtRoomTypeMaxCustomer").val(room.MaxCustomer);
                 $("#txtRoomTypePriceDay").val(room.Price[3]);
@@ -243,6 +61,59 @@
         });
     }
 
+    function addRoomType() {
+        var Name = $("#txtRoomTypeName").val();
+        var MaxCustomer = parseInt($("#txtRoomTypeMaxCustomer").val());
+        var PriceDay = parseInt($("#txtRoomTypePriceDay").val());
+        var Price1 = parseInt($("#txtRoomTypePriceHour1").val());
+        var Price2 = parseInt($("#txtRoomTypePriceHour2").val());
+        var Price3 = parseInt($("#txtRoomTypePriceHour3").val());
+
+        if (editRoomType == null) { //editRoomType ko có, nên là trường hợp tạo mới
+            console.log("create");
+
+            $.ajax({
+                url: "@Url.Action("CreateRoomType","RoomType")",
+                data: roomType = {
+                    Name: Name,
+                    MaxCustomer: MaxCustomer,
+                    Price: [Price1, Price2, Price3, PriceDay]
+                },
+                type: "POST",
+                success: function (data) {
+                    if (data == true) {
+                        $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
+                        alertify.success("Thêm thành công!");
+                    }
+                },
+                error: function () {
+                    alertify.error("Tạo loại phòng lỗi");
+                }
+            });
+        }
+        else { // đã có editRoomType, nên trường hợp này là cập nhật
+            editRoomType.Name = Name;
+            editRoomType.MaxCustomer = MaxCustomer;
+            editRoomType.Price = [Price1, Price2, Price3, PriceDay];
+            console.log("update");
+
+            $.ajax({
+                url: "@Url.Action("UpdateRoomType","RoomType")",
+                data: editRoomType,
+                type: "POST", //<== method = POST
+                success: function (data) {
+                    if (data == true) {
+                        $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
+                        alertify.success("Cập nhật thành công");
+                    }
+                },
+                error: function () {
+                    alert("Cập nhật loại phòng lỗi");
+                }
+            });
+        }
+    }
+
     function deleteRoomType(roomTypeId) {
         var agreeDelete = confirm("Bạn có chắc chắn muốn xóa loại phòng này?");
         if (agreeDelete) {
@@ -252,7 +123,8 @@
                 type: "POST", // <== Method = POST
                 success: function (data) {
                     if (data == true) {
-                        location.reload();
+                        $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
+                        alertify.success("Xóa thành công");
                     }
                 },
                 error: function () {
@@ -263,21 +135,123 @@
     }
 
     var roomTypeId = 0;
+    var roomTemp = null;
 
-    function openOffCanvasRoom(id) {
+    function openModalRoom(id) {
         roomTypeId = id;
-        if (id != null && id != "" && !isNaN(id)) {
-            $.ajax({
-                url: "@Url.Action("GetRoomList", "Room")",
-                data: { rtId: id },
-            type: "GET", // <== Method = GET
-            success: function () {
-                
-            },
-            error: function () {
-                alert("Không lấy được loại phòng");
+        if (roomTypeId != null && roomTypeId != "" && !isNaN(roomTypeId)) {
+            $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId)
+        }
+
+        clearRoomField();
+    }
+
+    function createRoom() {
+        var roomName = $("#roomName").val();
+        var roomRemark = $("#roomRemark").val();
+        var rtId = roomTypeId;
+
+        var room = new Object(
+            {
+                RoomTypeId: rtId,
+                Name: roomName,
+                Remark: roomRemark
             }
-        });
+        );
+        if(roomTemp == null) //Create
+        {
+            $.ajax({
+                url: '@Url.Action("CreateRoom","RoomType")',
+                type: "POST",
+                data: {
+                    r: room
+
+                },
+                success: function myfunction(data) {
+                    if (data) {
+                        alert("Thêm thành công");
+                        $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId)
+                    }
+                    else
+                        alert("Thêm không thành c");
+                },
+                error: function myfunction() {
+
+                }
+            })
+        }
+        else //update
+        {
+            roomTemp.Name = roomName;
+            roomTemp.Remark = roomRemark;
+      
+            $.ajax({
+                url: '@Url.Action("UpdateRoom", "RoomType")',
+                type: "POST",
+                data: {
+                    r: roomTemp
+
+                },
+                success: function (data) {
+                    if (data) {
+                        alert("Cập nhật thành công");
+                        $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId);
+                        clearRoomField();
+                    }
+                    else
+                        alert("Không thành công");
+                },
+                error: function myfunction() {
+
+                }
+            })
+        }
+       
+
+    }
+
+    function editRoom(id) {
+        $("#btnAddRoom").text("Cập nhật");
+        $.ajax({
+            url: "@Url.Action("GetRoomInfo","RoomType")",
+            data: { rId: id },
+            type: "GET",
+            success: function (data) {
+                if (data != null) {
+                    roomTemp = data;
+                    $("#roomName").val(data.Name);
+                    $("#roomRemark").val(data.Remark);
+                }
+            },
+            error: function () { alert("Loi oi") }
+        })
+    }
+
+    function clearRoomField() {
+        $("#roomName").val("");
+        $("#roomRemark").val("");
+        roomTemp = null;
+        $("#btnAddRoom").text("Thêm");
+    }
+    
+
+    function deleteRoom(id) {
+        var agreeDelete = confirm("Bạn có chắc chắn muốn xóa phòng này?");
+        if (agreeDelete) {
+            $.ajax({
+                url: "@Url.Action("DeleteRoom", "RoomType")",
+                data: { rId: id },
+                type: "POST", // <== Method = POST
+                success: function (data) {
+                    if (data) {
+                        $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId)
+                        alertify.success("Xóa thành công");
+                    }
+                },
+                error: function () {
+                    alertify.error("Không lấy được mã phòng");
+                }
+            });
         }
     }
 </script>

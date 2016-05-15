@@ -1,0 +1,55 @@
+﻿<div class="modal right fade" id="modalAddRoomtype" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel2">Thêm loại phòng</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <form class="form" role="form">
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtRoomTypeName">
+                        <label for="txtRoomTypeName">Tên loại phòng</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtRoomTypeMaxCustomer">
+                        <label for="txtRoomTypeMaxCustomer">Số khách tối đa</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtRoomTypePriceDay">
+                        <label for="txtRoomTypePriceDay">Giá phòng/ngày</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtRoomTypePriceHour1">
+                        <label for="txtRoomTypePriceHour1">Giá phòng/h</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtRoomTypePriceHour2">
+                        <label for="txtRoomTypePriceHour2">Giá phòng/2h</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtRoomTypePriceHour3">
+                        <label for="txtRoomTypePriceHour3">Giá phòng/3h</label>
+                    </div>
+
+                    <br />
+                    <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+                        <a class="btn btn-primary" role="button" onclick="addRoomType();" id="btnAddRoomType">Thêm</a>
+                        <a class="btn btn-default" role="button" onclick="clearControl();">Nhập lại</a>
+                    </div>
+                </form>
+
+            </div>
+
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div><!-- modal -->

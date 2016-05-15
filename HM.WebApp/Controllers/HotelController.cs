@@ -23,5 +23,7 @@ namespace HM.WebApp.Controllers
             var hotel = DataContext.Instance.GetHotel(id);
             return Json(hotel, JsonRequestBehavior.AllowGet);
         }
+
+        
     }
 }

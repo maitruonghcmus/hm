@@ -1,6 +1,9 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
+    var hotels = ViewBag.Hotels as IEnumerable<HM.DataModels.Hotel>;
+
+
+
 }
 
 <section class="style-default-bright">
@@ -14,70 +17,48 @@
                     <table id="datatable1" class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>Rendering engine</th>
-                                <th>Browser</th>
-                                <th>Platform(s)</th>
-                                <th class="sort-numeric">Engine version</th>
-                                <th class="sort-alpha">CSS grade</th>
+                                <th class="sort-alpha">Tên khách sạn</th>
+                                <th>Mã số thuế</th>
+                                <th>Địa chỉ</th>
+                                <th class="sort-alpha">Người liên hệ</th>
+                                <th>Điện thoại</th>
+                                <th>Mail</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="gradeX">
-                                <td>Trident</td>
-                                <td>Internet Explorer 4.0</td>
-                                <td>Win 95+</td>
-                                <td>4</td>
-                                <td>X</td>
-                            </tr>
-                            <tr class="gradeC">
-                                <td>Trident</td>
-                                <td>Internet Explorer 5.0</td>
-                                <td>Win 95+</td>
-                                <td>5</td>
-                                <td>C</td>
-                            </tr>
-                            <tr class="gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 5.5</td>
-                                <td>Win 95+</td>
-                                <td>5.5</td>
-                                <td>A</td>
-                            </tr>
-                            <tr class="gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 6</td>
-                                <td>Win 98+</td>
-                                <td>6</td>
-                                <td>A</td>
-                            </tr>
-                            <tr class="gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 7</td>
-                                <td>Win XP SP2+</td>
-                                <td>7</td>
-                                <td>A</td>
-                            </tr>
-                            <tr class="gradeA">
-                                <td>Trident</td>
-                                <td>AOL browser (AOL desktop)</td>
-                                <td>Win XP</td>
-                                <td>6</td>
-                                <td>A</td>
-                            </tr>
-                            <tr class="gradeA">
-                                <td>Gecko</td>
-                                <td>Firefox 1.0</td>
-                                <td>Win 98+ / OSX.2+</td>
-                                <td>1.7</td>
-                                <td>A</td>
-                            </tr>
-                            <tr class="gradeA">
-                                <td>Gecko</td>
-                                <td>Firefox 1.5</td>
-                                <td>Win 98+ / OSX.2+</td>
-                                <td>1.8</td>
-                                <td>A</td>
-                            </tr>
+                            @{
+                                if (hotels != null)
+                                {
+                                    foreach (var item in hotels)
+                                    {
+                                        <tr>
+                                            <td>@item.Name</td> 
+                                            <td>@item.TaxCode</td>  
+                                            <td>@item.Address</td>
+                                            <td>@item.Contact</td>
+                                            <td>@item.ContactPhone</td>
+                                            <td>@item.ContactMail</td>
+                                            <td class="text-right">
+                                                <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-original-title="Edit row" onclick="editHotel(@item.Id)"><i class="fa fa-pencil"></i></button>
+                                                <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-original-title="Delete row" onclick="deleteHotel(@item.Id)"><i class="fa fa-trash-o"></i></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>Dữ liệutTrống</td>
+                                        <td>Trống</td>
+                                        <td>Trống</td>
+                                        <td>4</td>
+                                        <td>X</td>
+                                    </tr>
+
+                                }
+                            }
+                           
                         </tbody>
                     </table>
                 </div><!--end .table-responsive -->
@@ -86,4 +67,40 @@
     </div><!--end .section-body -->
 </section>
 
+<button type="button" onclick="openModalAddHotel()" class="btn ink-reaction btn-floating-action btn-lg btn-primary fix-floating-btn" data-toggle="modal" data-target="#modalAddHotel"><i class="md md-add"></i></button>
+
 <script src="~/Content/assets/js/core/demo/DemoTableDynamic.js"></script>
+
+<script>
+    function addHotel()
+    {
+      
+        var hotel = new Object({
+            Name: $("#txtHotelName").Val(),
+            TaxCode: $("#txtHotelTaxCode").Val(),
+            Address: $("#txtHotelAddress").Val(),
+            Contact: $("#txtHotelContact").Val(),
+            ContactPhone: $("#txtHotelContactPhone").Val(),
+            ContactMail: $("#txtHotelContactMail").Val()
+        });
+
+
+    }
+    function editHotel(id)
+    {
+        alert(id);
+    }
+    function deleteHotel(id)
+    {
+        alert(id);
+    }
+
+</script>
+
+
+
+
+
+
+
+
