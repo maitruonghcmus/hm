@@ -1,0 +1,47 @@
+﻿@{
+    var roomList = ViewBag.RoomList as IEnumerable<HM.DataModels.Room>;
+
+      
+}
+
+
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body no-padding">
+            <ul class="list divider-full-bleed">
+                @{
+                    foreach (var item in roomList)
+                    {
+                        <li class="tile">
+                            <a class="tile-content ink-reaction" href="#2">
+                                <div class="tile-text">@item.Name</div>
+                            </a>
+                            <a class="btn btn-flat ink-reaction" onclick="editRoom(@item.Id);">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <a class="btn btn-flat ink-reaction" onclick="deleteRoom(@item.Id);">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </li>
+                    }
+                }
+                
+                
+            </ul>
+        </div><!--end .card-body -->
+    </div><!--end .card -->
+</div><!--end .col -->
+
+<script>
+    
+
+    function editRoom(id) {
+        alert(id);
+    }
+
+    function deleteRoom(id) {
+        alert(id + "delete");
+    }
+
+</script>

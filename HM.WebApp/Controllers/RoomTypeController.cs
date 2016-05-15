@@ -11,9 +11,21 @@ namespace HM.WebApp.Controllers
     {
         public ActionResult Index()
         {
-            var roomtypes = DataContext.Instance.GetRoomTypes();
-            ViewBag.RoomTypes = roomtypes;
+            var roomtypes = new List<RoomType>();
+       
+            //var roomtypes = DataContext.Instance.GetRoomTypes();
+#if DEBUG
+           var roomtype1 = new RoomType {
+                Id =1,
+                MaxCustomer = 4,
+                Price = new long[] { 200000,300000,300000 },
+                Name = "A",
+            };
 
+           roomtypes.Add(roomtype1);
+#endif
+            ViewBag.RoomTypes = roomtypes;
+           
             return View();
         }
 

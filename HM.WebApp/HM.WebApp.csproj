@@ -204,6 +204,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -2011,10 +2012,13 @@
     <Content Include="Views\RoomType\Index.cshtml" />
     <Content Include="Views\Hotel\Index.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\RoomType\_RoomPartial.cshtml" />
+    <Content Include="Views\RoomType\_RoomListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\js\core\cache\" />
+    <Folder Include="Views\Room\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
