@@ -1,9 +1,5 @@
 ﻿@{
     ViewBag.Title = "Index";
-    var hotels = ViewBag.Hotels as IEnumerable<HM.DataModels.Hotel>;
-
-
-
 }
 
 <section class="style-default-bright">
@@ -11,59 +7,16 @@
         <h2 class="text-primary">Danh sách khách sạn</h2>
     </div>
     <div class="section-body">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="table-responsive">
-                    <table id="datatable1" class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th class="sort-alpha">Tên khách sạn</th>
-                                <th>Mã số thuế</th>
-                                <th>Địa chỉ</th>
-                                <th class="sort-alpha">Người liên hệ</th>
-                                <th>Điện thoại</th>
-                                <th>Mail</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                if (hotels != null)
-                                {
-                                    foreach (var item in hotels)
-                                    {
-                                        <tr>
-                                            <td>@item.Name</td> 
-                                            <td>@item.TaxCode</td>  
-                                            <td>@item.Address</td>
-                                            <td>@item.Contact</td>
-                                            <td>@item.ContactPhone</td>
-                                            <td>@item.ContactMail</td>
-                                            <td class="text-right">
-                                                <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-original-title="Edit row" onclick="editHotel(@item.Id)"><i class="fa fa-pencil"></i></button>
-                                                <button type="button" class="btn btn-icon-toggle" data-toggle="tooltip" data-original-title="Delete row" onclick="deleteHotel(@item.Id)"><i class="fa fa-trash-o"></i></button>
-                                            </td>
-                                        </tr>
-                                    }
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <td>Dữ liệutTrống</td>
-                                        <td>Trống</td>
-                                        <td>Trống</td>
-                                        <td>4</td>
-                                        <td>X</td>
-                                    </tr>
+    <div class="row">
+        <div id="toLoadHotels">
+            @Html.Partial("_ShowHotelsPartial")
+        </div>
 
-                                }
-                            }
-                           
-                        </tbody>
-                    </table>
-                </div><!--end .table-responsive -->
-            </div><!--end .col -->
-        </div><!--end .row -->
+    </div>
+       
+        <!-- BEGIN OFFCANVAS RIGHT -->
+        @Html.Partial("_ModalAddHotelPartial")
+        <!-- END OFFCANVAS RIGHT -->
     </div><!--end .section-body -->
 </section>
 
@@ -72,27 +25,132 @@
 <script src="~/Content/assets/js/core/demo/DemoTableDynamic.js"></script>
 
 <script>
+    var hotelTemp = null;
+
+    function openModalAddHotel() {
+        $("#btnAddHotel").text("Thêm");
+        $("#myModalLabel3").text("Thêm khách sạn");
+        hotelTemp = null;
+        clearControl();
+    }
+
+    function clearControl()
+    {
+        $("#txtHotelName").val("");
+        $("#txtHotelTaxCode").val("");
+        $("#txtHotelAddress").val("");
+        $("#txtHotelContact").val("");
+        $("#txtHotelContactPhone").val("");
+        $("#txtHotelContactMail").val("");
+    }
+
     function addHotel()
     {
-      
+
         var hotel = new Object({
-            Name: $("#txtHotelName").Val(),
-            TaxCode: $("#txtHotelTaxCode").Val(),
-            Address: $("#txtHotelAddress").Val(),
-            Contact: $("#txtHotelContact").Val(),
-            ContactPhone: $("#txtHotelContactPhone").Val(),
-            ContactMail: $("#txtHotelContactMail").Val()
+            Name: $("#txtHotelName").val(),
+            TaxCode: $("#txtHotelTaxCode").val(),
+            Address: $("#txtHotelAddress").val(),
+            Contact: $("#txtHotelContact").val(),
+            ContactPhone: $("#txtHotelContactPhone").val(),
+            ContactMail: $("#txtHotelContactMail").val()
         });
 
+        if(hotelTemp==null)//Create
+        {
+            $.ajax({
+                url: '@Url.Action("CreateHotel","Hotel")',
+                type: "POST",
+                data: {
+                    ht : hotel
+
+                },
+                success: function myfunction(data) {
+                    if (data) {
+                        alert("Thêm thành công");
+                        $("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
+                    }
+                    else
+                        alert("Thêm không thành c");
+                },
+                error: function myfunction() {
+
+                }
+            })
+        }
+        else //Update
+        {
+            hotelTemp.Name = $("#txtHotelName").val();
+            hotelTemp.TaxCode = $("#txtHotelTaxCode").val();
+            hotelTemp.Address = $("#txtHotelAddress").val();
+            hotelTemp.Contact = $("#txtHotelContact").val();
+            hotelTemp.ContactPhone = $("#txtHotelContactPhone").val();
+            hotelTemp.ContactMail = $("#txtHotelContactMail").val();
+
+            $.ajax({
+                url: '@Url.Action("UpdateHotel", "Hotel")',
+                type: "POST",
+                data: {
+                    ht: hotelTemp
+                },
+                success: function (data) {
+                    if (data) {
+                        alert("Cập nhật thành công");
+                        $("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
+                        openModalAddHotel();
+                    }
+                    else
+                        alert("Không thành công");
+                },
+                error: function myfunction() {
+
+                }
+            })
+        }
 
     }
     function editHotel(id)
     {
-        alert(id);
+        $("#btnAddHotel").text("Cập nhật");
+        $("#myModalLabel3").text("Cập nhật khách sạn");
+        $.ajax({
+            url: "@Url.Action("GetHotelInfo","Hotel")",
+            data: { htId: id },
+        type: "GET",
+        success: function (data) {
+            if (data != null) {
+                hotelTemp = data;
+
+                $("#txtHotelName").val(data.Name);
+                $("#txtHotelTaxCode").val(data.TaxCode);
+                $("#txtHotelAddress").val(data.Address);
+                $("#txtHotelContact").val(data.Contact);
+                $("#txtHotelContactPhone").val(data.ContactPhone);
+                $("#txtHotelContactMail").val(data.ContactMail);
+            }
+        },
+        error: function () { alert("Loi oi") }
+    })
     }
     function deleteHotel(id)
     {
-        alert(id);
+        var agreeDelete = confirm("Bạn có chắc chắn muốn xóa khách sạn này?");
+        if (agreeDelete) {
+            $.ajax({
+                url: "@Url.Action("DeleteHotel", "Hotel")",
+                data: { htId: id },
+            type: "POST", // <== Method = POST
+            success: function (data) {
+                if (data) {
+                    $("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
+                    alertify.success("Xóa thành công");
+                }
+            },
+            error: function () {
+                alertify.error("Có lỗi xảy ra");
+            }
+        });
+    }
     }
 
 </script>
