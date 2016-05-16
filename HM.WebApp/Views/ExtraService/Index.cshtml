@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<section>
+
+    <div class="section-header">
+        <h2 class="text-primary">Danh sách các dịch vụ hiện có</h2>
+    </div>
+    <div class="section-body">
+        <div id="toLoadServices">@Html.Partial("_ShowExtraServices")</div>
+        <!-- BEGIN OFFCANVAS RIGHT -->
+        @Html.Partial("_modalAddService")
+        <!-- END OFFCANVAS RIGHT -->
+
+    </div> <!--end section-body-->
+    
+</section>
+
+<button type="button" onclick="openModalAddService()" class="btn ink-reaction btn-floating-action btn-lg btn-primary fix-floating-btn" data-toggle="modal" data-target="#modalAddService"><i class="md md-add"></i></button>
+
+<script>
+
+    var serviceTemp = null;
+
+    function openModalAddService()
+    {
+        $("#modalServiceLabel").val("Thêm dịch vụ");
+        $("#btnAddService").val("Thêm");
+        $("#btnClear").show();
+        serviceTemp = null;
+        clearControl();
+    }
+    function clearControl()
+    {
+        $("#txtServiceName").val("");
+        $("#txtServiceUnit").val("");
+        $("#txtServicePrice").val("");
+    }
+    function addService()
+    {
+        var service = new Object({
+            Name: $("#txtServiceName").val(),
+            Unit: $("#txtServiceUnit").val(),
+            Price: $("#txtServicePrice").val()
+        });
+
+        if(serviceTemp == null) //create
+        {
+            $.ajax({
+                url: '@Url.Action("CreateExtraService","ExtraService")',
+                type: "POST",
+                data: {
+                    sv : service
+
+                },
+                success: function myfunction(data) {
+                    if (data) {
+                        alert("Thêm thành công");
+                        $("#toLoadServices").load('@Url.Action("LoadExtraServices", "ExtraService")');
+                    }
+                    else
+                        alert("Thêm không thành công");
+                },
+                error: function myfunction() {
+
+                }
+            })
+        }
+        else
+        {
+            serviceTemp.Name = $("#txtServiceName").val();
+            serviceTemp.Unit =  $("#txtServiceUnit").val();
+            serviceTemp.Price = $("#txtServicePrice").val();
+
+            $.ajax({
+                url: '@Url.Action("UpdateExtraService", "ExtraService")',
+                type: "POST",
+                data: {
+                    sv: serviceTemp
+                },
+                success: function (data) {
+                    if (data) {
+                        alert("Cập nhật thành công");
+                         $("#toLoadServices").load('@Url.Action("LoadExtraServices", "ExtraService")');
+                        openModalAddService();
+                    }
+                    else
+                        alert("Không thành công");
+                },
+                error: function myfunction() {
+
+                }
+            })
+
+        }
+
+    }
+
+    function updateService(id)
+    {
+        $("#btnAddService").text("Cập nhật");
+        $("#modalServiceLabel").text("Cập nhật dịch vụ");
+        $("#btnClear").hide();
+
+        $.ajax({
+            url: "@Url.Action("GetExtraService","ExtraService")",
+            data: { svId: id },
+        type: "GET",
+        success: function (data) {
+            if (data != null) {
+                serviceTemp = data;
+
+                $("#txtServiceName").val(data.Name);
+                $("#txtServiceUnit").val(data.Unit);
+                $("#txtServicePrice").val(data.Price);
+
+            }
+        },
+        error: function () { alert("Loi oi") }
+    })
+    }
+    function deletaService(id)
+    {
+        var agreeDelete = confirm("Bạn có chắc chắn muốn xóa?");
+        if (agreeDelete) {
+            $.ajax({
+                url: "@Url.Action("DeleteExtraService", "ExtraService")",
+                data: { svId: id },
+            type: "POST", // <== Method = POST
+            success: function (data) {
+                if (data) {
+                    $("#toLoadServices").load('@Url.Action("LoadExtraServices", "ExtraService")');
+                    alertify.success("Xóa thành công");
+                }
+            },
+            error: function () {
+                alertify.error("Có lỗi xảy ra");
+            }
+        });
+    }
+
+
+</script>
+
+
+

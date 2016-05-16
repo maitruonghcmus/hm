@@ -1,0 +1,48 @@
+﻿@{ 
+    var services = ViewBag.Services as IEnumerable<HM.DataModels.ExtraService>;
+}
+
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body no-padding">
+            <ul class="list divider-full-bleed">
+
+                @{
+                    if (services != null)
+                    {
+                        foreach (var item in services)
+                        {
+                            <li class="tile">
+                                <a class="tile-content ink-reaction" onclick="editService(@item.Id);">
+                                    <div class="tile-text">
+                                        @item.Name
+                                        <small>
+                                            Đơn vị tính: @item.Unit
+                                        </small>
+                                        <small>
+                                            Giá: @item.Price
+                                        </small>
+
+                                    </div>
+                                </a>
+                                <a class="btn btn-flat ink-reaction">
+                                    <i class="fa fa-trash" onclick="deleteService(@item.Id);"></i>
+                                </a>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <h2>Danh sách dịch vụ trống</h2>
+                    }
+
+                }
+               
+
+            </ul>
+        </div>
+    </div>
+
+
+</div>

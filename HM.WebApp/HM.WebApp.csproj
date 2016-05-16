@@ -201,6 +201,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\ExtraServiceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -2019,6 +2020,9 @@
     <Content Include="Views\RoomType\_RoomTypePartial.cshtml" />
     <Content Include="Views\Hotel\_ModalAddHotelPartial.cshtml" />
     <Content Include="Views\Hotel\_ShowHotelsPartial.cshtml" />
+    <Content Include="Views\ExtraService\Index.cshtml" />
+    <Content Include="Views\ExtraService\_ShowExtraServices.cshtml" />
+    <Content Include="Views\ExtraService\_ModalAddService.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
