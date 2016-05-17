@@ -201,6 +201,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\CustomerTypeController.cs" />
     <Compile Include="Controllers\ExtraServiceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
@@ -2024,6 +2025,9 @@
     <Content Include="Views\ExtraService\Index.cshtml" />
     <Content Include="Views\ExtraService\_ShowExtraServices.cshtml" />
     <Content Include="Views\ExtraService\_ModalAddService.cshtml" />
+    <Content Include="Views\CustomerType\Index.cshtml" />
+    <Content Include="Views\CustomerType\_ShowCustomerTypes.cshtml" />
+    <Content Include="Views\CustomerType\_ModalAddCustomerType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

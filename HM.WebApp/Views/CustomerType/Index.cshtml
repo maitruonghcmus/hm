@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<section>
+
+    <div class="section-header">
+        <h2 class="text-primary">Danh sách loại Khách hàng</h2>
+    </div>
+    <div class="section-body">
+        
+
+        <div id="toLoadCustomerType">@Html.Partial("_ShowCustomerTypes")</div>
+ 
+        <!-- BEGIN OFFCANVAS RIGHT -->
+        @Html.Partial("_ModalAddCustomerType")
+        <!-- END OFFCANVAS RIGHT -->
+
+    </div> <!--end section-body-->
+
+</section>
+
+
+<button type="button" onclick="openModalAddCustomerType()" class="btn ink-reaction btn-floating-action btn-lg btn-primary fix-floating-btn" data-toggle="modal" data-target="#modalAddCustomerType"><i class="md md-add"></i></button>
+
+
+<script>
+    var customerTypeTemp = null;
+    function openModalAddCustomerType() {
+        $("#modalCustomerTypeLabel").val("Thêm Loại Khách");
+        $("#btnAddCustomerType").val("Thêm");
+        $("#btnClear").show();
+        customerTypeTemp = null;
+        clearControl();
+    }
+
+    function clearControl() {
+        $("#txtCustomerTypeName").val("");
+        $("#txtCustomerCoefficient").val("");
+    }
+
+    function addCustomerType()
+    {
+         
+        var customerType = new Object({
+            Name: $("#txtCustomerTypeName").val(),
+            Coefficient: parseFloat($("#txtCustomerTypeCoefficient").val())
+        });
+
+        if (customerTypeTemp == null) //create
+        {
+   
+            $.ajax({
+                url: '@Url.Action("CreateCustomerType", "CustomerType")',
+                type: "POST",
+                data: {
+                    ctmType: customerType
+                },
+                success: function myfunction(data) {
+                    if (data) {
+                        alert("Thêm thành công");
+                        $("#toLoadCustomerType").load('@Url.Action("LoadCustomerTypes", "CustomerType")');
+                    }
+                    else
+                        alert("Thêm không thành công");
+                },
+                error: function myfunction() {
+
+                }
+            })
+        }
+        else {
+            customerTypeTemp.Name = $("#txtCustomerTypeName").val()
+            customerTypeTemp.Coefficient = parseFloat($("#txtCustomerTypeCoefficient").val());
+
+
+            $.ajax({
+                url: '@Url.Action("UpdateCustomerType", "CustomerType")',
+                type: "POST",
+                data: {
+                    ctmType: customerTypeTemp
+                },
+                success: function (data) {
+                    if (data) {
+                        alert("Cập nhật thành công");
+                         $("#toLoadCustomerType").load('@Url.Action("LoadCustomerTypes", "CustomerType")');
+                        openModalAddCustomerType();
+                    }
+                    else
+                        alert("Không thành công");
+                },
+                error: function myfunction() {
+
+                }
+            })
+        }
+
+    }
+    function editCustomerType(id)
+    {
+        $("#btnAddCustomerType").text("Cập nhật");
+        $("#modalCustomerTypeLabel").text("Cập nhật loại khách");
+        $("#btnClear").hide();
+
+        $.ajax({
+            url: "@Url.Action("GetCustomerTypeInfo", "CustomerType")",
+            data: { ctmTypeId: id },
+        type: "GET",
+        success: function (data) {
+            if (data != null) {
+                customerTypeTemp = data;
+
+                $("#txtCustomerTypeName").val(data.Name);
+                $("#txtCustomerCoefficient").val(data.Coefficient);
+
+            }
+        },
+        error: function () { alert("Loi oi") }
+    })
+    }
+    function deleteCustomerType(id)
+    {
+        var agreeDelete = confirm("Bạn có chắc chắn muốn xóa?");
+        if (agreeDelete) {
+            $.ajax({
+                url: "@Url.Action("DeleteCustomerType", "CustomerType")",
+                data: { ctmTypeId: id },
+            type: "POST", // <== Method = POST
+            success: function (data) {
+                if (data) {
+                    $("#toLoadCustomerType").load('@Url.Action("LoadCustomerTypes", "CustomerType")');
+                    alert("Xóa thành công");
+                }
+            },
+            error: function () {
+                alert("Có lỗi xảy ra");
+            }
+        });
+    }
+    }
+</script>
+

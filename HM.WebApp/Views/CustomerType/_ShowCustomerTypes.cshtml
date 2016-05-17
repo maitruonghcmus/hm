@@ -1,0 +1,56 @@
+﻿@{
+    var ctmTypes = ViewBag.CustomerTypes as IEnumerable<HM.DataModels.CustomerType>;
+}
+
+<div class="row">
+    @{
+        if (ctmTypes!=null)
+        {
+            <ul class="list">
+                @foreach (var item in ctmTypes)
+                {
+                    <li>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="card style-primary">
+                                <div class="card-head">
+                                    <div class="tools">
+                                        <div class="btn-group">
+                                            <a class="btn btn-icon-toggle" data-toggle="modal" data-target="#modalAddCustomerType" onclick="editCustomerType(@item.Id);"><i class="fa fa-pencil"></i></a>
+                                            <a class="btn btn-icon-toggle" onclick="deleteCustomerType(@item.Id);"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </div>
+                                    <header class="name">@item.Name</header>
+                                </div><!--end .card-head -->
+                                <div class="card-body style-default-bright" style="display: block;">
+                                    <ul class="list">
+                                        <li class="tile">
+                                            <a class="tile-content ink-reaction">
+                                                <div class="tile-icon">
+                                                    <i class="fa fa-users"></i>
+                                                </div>
+                                                <div class="tile-text">
+                                                    Hệ số: <label class="coefficient">@item.Coefficient</label>
+                                                
+                                                </div>
+                                            </a>
+                                        </li>
+                                      
+                                    </ul>
+                                </div><!--end .card-body -->
+                            </div>
+                        </div><!--end .col -->
+                    </li>
+                }
+            </ul>
+        }
+    }
+</div><!--end .row -->
+
+
+<script>
+    var options = {
+        valueNames: ['name', 'coefficient']
+    };
+
+    var customerType = new List('body', options);
+</script>
