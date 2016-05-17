@@ -98,14 +98,14 @@
 
     }
 
-    function updateService(id)
+    function editService(id)
     {
         $("#btnAddService").text("Cập nhật");
         $("#modalServiceLabel").text("Cập nhật dịch vụ");
         $("#btnClear").hide();
 
         $.ajax({
-            url: "@Url.Action("GetExtraService","ExtraService")",
+            url: "@Url.Action("GetExtraServiceInfo", "ExtraService")",
             data: { svId: id },
         type: "GET",
         success: function (data) {
@@ -121,27 +121,25 @@
         error: function () { alert("Loi oi") }
     })
     }
-    function deletaService(id)
-    {
+    function deleteService(id) {
         var agreeDelete = confirm("Bạn có chắc chắn muốn xóa?");
         if (agreeDelete) {
             $.ajax({
                 url: "@Url.Action("DeleteExtraService", "ExtraService")",
                 data: { svId: id },
-            type: "POST", // <== Method = POST
-            success: function (data) {
-                if (data) {
-                    $("#toLoadServices").load('@Url.Action("LoadExtraServices", "ExtraService")');
-                    alertify.success("Xóa thành công");
+                type: "POST", // <== Method = POST
+                success: function (data) {
+                    if (data) {
+                        $("#toLoadServices").load('@Url.Action("LoadExtraServices", "ExtraService")');
+                        alertify.success("Xóa thành công");
+                    }
+                },
+                error: function () {
+                    alertify.error("Có lỗi xảy ra");
                 }
-            },
-            error: function () {
-                alertify.error("Có lỗi xảy ra");
-            }
-        });
+            });
+        }
     }
-
-
 </script>
 
 

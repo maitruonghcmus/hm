@@ -6,8 +6,10 @@
     @{
         if (roomtypes?.Count() > 0)
         {
-            foreach (var item in roomtypes)
+            <ul class="list">
+            @foreach (var item in roomtypes)
             {
+                <li>
                 <div class="col-md-4 col-sm-6">
                     <div class="card style-primary">
                         <div class="card-head">
@@ -17,7 +19,7 @@
                                     <a class="btn btn-icon-toggle" onclick="deleteRoomType(@item.Id);"><i class="fa fa-trash"></i></a>
                                 </div>
                             </div>
-                            <header>@item.Name</header>
+                            <header class="name">@item.Name</header>
                         </div><!--end .card-head -->
                         <div class="card-body style-default-bright" style="display: block;">
                             <ul class="list">
@@ -38,8 +40,8 @@
                                             <i class="fa fa-users"></i>
                                         </div>
                                         <div class="tile-text">
-                                            Số khách tối đa: @item.MaxCustomer
-                                            <small></small>
+                                            Số khách tối đa: 
+                                            <small class="maxCtm">@item.MaxCustomer</small>
                                         </div>
                                     </a>
                                 </li>
@@ -49,8 +51,8 @@
                                             <i class="fa fa-money"></i>
                                         </div>
                                         <div class="tile-text">
-                                            Giá phòng: @item.Price.LastOrDefault().ToString("#,##0")
-                                            <small></small>
+                                            Giá phòng: 
+                                            <small class="roomTypePrice">@item.Price.LastOrDefault().ToString("#,##0")</small>
                                         </div>
                                     </a>
                                 </li>
@@ -74,7 +76,18 @@
                         </div><!--end .card-body -->
                     </div>
                 </div><!--end .col -->
+                    </li>
             }
+                </ul>
         }
     }
 </div><!--end .row -->
+
+
+<script>
+    var options = {
+        valueNames: ['name', 'maxCtm', 'roomTypePrice']
+    };
+
+    var roomTypeList = new List('body', options);
+</script>

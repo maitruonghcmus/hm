@@ -12,6 +12,8 @@ namespace HM.WebApp.Controllers
         // GET: ExtraService
         public ActionResult Index()
         {
+            var services = DataContext.Instance.GetExtraServices();
+            ViewBag.Services = services;
             return View();
         }
 

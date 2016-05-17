@@ -1678,6 +1678,7 @@
     <Content Include="Content\assets\js\libs\wizard\jquery.bootstrap.wizard.js" />
     <Content Include="Content\assets\js\libs\wizard\jquery.bootstrap.wizard.min.js" />
     <Content Include="Content\assets\js\libs\wizard\MIT-LICENSE.txt" />
+    <Content Include="Content\assets\js\listjs\list.js" />
     <Content Include="Content\assets\less\libs\bootstrap-colorpicker\modified-log.txt" />
     <Content Include="Content\assets\less\libs\DataTables\license.txt" />
     <Content Include="Content\assets\less\libs\fullcalendar\license.txt" />
