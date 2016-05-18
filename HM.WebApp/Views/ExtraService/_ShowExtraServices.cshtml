@@ -15,15 +15,15 @@
                         {
                         <li class="tile">
                             <a class="tile-content ink-reaction">
+                                <div class="tile-icon">
+                                    <img src="~Content/assets/img/avatar11.jpg?1404026774" alt="">
+                                </div>
                                 <div class="tile-text name">
                                     @item.Name
                                     <small>
-                                        Đơn vị tính: @item.Unit
+                                        Đơn vị tính: @item.Unit, Giá <label class="price">@item.Price</label>
                                     </small>
-                                    <small class="price">
-                                        Giá: @item.Price
-                                    </small>
-
+                                
                                 </div>
                             </a>
                             <a class="btn btn-flat ink-reaction" data-toggle="modal" data-target="#modalAddService"  onclick="editService(@item.Id);">
