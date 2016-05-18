@@ -25,4 +25,15 @@ namespace HM.WebApp
         public static readonly string UPDATE = "Update";
         public static readonly string DELETE = "Delete";
     }
+
+    public class DateTimeUtils
+    {
+        public static readonly string YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
+    }
+
+    public class NumberUtils
+    {
+        public static readonly string NumberFormatByComma = "#,##0";
+        public static readonly string NumberByFormatSpacing = "# ##0";
+    }
 }

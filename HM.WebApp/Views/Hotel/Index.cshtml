@@ -7,13 +7,12 @@
         <h2 class="text-primary">Danh sách khách sạn</h2>
     </div>
     <div class="section-body">
-    <div class="row">
-        <div id="toLoadHotels">
-            @Html.Partial("_ShowHotelsPartial")
-        </div>
+        <div class="row">
+            <div id="toLoadHotels">
+                @Html.Partial("_ShowHotelsPartial")
+            </div>
 
-    </div>
-       
+        </div>
         <!-- BEGIN OFFCANVAS RIGHT -->
         @Html.Partial("_ModalAddHotelPartial")
         <!-- END OFFCANVAS RIGHT -->
@@ -25,6 +24,9 @@
 <script src="~/Content/assets/js/core/demo/DemoTableDynamic.js"></script>
 
 <script>
+
+
+
     var hotelTemp = null;
 
     function openModalAddHotel() {
@@ -34,8 +36,7 @@
         clearControl();
     }
 
-    function clearControl()
-    {
+    function clearControl() {
         $("#txtHotelName").val("");
         $("#txtHotelTaxCode").val("");
         $("#txtHotelAddress").val("");
@@ -44,9 +45,7 @@
         $("#txtHotelContactMail").val("");
     }
 
-    function addHotel()
-    {
-
+    function addHotel() {
         var hotel = new Object({
             Name: $("#txtHotelName").val(),
             TaxCode: $("#txtHotelTaxCode").val(),
@@ -56,19 +55,20 @@
             ContactMail: $("#txtHotelContactMail").val()
         });
 
-        if(hotelTemp==null)//Create
+        if (hotelTemp == null)//Create
         {
             $.ajax({
                 url: '@Url.Action("CreateHotel","Hotel")',
                 type: "POST",
                 data: {
-                    ht : hotel
+                    ht: hotel
 
                 },
                 success: function myfunction(data) {
                     if (data) {
                         alert("Thêm thành công");
-                        $("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
+                        //$("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
+                        $('#hotelsTable').dataTable().fnDraw();
                     }
                     else
                         alert("Thêm không thành c");
@@ -96,7 +96,8 @@
                 success: function (data) {
                     if (data) {
                         alert("Cập nhật thành công");
-                        $("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
+                        //$("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
+                        $('#hotelsTable').dataTable().fnDraw();
                         openModalAddHotel();
                     }
                     else
@@ -109,56 +110,47 @@
         }
 
     }
-    function editHotel(id)
-    {
+    function editHotel(id) {
         $("#btnAddHotel").text("Cập nhật");
         $("#myModalLabel3").text("Cập nhật khách sạn");
         $.ajax({
             url: "@Url.Action("GetHotelInfo","Hotel")",
             data: { htId: id },
-        type: "GET",
-        success: function (data) {
-            if (data != null) {
-                hotelTemp = data;
+            type: "GET",
+            success: function (data) {
+                if (data != null) {
+                    hotelTemp = data;
 
-                $("#txtHotelName").val(data.Name);
-                $("#txtHotelTaxCode").val(data.TaxCode);
-                $("#txtHotelAddress").val(data.Address);
-                $("#txtHotelContact").val(data.Contact);
-                $("#txtHotelContactPhone").val(data.ContactPhone);
-                $("#txtHotelContactMail").val(data.ContactMail);
-            }
-        },
-        error: function () { alert("Loi oi") }
-    })
+                    $("#txtHotelName").val(data.Name);
+                    $("#txtHotelTaxCode").val(data.TaxCode);
+                    $("#txtHotelAddress").val(data.Address);
+                    $("#txtHotelContact").val(data.Contact);
+                    $("#txtHotelContactPhone").val(data.ContactPhone);
+                    $("#txtHotelContactMail").val(data.ContactMail);
+                }
+            },
+            error: function () { alert("Loi oi") }
+        })
     }
-    function deleteHotel(id)
-    {
+    function deleteHotel(id) {
         var agreeDelete = confirm("Bạn có chắc chắn muốn xóa khách sạn này?");
         if (agreeDelete) {
             $.ajax({
                 url: "@Url.Action("DeleteHotel", "Hotel")",
                 data: { htId: id },
-            type: "POST", // <== Method = POST
-            success: function (data) {
-                if (data) {
-                    $("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
-                    alertify.success("Xóa thành công");
+                type: "POST", // <== Method = POST
+                success: function (data) {
+                    if (data) {
+                        //$("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
+                        $('#hotelsTable').dataTable().fnDraw();
+                        alertify.success("Xóa thành công");
+                    }
+                },
+                error: function () {
+                    alertify.error("Có lỗi xảy ra");
                 }
-            },
-            error: function () {
-                alertify.error("Có lỗi xảy ra");
-            }
-        });
-    }
+            });
+        }
     }
 
 </script>
-
-
-
-
-
-
-
-
