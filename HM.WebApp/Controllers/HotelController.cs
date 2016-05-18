@@ -55,7 +55,6 @@ namespace HM.WebApp.Controllers
             return Json(dataTable, JsonRequestBehavior.AllowGet);
         }
 
-
         [HttpGet]
         public JsonResult GetHotelInfo(int htId)
         {
