@@ -16,7 +16,7 @@ namespace HM.DataModels
         /// ngoài nước 1.5 hoặc khác, chém cao hơn khách trong nước
         /// cty đặt nhiều phòng thì giảm giá 20% => hệ số = 0.8
         /// </summary>
-        public double Coefficient { get; set; }
+        public float Coefficient { get; set; }
 
         public int HotelId { get; set; }
         public bool Inactive { get; set; }
