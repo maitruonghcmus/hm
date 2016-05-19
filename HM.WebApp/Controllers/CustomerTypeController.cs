@@ -1,6 +1,7 @@
 ﻿using HM.DataModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -33,9 +34,15 @@ namespace HM.WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateCustomerType(CustomerType ctmType)
+        public ActionResult CreateCustomerType(string name, string coe)
         {
-            var createSuccess = DataContext.Instance.CreateCustomerType(ctmType);
+            var ctype = new CustomerType
+            {
+                Coefficient = float.Parse(coe, CultureInfo.InvariantCulture),
+                Name = name
+            };
+
+            var createSuccess = DataContext.Instance.CreateCustomerType(ctype);
             if (createSuccess) { return Json(true, JsonRequestBehavior.AllowGet); }
             return Json(false, JsonRequestBehavior.AllowGet);
         }

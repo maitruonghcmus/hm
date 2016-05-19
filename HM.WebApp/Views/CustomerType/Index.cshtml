@@ -38,25 +38,26 @@
 
     function clearControl() {
         $("#txtCustomerTypeName").val("");
-        $("#txtCustomerCoefficient").val("");
+        $("#txtCustomerTypeCoefficient").val("");
     }
 
     function addCustomerType()
     {
-         
-        var customerType = new Object({
-            Name: $("#txtCustomerTypeName").val(),
-            Coefficient: parseFloat($("#txtCustomerTypeCoefficient").val())
-        });
+        //var coe = parseFloat($("#txtCustomerTypeCoefficient").val());
+        
+        //var customerType = new Object({
+        //    Name: $("#txtCustomerTypeName").val(),
+        //    Coefficient: $("#txtCustomerTypeCoefficient").val()
+        //});
 
         if (customerTypeTemp == null) //create
         {
-   
             $.ajax({
                 url: '@Url.Action("CreateCustomerType", "CustomerType")',
                 type: "POST",
                 data: {
-                    ctmType: customerType
+                    name: $("#txtCustomerTypeName").val(),
+                    coe: $("#txtCustomerTypeCoefficient").val()
                 },
                 success: function myfunction(data) {
                     if (data) {
@@ -113,7 +114,7 @@
                 customerTypeTemp = data;
 
                 $("#txtCustomerTypeName").val(data.Name);
-                $("#txtCustomerCoefficient").val(data.Coefficient);
+                $("#txtCustomerTypeCoefficient").val(data.Coefficient);
 
             }
         },

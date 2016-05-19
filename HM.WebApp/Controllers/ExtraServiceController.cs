@@ -21,6 +21,28 @@ namespace HM.WebApp.Controllers
         public ActionResult GetExtraServiceInfo(int svId)
         {
             var service = DataContext.Instance.GetExtraService(svId);
+
+            if (service != null)
+            {
+                var obj = new
+                {
+                    service.Id,
+                    service.HotelId,
+                    service.Inactive,
+                    service.ModifiedBy,
+                    ModifiedOn = service.ModifiedOn?.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM) ?? string.Empty,
+                    service.CreatedBy,
+                    CreatedOn = service.CreatedOn.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
+                    service.Price,
+                    service.Name,
+                    service.Unit,
+                  
+                };
+
+                return Json(obj, JsonRequestBehavior.AllowGet);
+            }
+
+
             return Json(service, JsonRequestBehavior.AllowGet);
         }
 

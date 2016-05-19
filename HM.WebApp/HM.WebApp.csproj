@@ -207,12 +207,14 @@
     <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HttpClientHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DataTable.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2028,11 +2030,14 @@
     <Content Include="Views\CustomerType\Index.cshtml" />
     <Content Include="Views\CustomerType\_ShowCustomerTypes.cshtml" />
     <Content Include="Views\CustomerType\_ModalAddCustomerType.cshtml" />
+    <Content Include="Views\Customer\_ShowCustomers.cshtml" />
+    <Content Include="Views\Customer\_ModalAddCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\js\core\cache\" />
     <Folder Include="Views\Room\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

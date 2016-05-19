@@ -1,6 +1,7 @@
 ﻿using HM.DataModels;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -10,7 +11,7 @@ namespace HM.WebApp
 {
     public class HttpClientHelper
     {
-        private const string uri = "http://localhost:3333";
+        private string uri = ConfigurationManager.AppSettings["ApiUrl"] ?? "http://localhost:33333";
 
         public static HttpClientHelper Instance = new HttpClientHelper();
 
