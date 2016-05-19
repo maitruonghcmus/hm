@@ -83,11 +83,11 @@
                 success: function (data) {
                     if (data == true) {
                         $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
-                        alertify.success("Thêm thành công!");
+                        toastr.success("Thêm thành công!");
                     }
                 },
                 error: function () {
-                    alertify.error("Tạo loại phòng lỗi");
+                    toastr.error("Tạo loại phòng lỗi");
                 }
             });
         }
@@ -104,11 +104,11 @@
                 success: function (data) {
                     if (data == true) {
                         $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
-                        alertify.success("Cập nhật thành công");
+                        toastr.success("Cập nhật thành công");
                     }
                 },
                 error: function () {
-                    alert("Cập nhật loại phòng lỗi");
+                    toastr.error("Cập nhật loại phòng lỗi");
                 }
             });
         }
@@ -124,11 +124,11 @@
                 success: function (data) {
                     if (data == true) {
                         $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
-                        alertify.success("Xóa thành công");
+                        toastr.success("Xóa thành công");
                     }
                 },
                 error: function () {
-                    alert("Không lấy được loại phòng");
+                    toastr.error("Không lấy được loại phòng");
                 }
             });
         }
@@ -169,11 +169,11 @@
                 },
                 success: function myfunction(data) {
                     if (data) {
-                        alert("Thêm thành công");
+                        toastr.success("Thêm thành công");
                         $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId)
                     }
                     else
-                        alert("Thêm không thành c");
+                        toastr.error("Thêm không thành công");
                 },
                 error: function myfunction() {
 
@@ -194,12 +194,12 @@
                 },
                 success: function (data) {
                     if (data) {
-                        alert("Cập nhật thành công");
+                        toastr.success("Cập nhật thành công");
                         $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId);
                         clearRoomField();
                     }
                     else
-                        alert("Không thành công");
+                        toastr.error("Không thành công");
                 },
                 error: function myfunction() {
 
@@ -245,7 +245,7 @@
                 success: function (data) {
                     if (data) {
                         $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId)
-                        alertify.success("Xóa thành công");
+                        toastr.success("Xóa thành công");
                     }
                 },
                 error: function () {

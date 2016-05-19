@@ -2032,12 +2032,14 @@
     <Content Include="Views\CustomerType\_ModalAddCustomerType.cshtml" />
     <Content Include="Views\Customer\_ShowCustomers.cshtml" />
     <Content Include="Views\Customer\_ModalAddCustomer.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\_ShowUsers.cshtml" />
+    <Content Include="Views\User\_ModalAddUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\js\core\cache\" />
     <Folder Include="Views\Room\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

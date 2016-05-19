@@ -23,6 +23,7 @@ namespace HM.WebApp.Controllers
         {
             var ctmType = DataContext.Instance.GetCustomerType(ctmTypeId);
             return Json(ctmType, JsonRequestBehavior.AllowGet);
+
         }
 
         [HttpPost]

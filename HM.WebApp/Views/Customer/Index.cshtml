@@ -51,7 +51,7 @@
             Address:$("#txtCustomerAddress").val()
         });
 
-        if(ctmTemp==null)
+        if (customerTemp == null)
         {
             $.ajax({
                 url: '@Url.Action("CreateCustomer","Customer")',
@@ -62,11 +62,11 @@
                 },
                 success: function myfunction(data) {
                     if (data) {
-                        alert("Thêm thành công");
+                        toastr.success("Thêm thành công");
                         $('#customersTable').dataTable().fnDraw();
                     }
                     else
-                        alert("Thêm không thành c");
+                        toastr.error("Thêm không thành công");
                 },
                 error: function myfunction() {
 
@@ -90,12 +90,12 @@
                 },
                 success: function (data) {
                     if (data) {
-                        alert("Cập nhật thành công");
+                        toastr.success("Cập nhật thành công");
                         $('#customersTable').dataTable().fnDraw();
                         openModalAddCustomer();
                     }
                     else
-                        alert("Không thành công");
+                        toastr.error("Không thành công");
                 },
                 error: function myfunction() {
 
@@ -127,7 +127,7 @@
 
             }
         },
-        error: function () { alert("Loi oi") }
+        error: function () { toastr.error("Loi oi") }
     })
     }
   
@@ -144,11 +144,11 @@
                 if (data) {
      
                     $('#customersTable').dataTable().fnDraw();
-                    alert("Xóa thành công");
+                    toastr.success("Xóa thành công");
                 }
             },
             error: function () {
-                alertr("Có lỗi xảy ra");
+                toastr.error("Có lỗi xảy ra");
             }
         });
     }

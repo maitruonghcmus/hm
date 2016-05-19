@@ -43,7 +43,7 @@ namespace HM.WebApp.Controllers
             }
 
 
-            return Json(service, JsonRequestBehavior.AllowGet);
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
