@@ -19,14 +19,14 @@ namespace HM.DataModels
         /// Ghi chú của phòng
         /// </summary>
         public string Remark { get; set; }
-        
+
         /// <summary>
         /// Trạng thái phòng
         /// 0. Trống
         /// 1. Có khách
         /// -1. Cần dọn dẹp
         /// </summary>
-        public int? Status { get; set; }
+        public int? Status { get; set; } = 0;
 
         public int HotelId { get; set; }
         public bool Inactive { get; set; }
