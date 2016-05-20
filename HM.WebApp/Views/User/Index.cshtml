@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    var roles = ViewBag.Roles as IEnumerable<HM.DataModels.Role>;
+}
+
+
+<section class="style-default-bright">
+    <div class="section-header">
+        <h2 class="text-primary">Danh sách người dùng</h2>
+    </div>
+
+    <div class="section-body">
+        <div class="row">
+            <div class="toLoadUsers">@Html.Partial("_ShowUsers")</div>
+        </div>
+
+
+        <!-- BEGIN OFFCANVAS RIGHT -->
+        @Html.Partial("_ModalAddUser")
+        <!-- END OFFCANVAS RIGHT -->
+    </div><!--end .section-body -->
+</section>
+
+
+<button type="button" onclick="openModalAddUser()" class="btn ink-reaction btn-floating-action btn-lg btn-primary fix-floating-btn" data-toggle="modal" data-target="#modalAddUser"><i class="md md-add"></i></button>
+
+<script>
+
+
+        var userTemp = null;
+    function openModalAddUser() {
+        $("#modalUserLabel").val("Thêm tài khoản");
+        $("#btnAddUser").val("Thêm");
+        $("#btnClear").show();
+        userTemp = null;
+        clearControl();
+    }
+
+    function clearControl() {
+        $("#txtUserFullName").val("");
+        $("#txtUsername").val("");
+        $("#txtUserPassword").val("");
+    }
+
+    function addUser()
+    {
+       
+
+        var usernew = new Object({
+            Username: $("#txtUsername").val(),
+            Fullname: $("#txtUserFullName").val(),
+            Password: $("#txtUserPassword").val(),
+            RoleId: $("#cbbUserRole").val(),
+
+        });
+
+        if (userTemp == null)
+        {
+            $.ajax({
+                url: '@Url.Action("CreateUser","User")',
+                type: "POST",
+                data: {
+                    user: usernew
+
+                },
+                success: function myfunction(data) {
+                    if (data) {
+                        toastr.success("Thêm thành công");
+                        $('#usersTable').dataTable().fnDraw();
+                    }
+                    else
+                        toastr.error("Thêm không thành công");
+                },
+                error: function myfunction() {
+
+                }
+            })
+        }
+        else
+        {
+
+            userTemp.Username = $("#txtUsername").val();
+            userTemp.Fullname = $("#txtUserFullName").val();
+            userTemp.Password= $("#txtUserPassword").val();
+            userTemp.RoleId= $("#cbbUserRole").val();
+   
+
+            $.ajax({
+                url: '@Url.Action("UpdateUser", "User")',
+                type: "POST",
+                data: {
+                    user: userTemp
+                },
+                success: function (data) {
+                    if (data) {
+                        toastr.success("Cập nhật thành công");
+                        $('#usersTable').dataTable().fnDraw();
+                        openModalAddUser();
+                    }
+                    else
+                        toastr.error("Không thành công");
+                },
+                error: function myfunction() {
+
+                }
+            })
+        }
+        
+    }
+
+
+    function editUser(id)
+    {
+        $("#btnAddUser").text("Cập nhật");
+        $("#modalUserLabel").text("Cập nhật tài khoản");
+        $("#btnClear").hide();
+
+        $.ajax({
+            url: "@Url.Action("GetUserInfo","User")",
+            data: { userId: id },
+        type: "GET",
+        success: function (data) {
+            if (data != null) {
+                userTemp = data;
+                $("#txtUserFullName").val(data.Fullname);
+                $("#txtUsername").val(data.Username);
+                $("#cbbUserRole").val(data.RoleId);
+                $("#txtUserPassword").val(data.Password);
+
+            }
+        },
+        error: function () { alert("Loi oi") }
+    })
+    }
+  
+
+    function deleteUser(id)
+    {
+        var agreeDelete = confirm("Bạn có chắc chắn muốn xóa ?");
+        if (agreeDelete) {
+            $.ajax({
+                url: "@Url.Action("DeleteUser", "User")",
+                data: { userId: id },
+            type: "POST", // <== Method = POST
+            success: function (data) {
+                if (data) {
+                    $("#usersTable").dataTable().fnDraw();
+                    toastr.success("Xóa thành công");
+                }
+            },
+            error: function () {
+                toastr.error("Có lỗi xảy ra");
+            }
+        });
+    }
+    }
+
+
+</script>

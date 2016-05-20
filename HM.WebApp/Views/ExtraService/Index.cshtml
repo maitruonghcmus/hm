@@ -57,11 +57,11 @@
                 },
                 success: function myfunction(data) {
                     if (data) {
-                        alert("Thêm thành công");
+                        toastr.success("Thêm thành công");
                         $("#toLoadServices").load('@Url.Action("LoadExtraServices", "ExtraService")');
                     }
                     else
-                        alert("Thêm không thành công");
+                        toastr.error("Thêm không thành công");
                 },
                 error: function myfunction() {
 
@@ -82,12 +82,12 @@
                 },
                 success: function (data) {
                     if (data) {
-                        alert("Cập nhật thành công");
+                        toastr.success("Cập nhật thành công");
                          $("#toLoadServices").load('@Url.Action("LoadExtraServices", "ExtraService")');
                         openModalAddService();
                     }
                     else
-                        alert("Không thành công");
+                        toastr.error("Không thành công");
                 },
                 error: function myfunction() {
 
@@ -118,7 +118,7 @@
 
             }
         },
-        error: function () { alert("Loi oi") }
+        error: function () { toastr.error("Loi oi") }
     })
     }
     function deleteService(id) {
@@ -131,11 +131,11 @@
                 success: function (data) {
                     if (data) {
                         $("#toLoadServices").load('@Url.Action("LoadExtraServices", "ExtraService")');
-                        alertify.success("Xóa thành công");
+                        toastr.success("Xóa thành công");
                     }
                 },
                 error: function () {
-                    alertify.error("Có lỗi xảy ra");
+                    toastr.error("Có lỗi xảy ra");
                 }
             });
         }

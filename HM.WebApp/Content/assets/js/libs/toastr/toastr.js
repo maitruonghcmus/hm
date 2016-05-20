@@ -84,6 +84,7 @@
                     message: message,
                     optionsOverride: optionsOverride,
                     title: title
+               
                 });
             }
 
@@ -157,6 +158,7 @@
                     containerId: 'toast-container',
                     debug: false,
 
+                    closeButton: true,
                     showMethod: 'fadeIn', //fadeIn, slideDown, and show are built into jQuery
                     showDuration: 300,
                     showEasing: 'swing', //swing and linear are built into jQuery
@@ -174,7 +176,7 @@
                         warning: 'toast-warning'
                     },
                     iconClass: 'toast-info',
-                    positionClass: 'toast-top-right',
+                    positionClass: 'toast-bottom-left',
                     timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
                     titleClass: 'toast-title',
                     messageClass: 'toast-message',

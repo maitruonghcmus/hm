@@ -66,12 +66,12 @@
                 },
                 success: function myfunction(data) {
                     if (data) {
-                        alert("Thêm thành công");
+                        toastr.success("Thêm thành công");
                         //$("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
                         $('#hotelsTable').dataTable().fnDraw();
                     }
                     else
-                        alert("Thêm không thành c");
+                        toastr.error("Thêm không thành công");
                 },
                 error: function myfunction() {
 
@@ -95,13 +95,13 @@
                 },
                 success: function (data) {
                     if (data) {
-                        alert("Cập nhật thành công");
+                        toastr.success("Cập nhật thành công");
                         //$("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
                         $('#hotelsTable').dataTable().fnDraw();
                         openModalAddHotel();
                     }
                     else
-                        alert("Không thành công");
+                        toastr.error("Không thành công");
                 },
                 error: function myfunction() {
 
@@ -129,7 +129,7 @@
                     $("#txtHotelContactMail").val(data.ContactMail);
                 }
             },
-            error: function () { alert("Loi oi") }
+            error: function () { toastr.error("Loi oi") }
         })
     }
     function deleteHotel(id) {
@@ -143,11 +143,11 @@
                     if (data) {
                         //$("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
                         $('#hotelsTable').dataTable().fnDraw();
-                        alertify.success("Xóa thành công");
+                        toastr.success("Xóa thành công");
                     }
                 },
                 error: function () {
-                    alertify.error("Có lỗi xảy ra");
+                    toastr.error("Có lỗi xảy ra");
                 }
             });
         }

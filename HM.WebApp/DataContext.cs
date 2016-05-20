@@ -369,5 +369,19 @@ namespace HM.WebApp
             return HttpClientHelper.Instance.Delete<Payment>(ApiUtils.PAYMENT, ApiUtils.DELETE, id).IsSuccess();
         }
         #endregion
+
+        #region Role
+        public Role GetRole(int id)
+        {
+            var role = HttpClientHelper.Instance.GetObject<Role>(ApiUtils.ROLE, ApiUtils.GETBYID, id);
+            return role != null && !role.Inactive ? role : null;
+        }
+
+        public IEnumerable<Role> GetRoles()
+        {
+            var roles = HttpClientHelper.Instance.GetObjects<IEnumerable<Role>>(ApiUtils.ROLE, ApiUtils.GETALL);
+            return roles != null ? roles.Where(a=> !a.Inactive).Select(a=>a) : null;
+        }
+        #endregion
     }
 }

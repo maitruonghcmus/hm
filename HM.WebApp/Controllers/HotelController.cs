@@ -59,7 +59,29 @@ namespace HM.WebApp.Controllers
         public JsonResult GetHotelInfo(int htId)
         {
             var hotel = DataContext.Instance.GetHotel(htId);
-            return Json(hotel, JsonRequestBehavior.AllowGet);
+            if (hotel != null)
+            {
+                var obj = new
+                {
+                    hotel.Id,
+                    hotel.Address,
+                    hotel.Contact,
+                    hotel.ContactMail,
+                    hotel.ContactPhone,
+                    hotel.CreatedBy,
+                    CreatedOn = hotel.CreatedOn.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
+                    hotel.Inactive,
+                    hotel.ModifiedBy,
+                    ModifiedOn = hotel.ModifiedOn?.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM) ?? string.Empty,
+                    hotel.Name,
+                    hotel.TaxCode
+                };
+
+                return Json(obj, JsonRequestBehavior.AllowGet);
+            }
+
+
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

@@ -38,33 +38,34 @@
 
     function clearControl() {
         $("#txtCustomerTypeName").val("");
-        $("#txtCustomerCoefficient").val("");
+        $("#txtCustomerTypeCoefficient").val("");
     }
 
     function addCustomerType()
     {
-         
-        var customerType = new Object({
-            Name: $("#txtCustomerTypeName").val(),
-            Coefficient: parseFloat($("#txtCustomerTypeCoefficient").val())
-        });
+        //var coe = parseFloat($("#txtCustomerTypeCoefficient").val());
+        
+        //var customerType = new Object({
+        //    Name: $("#txtCustomerTypeName").val(),
+        //    Coefficient: $("#txtCustomerTypeCoefficient").val()
+        //});
 
         if (customerTypeTemp == null) //create
         {
-   
             $.ajax({
                 url: '@Url.Action("CreateCustomerType", "CustomerType")',
                 type: "POST",
                 data: {
-                    ctmType: customerType
+                    name: $("#txtCustomerTypeName").val(),
+                    coe: $("#txtCustomerTypeCoefficient").val()
                 },
                 success: function myfunction(data) {
                     if (data) {
-                        alert("Thêm thành công");
+                        toastr.success('Thêm thành công')
                         $("#toLoadCustomerType").load('@Url.Action("LoadCustomerTypes", "CustomerType")');
                     }
                     else
-                        alert("Thêm không thành công");
+                        toastr.error('Thêm thành công')
                 },
                 error: function myfunction() {
 
@@ -84,12 +85,12 @@
                 },
                 success: function (data) {
                     if (data) {
-                        alert("Cập nhật thành công");
+                        toastr.success("Cập nhật thành công");
                          $("#toLoadCustomerType").load('@Url.Action("LoadCustomerTypes", "CustomerType")');
                         openModalAddCustomerType();
                     }
                     else
-                        alert("Không thành công");
+                        toastr.error("Không thành công");
                 },
                 error: function myfunction() {
 
@@ -113,11 +114,11 @@
                 customerTypeTemp = data;
 
                 $("#txtCustomerTypeName").val(data.Name);
-                $("#txtCustomerCoefficient").val(data.Coefficient);
+                $("#txtCustomerTypeCoefficient").val(data.Coefficient);
 
             }
         },
-        error: function () { alert("Loi oi") }
+        error: function () { toastr.error("Loi oi") }
     })
     }
     function deleteCustomerType(id)
@@ -131,14 +132,18 @@
             success: function (data) {
                 if (data) {
                     $("#toLoadCustomerType").load('@Url.Action("LoadCustomerTypes", "CustomerType")');
-                    alert("Xóa thành công");
+                    toastr.success("Xóa thành công");
                 }
             },
             error: function () {
-                alert("Có lỗi xảy ra");
+                toastr.error("Có lỗi xảy ra");
             }
         });
     }
     }
+
+
+
+   
 </script>
 
