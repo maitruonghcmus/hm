@@ -1,0 +1,73 @@
+﻿@{
+
+    var rooms = ViewBag.Rooms as IEnumerable<HM.WebApp.Models.RoomModel>;
+    var group = rooms?.GroupBy(a => a.RoomTypeName).Select(a => a);
+    var customers = ViewBag.Customers as IEnumerable<HM.DataModels.Customer>;
+
+    if (group != null)
+    {
+        foreach (var g in group)
+        {
+            <div class="row">
+                <h2 class="text-primary"> Phòng @g.Key</h2>
+                @foreach (var r in g)
+                {
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                        <div class="card card-bordered @(r.Status.HasValue && r.Status == 0 ? "style-primary" : (r.Status == 1 ? "style-warning" : "style-danger"))">
+                            <div class="card-head">
+                                <div class="tools">
+                                    <div class="btn-group">
+                                        <a class="btn btn-icon-toggle" data-toggle="modal" onclick="openModalRoomInfo(@r.Name);" data-target="#ModalRoomInfo"><i class="fa fa-info"></i></a>
+                                        <a class="btn btn-icon-toggle" onclick="@(r.Status.HasValue && r.Status == 0 ? "openModalBooking(@r.Id, @r.RoomTypeId);" : (r.Status == 1 ? "displayUnavailableRoom();" : "displayUnavailableRoom();"))" href="@(r.Status.HasValue && r.Status == 0 ? "#modalBooking" : (r.Status == 1 ? "#" : "#"))" data-toggle="modal" data-backdrop="@(r.Status.HasValue && r.Status == 0 ? "true" : (r.Status == 1 ? "false" : "true"))"><i class="fa fa-check"></i></a>
+                                        <a class="btn btn-icon-toggle btn-collapse"><i class="fa fa-angle-down"></i></a>
+                                    </div>
+                                </div>
+                                <header><i class="fa fa-fw fa-tag"></i>@r.Name</header>
+                            </div><!--end .card-head -->
+                            <div class="card-body style-default-bright" style="display: block;">
+                                <ul class="list">
+                                    <li class="tile">
+                                        <a class="tile-content ink-reaction">
+                                            <div class="tile-icon">
+                                                <i class="glyphicon glyphicon-user"></i>
+                                            </div>
+                                            <div class="tile-text">
+                                                John Doe, Daniel, Contei
+                                                <small>2/3</small>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="tile">
+                                        <a class="tile-content ink-reaction">
+                                            <div class="tile-icon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <div class="tile-text">
+                                                21/05/2010
+                                                <small>2days ago</small>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="tile">
+                                        <a class="tile-content ink-reaction">
+                                            <div class="tile-icon">
+                                                <i class="fa fa-money"></i>
+                                            </div>
+                                            <div class="tile-text">
+                                                @r.Price
+                                                <small>/ngày</small>
+                                            </div>
+                                        </a>
+                                        <a class="btn btn-flat ink-reaction" data-toggle="modal" data-target="#modalPay">
+                                            <i class="fa fa-credit-card"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div><!--end .card-body -->
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+}

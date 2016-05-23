@@ -206,6 +206,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -2038,10 +2039,14 @@
     <Content Include="Views\User\_ShowUsers.cshtml" />
     <Content Include="Views\User\_ModalAddUser.cshtml" />
     <Content Include="Views\Room\Index.cshtml" />
+    <Content Include="Views\Room\_ModalBooking.cshtml" />
+    <Content Include="Views\Room\_ShowRooms.cshtml" />
+    <Content Include="Views\Room\_ModalRoomInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\js\core\cache\" />
+    <Folder Include="Views\Order\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
