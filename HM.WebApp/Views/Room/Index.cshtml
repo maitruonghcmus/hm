@@ -15,7 +15,7 @@
                         <h2>@g.Key</h2>
                         @foreach (var r in g)
                         {
-                            <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                 <div class="card card-bordered @(r.Status.HasValue && r.Status == 0 ? "style-primary" : (r.Status == 1 ? "style-warning" : "style-danger"))">
                                     <div class="card-head">
                                         <div class="tools">

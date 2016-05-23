@@ -24,7 +24,7 @@
         $("#btnAddRoomType").text("Thêm");
         editRoomType = null;
         clearControl();
-    }
+    }   
 
     function clearControl() {
         $("#txtRoomTypeName").val("");
@@ -56,7 +56,7 @@
                 $("#txtRoomTypePriceHour3").val(room.Price[2]);
             },
             error: function () {
-                alert("Không lấy được loại phòng");
+                toastr.error("Không lấy được dữ liệu");
             }
         });
     }
@@ -158,7 +158,7 @@
                 Remark: roomRemark
             }
         );
-        if(roomTemp == null) //Create
+        if (roomTemp == null) //Create
         {
             $.ajax({
                 url: '@Url.Action("CreateRoom","RoomType")',
@@ -170,7 +170,8 @@
                 success: function myfunction(data) {
                     if (data) {
                         toastr.success("Thêm thành công");
-                        $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId)
+                        $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId);
+                        $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
                     }
                     else
                         toastr.error("Thêm không thành công");
@@ -184,7 +185,7 @@
         {
             roomTemp.Name = roomName;
             roomTemp.Remark = roomRemark;
-      
+
             $.ajax({
                 url: '@Url.Action("UpdateRoom", "RoomType")',
                 type: "POST",
@@ -199,7 +200,7 @@
                         clearRoomField();
                     }
                     else
-                        toastr.error("Không thành công");
+                        toastr.error("Cập nhật không thành công");
                 },
                 error: function myfunction() {
                 }
@@ -220,7 +221,7 @@
                     $("#roomRemark").val(data.Remark);
                 }
             },
-            error: function () { alert("Loi oi") }
+            error: function () { toastr.error("Không lấy được dữ liệu"); }
         })
     }
 
@@ -240,12 +241,13 @@
                 type: "POST", // <== Method = POST
                 success: function (data) {
                     if (data) {
-                        $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId)
+                        $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId);
+                        $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
                         toastr.success("Xóa thành công");
                     }
                 },
                 error: function () {
-                    alertify.error("Không lấy được mã phòng");
+                    toastr.error("Không lấy được dữ liệu");
                 }
             });
         }

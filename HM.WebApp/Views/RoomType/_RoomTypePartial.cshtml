@@ -1,5 +1,5 @@
 ﻿@{ 
-    var roomtypes = ViewBag.RoomTypes as IEnumerable<HM.DataModels.RoomType>;
+    var roomtypes = ViewBag.RoomTypes as IEnumerable<HM.WebApp.Models.RoomTypeModel>;
 }
 
 <div class="row">
@@ -10,7 +10,7 @@
             @foreach (var item in roomtypes)
             {
                 <li>
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-3 col-sm-6">
                     <div class="card style-primary">
                         <div class="card-head">
                             <div class="tools">
@@ -29,7 +29,7 @@
                                             <i class="fa fa-building-o"></i>
                                         </div>
                                         <div class="tile-text">
-                                            Tổng số phòng: 0
+                                            Tổng số phòng: @item.RoomCount
                                             <small></small>
                                         </div>
                                     </a>

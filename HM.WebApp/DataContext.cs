@@ -21,7 +21,7 @@ namespace HM.WebApp
         public IEnumerable<Hotel> GetHotels()
         {
             var hotels = HttpClientHelper.Instance.GetObjects<IEnumerable<Hotel>>(ApiUtils.HOTEL, ApiUtils.GETALL);
-            return hotels!=null ? hotels.Where(a => !a.Inactive).Select(a => a) : null ;
+            return hotels != null ? hotels.Where(a => !a.Inactive).Select(a => a) : null;
         }
 
         public Hotel GetHotel(int id)
@@ -49,7 +49,13 @@ namespace HM.WebApp
 
         public bool DeleteHotel(int id)
         {
-            return HttpClientHelper.Instance.Delete<Hotel>(ApiUtils.HOTEL, ApiUtils.DELETE, id).IsSuccess();
+            var roomTypeCount = DataContext.Instance.GetRoomTypes()?.Where(a => a.HotelId == id)?.Count() ?? 0;
+            var userCount = DataContext.Instance.GetUsers()?.Where(a => a.HotelId == id)?.Count() ?? 0;
+
+            if (roomTypeCount == 0 && userCount == 0)
+                return HttpClientHelper.Instance.Delete<Hotel>(ApiUtils.HOTEL, ApiUtils.DELETE, id).IsSuccess();
+
+            return false;
         }
         #endregion
 
@@ -64,7 +70,7 @@ namespace HM.WebApp
         public IEnumerable<User> GetUsers()
         {
             var us = HttpClientHelper.Instance.GetObjects<IEnumerable<User>>(ApiUtils.USER, ApiUtils.GETALL);
-            return us !=null ? us.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
+            return us != null ? us.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
         }
 
         public User GetUser(int id)
@@ -102,12 +108,12 @@ namespace HM.WebApp
         public IEnumerable<RoomType> GetRoomTypes()
         {
             var roomtypes = HttpClientHelper.Instance.GetObjects<IEnumerable<RoomType>>(ApiUtils.ROOMTYPE, ApiUtils.GETALL);
- 
-            if(roomtypes!=null)
+
+            if (roomtypes != null)
             {
-               return roomtypes.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+                return roomtypes.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
             }
-            return null; 
+            return null;
         }
 
         public RoomType GetRoomType(int id)
@@ -136,7 +142,12 @@ namespace HM.WebApp
 
         public bool DeleteRoomType(int id)
         {
-            return HttpClientHelper.Instance.Delete<RoomType>(ApiUtils.ROOMTYPE, ApiUtils.DELETE, id).IsSuccess();
+            var acceptToDelete = DataContext.Instance.GetRooms()?.Where(a => a.RoomTypeId == id)?.Count() == 0;
+
+            if (acceptToDelete)
+                return HttpClientHelper.Instance.Delete<RoomType>(ApiUtils.ROOMTYPE, ApiUtils.DELETE, id).IsSuccess();
+
+            return false;
         }
         #endregion
 
@@ -144,7 +155,7 @@ namespace HM.WebApp
         public IEnumerable<Room> GetRooms()
         {
             var rooms = HttpClientHelper.Instance.GetObjects<IEnumerable<Room>>(ApiUtils.ROOM, ApiUtils.GETALL);
-            if(rooms!=null)
+            if (rooms != null)
             {
                 return rooms.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
             }
@@ -177,7 +188,12 @@ namespace HM.WebApp
 
         public bool DeleteRoom(int id)
         {
-            return HttpClientHelper.Instance.Delete<Room>(ApiUtils.ROOM, ApiUtils.DELETE, id).IsSuccess();
+            var acceptToDelete = DataContext.Instance.GetRoom(id)?.Status == 1;
+
+            if (!acceptToDelete)
+                return HttpClientHelper.Instance.Delete<Room>(ApiUtils.ROOM, ApiUtils.DELETE, id).IsSuccess();
+
+            return false;
         }
         #endregion
 
@@ -185,7 +201,7 @@ namespace HM.WebApp
         public IEnumerable<CustomerType> GetCustomerTypes()
         {
             var types = HttpClientHelper.Instance.GetObjects<IEnumerable<CustomerType>>(ApiUtils.CUSTOMERTYPE, ApiUtils.GETALL);
-            if(types!=null)
+            if (types != null)
             {
                 return types.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
             }
@@ -218,7 +234,12 @@ namespace HM.WebApp
 
         public bool DeleteCustomerType(int id)
         {
-            return HttpClientHelper.Instance.Delete<CustomerType>(ApiUtils.CUSTOMERTYPE, ApiUtils.DELETE, id).IsSuccess();
+            var acceptToDelete = DataContext.Instance.GetCustomers()?.Where(a => a.CustomerTypeId == id)?.Count() == 0;
+
+            if (acceptToDelete)
+                return HttpClientHelper.Instance.Delete<CustomerType>(ApiUtils.CUSTOMERTYPE, ApiUtils.DELETE, id).IsSuccess();
+
+            return false;
         }
         #endregion
 
@@ -255,6 +276,7 @@ namespace HM.WebApp
 
         public bool DeleteCustomer(int id)
         {
+            //var acceptToDelete = DataContext.Instance.GetRooms()?.Where(a=>a.)
             return HttpClientHelper.Instance.Delete<Customer>(ApiUtils.CUSTOMER, ApiUtils.DELETE, id).IsSuccess();
         }
         #endregion
@@ -263,7 +285,7 @@ namespace HM.WebApp
         public IEnumerable<ExtraService> GetExtraServices()
         {
             var svs = HttpClientHelper.Instance.GetObjects<IEnumerable<ExtraService>>(ApiUtils.EXTRASERVICE, ApiUtils.GETALL);
-            return svs!=null ? svs.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) :null;
+            return svs != null ? svs.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
         }
 
         public ExtraService GetExtraService(int id)
@@ -300,7 +322,7 @@ namespace HM.WebApp
         public IEnumerable<Order> GetOrders()
         {
             var ords = HttpClientHelper.Instance.GetObjects<IEnumerable<Order>>(ApiUtils.ORDER, ApiUtils.GETALL);
-            return ords !=null ? ords.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
+            return ords != null ? ords.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
         }
 
         public Order GetOrder(int id)
@@ -337,7 +359,7 @@ namespace HM.WebApp
         public IEnumerable<Payment> GetPayments()
         {
             var pms = HttpClientHelper.Instance.GetObjects<IEnumerable<Payment>>(ApiUtils.PAYMENT, ApiUtils.GETALL);
-            return pms!=null ? pms.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
+            return pms != null ? pms.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
         }
 
         public Payment GetPayment(int id)
@@ -380,7 +402,7 @@ namespace HM.WebApp
         public IEnumerable<Role> GetRoles()
         {
             var roles = HttpClientHelper.Instance.GetObjects<IEnumerable<Role>>(ApiUtils.ROLE, ApiUtils.GETALL);
-            return roles != null ? roles.Where(a=> !a.Inactive).Select(a=>a) : null;
+            return roles != null ? roles.Where(a => !a.Inactive).Select(a => a) : null;
         }
         #endregion
     }
