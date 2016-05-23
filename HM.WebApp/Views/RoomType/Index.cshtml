@@ -126,6 +126,8 @@
                         $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
                         toastr.success("Xóa thành công");
                     }
+                    else
+                        toastr.error("Không thể xóa loại phòng này");
                 },
                 error: function () {
                     toastr.error("Không lấy được loại phòng");
@@ -245,6 +247,8 @@
                         $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
                         toastr.success("Xóa thành công");
                     }
+                    else
+                        toastr.error("Không thể xóa phòng này");
                 },
                 error: function () {
                     toastr.error("Không lấy được dữ liệu");

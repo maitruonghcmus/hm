@@ -276,8 +276,12 @@ namespace HM.WebApp
 
         public bool DeleteCustomer(int id)
         {
-            //var acceptToDelete = DataContext.Instance.GetRooms()?.Where(a=>a.)
-            return HttpClientHelper.Instance.Delete<Customer>(ApiUtils.CUSTOMER, ApiUtils.DELETE, id).IsSuccess();
+            var acceptToDelete = DataContext.Instance.GetRooms()?.Where(a => a.CurrentCustomerId == id)?.Count() == 0;
+
+            if (acceptToDelete)
+                return HttpClientHelper.Instance.Delete<Customer>(ApiUtils.CUSTOMER, ApiUtils.DELETE, id).IsSuccess();
+
+            return false;
         }
         #endregion
 

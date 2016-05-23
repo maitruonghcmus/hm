@@ -2,10 +2,12 @@
     ViewBag.Title = "Danh sách phòng";
     var rooms = ViewBag.Rooms as IEnumerable<HM.WebApp.Models.RoomModel>;
     var group = rooms?.GroupBy(a => a.RoomTypeName).Select(a => a);
+    var customers = ViewBag.Customers as IEnumerable<HM.DataModels.Customer>;
 }
 
 <section>
     <div class="section-body">
+<<<<<<< HEAD
         @{
             if (group != null)
             {
@@ -74,5 +76,61 @@
                 }
             }
         }
+=======
+        <div id="toLoadRooms">@Html.Partial("_ShowRooms")</div>
+        @Html.Partial("_ModalBooking")
+        @Html.Partial("_ModalRoomInfo")
+>>>>>>> 7cc7d8be788202dc663b5bcd086a9470d31a19c6
     </div>
 </section>
+
+
+<script>
+    var roomId;
+    var roomTypeId;
+    function openModalBooking(rId, rtId)
+    {
+        roomId = rId;
+        roomTypeId = rtId;
+    }
+
+    function openModalRoomInfo(roomId, roomName)
+    {
+        $("#RoomNameLabel").text(roomName);
+    }
+    function createOrder()
+    {
+
+        var order = new Object({
+            CustomerId: $("#cbbCustomers").val(),
+            RoomId: roomId,
+            //CheckInDate: new Date()
+        });
+
+
+        $.ajax({
+            url: "@Url.Action("BookNewRoom", "Room")",
+            data: { ord : order },
+        type: "POST",
+        success: function myfunction(data) {
+            if (data) {
+                toastr.success("Thêm thành công");
+                $("#toLoadRooms").load('@Url.Action("LoadRooms", "Room")');
+            }
+            else
+                toastr.error("Thêm không thành công");
+        },
+        error: function myfunction() {
+
+        }
+
+
+
+    });
+    }
+
+    function displayUnavailableRoom()
+    {
+        toastr.warning("Phòng đang sử dụng");
+    }
+</script>
