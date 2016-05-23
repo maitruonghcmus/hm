@@ -48,7 +48,7 @@ namespace HM.DataModels
         /// <summary>
         /// Nếu có xuất VAT thì tính thêm 10% tổng giá đơn hàng
         /// </summary>
-        public bool? VAT { get; set; }
+        public bool VAT { get; set; } = false;
 
         /// <summary>
         /// Tổng tiền = Amount + ServiceCharge + OtherCharge + DiscountTotal + VAT

@@ -20,8 +20,6 @@ namespace HM.WebApp.Controllers
             return View();
         }
 
-     
-
         public ActionResult GetCustomerInfo(int ctmId)
         {
             var ctm = DataContext.Instance.GetCustomer(ctmId);
@@ -45,11 +43,7 @@ namespace HM.WebApp.Controllers
 
                 return Json(obj, JsonRequestBehavior.AllowGet);
             }
-
-
             return Json(null, JsonRequestBehavior.AllowGet);
-
-
         }
 
         [HttpPost]
@@ -83,37 +77,36 @@ namespace HM.WebApp.Controllers
             return PartialView("_ShowCustomers");
         }
 
-
         [HttpPost]
         public ActionResult LoadCustomersTable(int? start, int? length)
         {
 
-            var tableSearchText = Request.Params["search[value]"]; //lấy text từ khung search của table nè
+            var tableSearchText = Request.Params["search[value]"];
 
-            var ctms = DataContext.Instance.GetCustomers() // lấy danh sách khach hang nè
-                         ?.Where(c => //check null rồi đem where để lọc dữ liệu nè
-                                (c.Name + c.CardId + c.Phone + c.Address).ToLower() // cộng chuỗi các field của hotel để đem so sánh với tableSearchText nè
-                                    .Contains(tableSearchText.ToLower()) //so nếu chuỗi trên có chứa tableSearchText nè
+            var ctms = DataContext.Instance.GetCustomers()
+                         ?.Where(c =>
+                                (c.Name + c.CardId + c.Phone + c.Address).ToLower()
+                                    .Contains(tableSearchText.ToLower())
                                 )
                          .Select(c => c);
 
-            var dataFiltered = ctms?.Skip(start ?? 0).Take(Math.Min(length ?? 0, ctms.Count() - start ?? 0)) //xong lấy 10 record từ start đến length để show lên trên table nè
-                    .Select(c => new
-                    {
-                        c.Id,
-                        Name = "<b>"+ c.Name + "</b> <br/><i class='fa fa-info'></i> " +  (DataContext.Instance.GetCustomerType(c.CustomerTypeId)?.Name ?? "Chưa rõ"),
-                        c.CardId,
-                        c.Phone,
-                        c.Address,
-                        CreatedBy = "<i class='fa fa-user'></i> " + (DataContext.Instance.GetUser(c.CreatedBy)?.Fullname ?? "Đang cập nhật" )+ "<br/><i class='fa fa-clock-o'></i> " + c.CreatedOn.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
-                        ModifiedBy = "<i class='fa fa-user'></i> " +(DataContext.Instance.GetUser(c.ModifiedBy ?? 0)?.Fullname ?? "Chưa chỉnh sửa") + "<br/><i class='fa fa-clock-o'></i> " + c.ModifiedOn?.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM) ?? "Chưa chỉnh sửa",
-                        Command = "<button type='button' onclick='editCustomer(" + c.Id + ")' class='btn btn-icon-toggle' data-toggle='modal' data-target='#modalAddCustomer'><i class='fa fa-pencil'></i></button>"
-                                + "<button type='button' onclick='deleteCustomer(" + c.Id + ")' class='btn btn-icon-toggle'><i class='fa fa-trash-o'></i></button>"
-                    });
+            var dataFiltered = ctms?.Skip(start ?? 0).Take(Math.Min(length ?? 0, ctms.Count() - start ?? 0))
+                .Select(c => new
+                {
+                    c.Id,
+                    Name = "<b>" + c.Name + "</b> <br/><i class='fa fa-info'></i> " + (DataContext.Instance.GetCustomerType(c.CustomerTypeId)?.Name ?? "Chưa rõ"),
+                    c.CardId,
+                    c.Phone,
+                    c.Address,
+                    CreatedBy = "<i class='fa fa-user'></i> " + (DataContext.Instance.GetUser(c.CreatedBy)?.Fullname ?? "Đang cập nhật") + "<br/><i class='fa fa-clock-o'></i> " + c.CreatedOn.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
+                    ModifiedBy = "<i class='fa fa-user'></i> " + (DataContext.Instance.GetUser(c.ModifiedBy ?? 0)?.Fullname ?? "Chưa chỉnh sửa") + "<br/><i class='fa fa-clock-o'></i> " + c.ModifiedOn?.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM) ?? "Chưa chỉnh sửa",
+                    Command = "<button type='button' onclick='editCustomer(" + c.Id + ")' class='btn btn-icon-toggle' data-toggle='modal' data-target='#modalAddCustomer'><i class='fa fa-pencil'></i></button>"
+                            + "<button type='button' onclick='deleteCustomer(" + c.Id + ")' class='btn btn-icon-toggle'><i class='fa fa-trash-o'></i></button>"
+                });
 
             var dataTable = new DataTable<object>
             {
-                recordsTotal = ctms?.Count() ?? 0, //Tổng số record nè, nếu hotel null thì là 0 record nè
+                recordsTotal = ctms?.Count() ?? 0,
                 recordsFiltered = ctms?.Count() ?? 0,
                 data = dataFiltered
             };
