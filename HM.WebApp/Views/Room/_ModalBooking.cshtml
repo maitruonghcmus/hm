@@ -1,0 +1,47 @@
+﻿
+@{ 
+    var customers = ViewBag.Customers as IEnumerable<HM.DataModels.Customer>;
+}
+<div class="modal right fade" id="modalBooking" tabindex="-1" role="dialog" aria-labelledby="ModalBookingLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="ModalBookingLabel">Đặt phòng</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <br />
+                <div class="form-group">
+
+                    <select id="cbbCustomers" name="cbbCustomers" class="form-control">
+
+                        @{
+                            <option value="">Khách hàng</option>
+                            if (customers != null)
+                            {
+                                foreach (var item in customers)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            }
+
+                        }
+                    </select>
+                    <!--<label for="cbbCustomers">Chọn khách</label>-->
+                </div>
+
+                <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+                    <a class="btn btn-primary" role="button" id="btnOrder" onclick="createOrder();">Đặt phòng này</a>
+                    <a class="btn btn-default" role="button" id="btnClear" onclick="clearRoomField()">Nhập lại</a>
+                </div>
+
+              
+
+            </div>
+
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div><!-- modal -->
