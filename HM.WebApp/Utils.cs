@@ -13,7 +13,7 @@ namespace HM.WebApp
         public static readonly string HOTEL = "Hotel";
         public static readonly string ORDER = "Order";
         public static readonly string ORDERDETAIL = "OrderDetail";
-        public static readonly string PAYMENT = "Paymet";
+        public static readonly string PAYMENT = "Payment";
         public static readonly string ROLE = "Role";
         public static readonly string ROOM = "Room";
         public static readonly string ROOMTYPE = "RoomType";

@@ -18,7 +18,7 @@ namespace HM.WebApp
         /// Hàm lấy 5 khách hàng mới nhất của một khách sạn
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Customer> Top5NewestCustomers()
+        public IEnumerable<Customer> Get5NewestCustomers()
         {
             var customers = DataContext.Instance.GetCustomers()?
                             .OrderByDescending(c => c.CreatedOn)?
@@ -30,7 +30,7 @@ namespace HM.WebApp
         /// Hàm thống kê 5 khách hàng vừa trả phòng gần nhất
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Customer> Top5CusomerCheckedOutRecent()
+        public IEnumerable<Customer> Get5CusomerCheckedOutRecent()
         {
             var payments = DataContext.Instance.GetPayments()?
                             .OrderByDescending(p => p.CheckOutDate)?
@@ -51,7 +51,7 @@ namespace HM.WebApp
         /// <param name="fromDate">từ ngày</param>
         /// <param name="toDate">đến ngày</param>
         /// <returns></returns>
-        public Dictionary<Room, double> RoomUseDensity(DateTime fromDate, DateTime toDate)
+        public Dictionary<Room, double> GetRoomUseDensity(DateTime fromDate, DateTime toDate)
         {
             //Double: tỷ lệ sử dụng phòng (tỷ lệ %)
             var orders = DataContext.Instance.GetOrders()?
@@ -79,27 +79,27 @@ namespace HM.WebApp
         /// Hàm thống kê mật độ sử dụng phòng trong ngày
         /// </summary>
         /// <returns></returns>
-        public Dictionary<Room, double> RoomUseDensityByDay()
+        public Dictionary<Room, double> GetRoomUseDensityByDay()
         {
-            return this.RoomUseDensity(DateTime.Today, DateTime.Today.AddDays(1));
+            return this.GetRoomUseDensity(DateTime.Today, DateTime.Today.AddDays(1));
         }
 
         /// <summary>
         /// Hàm thống kê mật độ sử dụng phòng trong 7 ngày gần nhất
         /// </summary>
         /// <returns></returns>
-        public Dictionary<Room, double> RoomUseDensityByWeek()
+        public Dictionary<Room, double> GetRoomUseDensityByWeek()
         {
-            return this.RoomUseDensity(DateTime.Today.AddDays(-6), DateTime.Today.AddDays(1));
+            return this.GetRoomUseDensity(DateTime.Today.AddDays(-6), DateTime.Today.AddDays(1));
         }
 
         /// <summary>
         /// Hàm thống kê mật độ sử dụng phòng trong 1 tháng gần nhất
         /// </summary>
         /// <returns></returns>
-        public Dictionary<Room, double> RoomUseDensityByMonth()
+        public Dictionary<Room, double> GetRoomUseDensityByMonth()
         {
-            return this.RoomUseDensity(DateTime.Today.AddMonths(-1).AddDays(1), DateTime.Today.AddDays(1));
+            return this.GetRoomUseDensity(DateTime.Today.AddMonths(-1).AddDays(1), DateTime.Today.AddDays(1));
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace HM.WebApp
         /// <param name="fromDate">từ ngày</param>
         /// <param name="toDate">đến ngày</param>
         /// <returns></returns>
-        public Dictionary<RoomType, double> RevenueByRoomType(DateTime fromDate, DateTime toDate)
+        public Dictionary<RoomType, double> GetRevenueByRoomType(DateTime fromDate, DateTime toDate)
         {
             var group = DataContext.Instance.GetPayments()?
                             .Where(a => a.CheckOutDate >= fromDate && a.CheckOutDate <= toDate)?
@@ -153,7 +153,7 @@ namespace HM.WebApp
         /// Hàm thống kê doanh thu trong ngày
         /// </summary>
         /// <returns></returns>
-        public double RevenueByDay()
+        public double GetRevenueByDay()
         {
             var payments = DataContext.Instance.GetPayments()?
                             .Where(a => a.CheckOutDate >= DateTime.Today && a.CheckOutDate <= DateTime.Today.AddDays(1))?
@@ -173,7 +173,7 @@ namespace HM.WebApp
         /// Hàm tính doanh thu 7 ngày gần nhất
         /// </summary>
         /// <returns></returns>
-        public double RevenueByWeek()
+        public double GetRevenueByWeek()
         {
             var payments = DataContext.Instance.GetPayments()?
                             .Where(a => a.CheckOutDate >= DateTime.Today.AddDays(-6) && a.CheckOutDate <= DateTime.Today.AddDays(1))?
@@ -193,10 +193,26 @@ namespace HM.WebApp
         ///Hàm tính doanh thu theo 1 tháng gần nhất        
         /// </summary>
         /// <returns></returns>
-        public double RevenueByMonth()
+        public double GetRevenueByMonth()
         {
             var payments = DataContext.Instance.GetPayments()?
                             .Where(a => a.CheckOutDate >= DateTime.Today.AddMonths(-1).AddDays(1) && a.CheckOutDate <= DateTime.Today.AddDays(1))?
+                            .Select(a => a);
+
+            var rev = 0.0;
+            if (payments != null)
+            {
+                foreach (var item in payments)
+                    rev += item.Total;
+            }
+
+            return rev;
+        }
+
+        public double GetRevenueByYear()
+        {
+            var payments = DataContext.Instance.GetPayments()?
+                            .Where(a => a.CheckOutDate >= DateTime.Today.AddYears(-1).AddDays(1) && a.CheckOutDate <= DateTime.Today.AddDays(1))?
                             .Select(a => a);
 
             var rev = 0.0;
