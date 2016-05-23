@@ -15,10 +15,10 @@ namespace HM.DataModels
         /// <summary>
         /// Danh sách những dịch vụ trong một lần khách mua hàng
         /// Ví dụ: coca 3,khăn lạnh 2, mỳ bò 3
-        /// Guid: ExtraServiceId
+        /// int: ExtraServiceId
         /// int: số lượng
         /// </summary>
-        public Dictionary<Guid, int> ExtraServices { get; set; }
+        public Dictionary<int, int> ExtraServices { get; set; }
 
         /// <summary>
         /// Tổng tiền cho tất cả các dịch vụ trên

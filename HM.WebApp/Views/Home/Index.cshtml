@@ -1,7 +1,9 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
-    var newCustomer = ViewBag.NewCustomer as List<HM.DataModels.Customer>;
+    var revByDay = (double)ViewBag.RevByDay;
+    var revByWeek = (double)ViewBag.RevByWeek;
+    var revByMonth = (double)ViewBag.RevByMonth;
+    var revByYear = (double)ViewBag.RevByYear;
 }
 
 <section>
@@ -14,8 +16,8 @@
                     <div class="card-body no-padding">
                         <div class="alert alert-callout alert-info no-margin">
                             <strong class="pull-right text-success text-lg">0,38% <i class="md md-trending-up"></i></strong>
-                            <strong class="text-xl">$ 32,829</strong><br />
-                            <span class="opacity-50">Revenue</span>
+                            <strong class="text-xl">@(revByDay.ToString("#,##0"))</strong><br />
+                            <span class="opacity-50">Doanh thu theo ngày</span>
                             <div class="stick-bottom-left-right">
                                 <div class="height-2 sparkline-revenue" data-line-color="#bdc1c1"></div>
                             </div>
@@ -30,8 +32,8 @@
                     <div class="card-body no-padding">
                         <div class="alert alert-callout alert-warning no-margin">
                             <strong class="pull-right text-warning text-lg">0,01% <i class="md md-swap-vert"></i></strong>
-                            <strong class="text-xl">432,901</strong><br />
-                            <span class="opacity-50">Visits</span>
+                            <strong class="text-xl">@(revByWeek.ToString("#,##0"))</strong><br />
+                            <span class="opacity-50">Doanh thu theo tuần</span>
                             <div class="stick-bottom-right">
                                 <div class="height-1 sparkline-visits" data-bar-color="#e5e6e6"></div>
                             </div>
@@ -46,8 +48,8 @@
                     <div class="card-body no-padding">
                         <div class="alert alert-callout alert-danger no-margin">
                             <strong class="pull-right text-danger text-lg">0,18% <i class="md md-trending-down"></i></strong>
-                            <strong class="text-xl">42.90%</strong><br />
-                            <span class="opacity-50">Bounce rate</span>
+                            <strong class="text-xl">@(revByMonth.ToString("#,##0"))</strong><br />
+                            <span class="opacity-50">Doanh thu theo tháng</span>
                             <div class="stick-bottom-left-right">
                                 <div class="progress progress-hairline no-margin">
                                     <div class="progress-bar progress-bar-danger" style="width:43%"></div>
@@ -64,8 +66,8 @@
                     <div class="card-body no-padding">
                         <div class="alert alert-callout alert-success no-margin">
                             <h1 class="pull-right text-success"><i class="md md-timer"></i></h1>
-                            <strong class="text-xl">54 sec.</strong><br />
-                            <span class="opacity-50">Avg. time on site</span>
+                            <strong class="text-xl">@(revByYear.ToString("#,##0"))</strong><br />
+                            <span class="opacity-50">Doanh thu theo năm</span>
                         </div>
                     </div><!--end .card-body -->
                 </div><!--end .card -->

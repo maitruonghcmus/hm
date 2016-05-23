@@ -1,4 +1,5 @@
 ﻿using HM.DataModels;
+using HM.WebApp.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,14 +17,11 @@ namespace HM.WebApp
         /// <summary>
         /// Hàm lấy 5 khách hàng mới nhất của một khách sạn
         /// </summary>
-        /// <param name="hotelId"></param>
         /// <returns></returns>
-        public IEnumerable<Customer> Top5NewestCustomers(int hotelId)
+        public IEnumerable<Customer> Get5NewestCustomers()
         {
-            var customers = HttpClientHelper.Instance
-                            .GetObjects<IEnumerable<Customer>>(ApiUtils.CUSTOMER, ApiUtils.GETALL)
-                            .Where(a => a.HotelId == hotelId)
-                            .OrderByDescending(a => a.CreatedOn)
+            var customers = DataContext.Instance.GetCustomers()?
+                            .OrderByDescending(c => c.CreatedOn)?
                             .Take(5);
             return customers;
         }
@@ -31,117 +29,223 @@ namespace HM.WebApp
         /// <summary>
         /// Hàm thống kê 5 khách hàng vừa trả phòng gần nhất
         /// </summary>
-        /// <param name="hotelId"></param>
         /// <returns></returns>
-        public IEnumerable<Customer> Top5CusomerCheckedOut(int hotelId)
+        public IEnumerable<Customer> Get5CusomerCheckedOutRecent()
         {
-            var payments = HttpClientHelper.Instance
-                            .GetObjects<IEnumerable<Payment>>(ApiUtils.PAYMENT, ApiUtils.GETALL)
-                            .Where(a => a.HotelId == hotelId)
-                            .OrderByDescending(a => a.CheckOutDate)
-                            .Select(a => a.CustomerId)
+            var payments = DataContext.Instance.GetPayments()?
+                            .OrderByDescending(p => p.CheckOutDate)?
+                            .Select(p => p.CustomerId)?
                             .Take(5);
 
             var customers = new List<Customer>();
-
-            payments.ToList().ForEach(a =>
-                customers.Add(HttpClientHelper.Instance.GetObject<Customer>(ApiUtils.CUSTOMER, ApiUtils.GETBYID, a))
+            payments?.ToList()?.ForEach(customerId =>
+                customers.Add(DataContext.Instance.GetCustomer(customerId))
             );
 
             return customers;
         }
 
-        //TODO: Định nghĩa hàm thống kê số phòng có mật độ sử dụng cao nhất, bao gồm tên phòng, số lần được sử dụng trong ngày, trong tuần, trong tháng
-        public Dictionary<Room, double> Top5MostUseRoom(int hotelId)
+        /// <summary>
+        /// Hàm thống kê mật độ sử dụng phòng (phòng nào được sử dụng nhiều nhất)
+        /// </summary>
+        /// <param name="fromDate">từ ngày</param>
+        /// <param name="toDate">đến ngày</param>
+        /// <returns></returns>
+        public Dictionary<Room, double> GetRoomUseDensity(DateTime fromDate, DateTime toDate)
         {
             //Double: tỷ lệ sử dụng phòng (tỷ lệ %)
-            return null;
+            var orders = DataContext.Instance.GetOrders()?
+                            .Where(a => a.CheckInDate >= fromDate && a.CheckInDate <= toDate)?
+                            .GroupBy(a => a.RoomId)?
+                            .Select(a => a);
+
+            var ordCount = orders?.Count() ?? 0.0;
+            var rooms = new Dictionary<Room, double>();
+            foreach (var o in orders)
+            {
+                var ordByRoomCount = 0.0;
+                foreach (var item in o)
+                {
+                    ordByRoomCount++;
+                }
+
+                rooms.Add(DataContext.Instance.GetRoom(o.Key), ordByRoomCount / ordCount);
+            }
+
+            return rooms;
         }
 
-        //TODO: Định nghĩa hàm thống kê doanh thu theo loại phòng
-        public Dictionary<RoomType, double> RevenueByRoomType(int hotelId, DateTime fromDate, DateTime toDate)
+        /// <summary>
+        /// Hàm thống kê mật độ sử dụng phòng trong ngày
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<Room, double> GetRoomUseDensityByDay()
         {
-            var payments = HttpClientHelper.Instance
-                            .GetObjects<IEnumerable<Payment>>(ApiUtils.PAYMENT, ApiUtils.GETALL)
-                            .Where(a => a.HotelId == hotelId && a.CheckOutDate >= fromDate && a.CheckOutDate <= toDate);
-
-            return null;
+            return this.GetRoomUseDensity(DateTime.Today, DateTime.Today.AddDays(1));
         }
-        
+
+        /// <summary>
+        /// Hàm thống kê mật độ sử dụng phòng trong 7 ngày gần nhất
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<Room, double> GetRoomUseDensityByWeek()
+        {
+            return this.GetRoomUseDensity(DateTime.Today.AddDays(-6), DateTime.Today.AddDays(1));
+        }
+
+        /// <summary>
+        /// Hàm thống kê mật độ sử dụng phòng trong 1 tháng gần nhất
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<Room, double> GetRoomUseDensityByMonth()
+        {
+            return this.GetRoomUseDensity(DateTime.Today.AddMonths(-1).AddDays(1), DateTime.Today.AddDays(1));
+        }
+
+        /// <summary>
+        /// Hàm thống kê doanh thu theo loại phòng
+        /// </summary>
+        /// <param name="fromDate">từ ngày</param>
+        /// <param name="toDate">đến ngày</param>
+        /// <returns></returns>
+        public Dictionary<RoomType, double> GetRevenueByRoomType(DateTime fromDate, DateTime toDate)
+        {
+            var group = DataContext.Instance.GetPayments()?
+                            .Where(a => a.CheckOutDate >= fromDate && a.CheckOutDate <= toDate)?
+                            .Select(a => new PaymentModel(a))?
+                            .GroupBy(a => a.RoomType)?
+                            .Select(a => a);
+
+            var rev = new Dictionary<RoomType, double>();
+            foreach (var g in group)
+            {
+                var total = 0.0;
+                foreach (var item in g)
+                    total += item.Total;
+                rev.Add(g.Key, total);
+            }
+
+            return rev;
+        }
+
+        /// <summary>
+        /// Hàm lấy loại phòng theo thanh toán
+        /// </summary>
+        /// <param name="paymentId"></param>
+        /// <returns></returns>
         public RoomType GetRoomTypeFromPayment(int paymentId)
         {
             var payment = DataContext.Instance.GetPayment(paymentId);
-            //var order = HttpClientHelper.Instance.GetObject<Order>(ApiUtils.ORDER, ApiUtils.GETBYID, payment != null ? (payment.OrderId != null ? payment.OrderId : 0 )  : 0);
-            var orderId = payment!=null ? payment.OrderId : 0;
+
+            var orderId = payment != null ? payment.OrderId : 0;
             var order = DataContext.Instance.GetOrder(orderId);
 
-            var roomId = order !=null ? order.RoomId : 0;
-            //var room = HttpClientHelper.Instance.GetObject<Room>(ApiUtils.ROOM, ApiUtils.GETBYID, order?.RoomId ?? 0);
+            var roomId = order != null ? order.RoomId : 0;
             var room = DataContext.Instance.GetRoom(roomId);
 
-            var roomtypeId = room !=null ? room.RoomTypeId : 0;
-            //var roomtype = HttpClientHelper.Instance.GetObject<RoomType>(ApiUtils.ROOMTYPE, ApiUtils.GETBYID, room?.RoomTypeId ?? 0);
+            var roomtypeId = room != null ? room.RoomTypeId : 0;
             var roomtype = DataContext.Instance.GetRoomType(roomtypeId);
 
             return roomtype;
         }
 
-        //TODO: định nghĩa hàm thống kê doanh thu theo ngày
-        public Dictionary<DateTime, double> RevenueByDay(int hotelId)
+        /// <summary>
+        /// Hàm thống kê doanh thu trong ngày
+        /// </summary>
+        /// <returns></returns>
+        public double GetRevenueByDay()
         {
-            //double: doanh thu
-            return null;
+            var payments = DataContext.Instance.GetPayments()?
+                            .Where(a => a.CheckOutDate >= DateTime.Today && a.CheckOutDate <= DateTime.Today.AddDays(1))?
+                            .Select(a => a);
+
+            var rev = 0.0;
+            if (payments != null)
+            {
+                foreach (var item in payments)
+                    rev += item.Total;
+            }
+
+            return rev;
         }
 
-        //TODO: định nghĩa hàm tính doanh thu theo tuần
-        public Dictionary<int, double> RevenueByWeek(int hotelId)
+        /// <summary>
+        /// Hàm tính doanh thu 7 ngày gần nhất
+        /// </summary>
+        /// <returns></returns>
+        public double GetRevenueByWeek()
         {
-            //double: doanh thu
-            return null;
+            var payments = DataContext.Instance.GetPayments()?
+                            .Where(a => a.CheckOutDate >= DateTime.Today.AddDays(-6) && a.CheckOutDate <= DateTime.Today.AddDays(1))?
+                            .Select(a => a);
+
+            var rev = 0.0;
+            if (payments != null)
+            {
+                foreach (var item in payments)
+                    rev += item.Total;
+            }
+
+            return rev;
         }
 
-        //TODO: định nghĩa hàm tính doanh thu theo tháng
-        public Dictionary<int, double> RevenueByMonth(int hotelId)
+        /// <summary>
+        ///Hàm tính doanh thu theo 1 tháng gần nhất        
+        /// </summary>
+        /// <returns></returns>
+        public double GetRevenueByMonth()
         {
-            //double: doanh thu
-            return null;
+            var payments = DataContext.Instance.GetPayments()?
+                            .Where(a => a.CheckOutDate >= DateTime.Today.AddMonths(-1).AddDays(1) && a.CheckOutDate <= DateTime.Today.AddDays(1))?
+                            .Select(a => a);
+
+            var rev = 0.0;
+            if (payments != null)
+            {
+                foreach (var item in payments)
+                    rev += item.Total;
+            }
+
+            return rev;
         }
 
-        //TODO: định nghĩa hàm thống kê các dịch vụ được khách sử dụng nhiều nhất trong ngày, tuần tháng
-        public Dictionary<ExtraService, double> ExtraServiceDensityByDay(int hotelId)
+        public double GetRevenueByYear()
         {
-            return null;
+            var payments = DataContext.Instance.GetPayments()?
+                            .Where(a => a.CheckOutDate >= DateTime.Today.AddYears(-1).AddDays(1) && a.CheckOutDate <= DateTime.Today.AddDays(1))?
+                            .Select(a => a);
+
+            var rev = 0.0;
+            if (payments != null)
+            {
+                foreach (var item in payments)
+                    rev += item.Total;
+            }
+
+            return rev;
         }
 
-        //TODO: định nghĩa hàm thống kê các dịch vụ được khách sử dụng nhiều nhất trong ngày, tuần tháng
-        public Dictionary<ExtraService, double> ExtraServiceDensityByWeek(int hotelId)
-        {
-            return null;
-        }
 
-        //TODO: định nghĩa hàm thống kê các dịch vụ được khách sử dụng nhiều nhất trong ngày, tuần tháng
-        public Dictionary<ExtraService, double> ExtraServiceDensityByMonth(int hotelId)
-        {
-            return null;
-        }
+        //public Dictionary<ExtraService, double> ExtraServiceDensity(DateTime fromDate, DateTime toDate)
+        //{
+        //    var 
+        //    return null;
+        //}
 
-        //TODO: định nghĩa hàm thống kê mật độ sử dụng phòng theo ngày
-        public Dictionary<Room, double> RoomUseDensityByDay(int hotelId)
-        {
-            return null;
-        }
+        //public Dictionary<ExtraService, double> ExtraServiceDensityByDay()
+        //{
+        //    return null;
+        //}
 
-        //TODO: định nghĩa hàm thống kê mật độ sử dụng phòng theo tuần
-        public Dictionary<Room, double> RoomUseDensityByWeek(int hotelId)
-        {
-            return null;
-        }
+        //public Dictionary<ExtraService, double> ExtraServiceDensityByWeek()
+        //{
+        //    return null;
+        //}
 
-        //TODO: định nghĩa hàm thống kê mật độ sử dụng phòng theo tháng
-        public Dictionary<Room, double> RoomUseDensityByMonth(int hotelId)
-        {
-            return null;
-        }
+        //public Dictionary<ExtraService, double> ExtraServiceDensityByMonth()
+        //{
+        //    return null;
+        //}
 
         #endregion
 
