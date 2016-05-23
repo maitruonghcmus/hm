@@ -49,7 +49,7 @@ namespace HM.WebApp.Controllers
 
             var r = DataContext.Instance.GetRoom(ord.RoomId);
             r.Status = 1;
-
+            r.CurrentCustomerId = ord.CustomerId; 
             if (createsuccess)
             {
                 var updatesuccess = DataContext.Instance.UpdateRoom(r);

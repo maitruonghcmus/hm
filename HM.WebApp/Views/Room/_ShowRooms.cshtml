@@ -32,8 +32,18 @@
                                                 <i class="glyphicon glyphicon-user"></i>
                                             </div>
                                             <div class="tile-text">
-                                                John Doe, Daniel, Contei
-                                                <small>2/3</small>
+                                                @{
+                                                    if (r.Customer != null)
+                                                    {
+                                                        @r.Customer.Name;
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>Phòng chưa được đặt</label>
+                                                    }
+
+                                                 }
+                                          
                                             </div>
                                         </a>
                                     </li>
