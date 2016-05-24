@@ -1,4 +1,5 @@
 ﻿using HM.DataModels;
+using HM.WebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,14 @@ namespace HM.WebApp.Controllers
     {
         public ActionResult Index()
         {
-            var roomtypes = DataContext.Instance.GetRoomTypes();
+            var roomtypes = DataContext.Instance.GetRoomTypes()?.Select(a => new RoomTypeModel(a));
             ViewBag.RoomTypes = roomtypes;
-           
             return View();
         }
 
         public ActionResult LoadRoomTypePartial()
         {
-            var roomtypes = DataContext.Instance.GetRoomTypes();
+            var roomtypes = DataContext.Instance.GetRoomTypes()?.Select(a => new RoomTypeModel(a));
             ViewBag.RoomTypes = roomtypes;
 
             return PartialView("_RoomTypePartial");
@@ -30,7 +30,7 @@ namespace HM.WebApp.Controllers
         {
             var createSuccess = DataContext.Instance.CreateRoomType(roomType);
 
-            if (createSuccess) 
+            if (createSuccess)
                 return Json(true, JsonRequestBehavior.AllowGet);
 
             return Json(false, JsonRequestBehavior.AllowGet);
@@ -39,8 +39,8 @@ namespace HM.WebApp.Controllers
         [HttpGet]
         public ActionResult GetRoomType(int id)
         {
-            var room = DataContext.Instance.GetRoomType(id);
-            return Json(room, JsonRequestBehavior.AllowGet);
+            var rt = DataContext.Instance.GetRoomType(id);
+            return Json(rt, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -72,7 +72,7 @@ namespace HM.WebApp.Controllers
 
         public ActionResult GetRoomList(int rtId)
         {
-            var rooms = DataContext.Instance.GetRooms()?.Where(a=>a.RoomTypeId == rtId).Select(a=>a).ToList();
+            var rooms = DataContext.Instance.GetRooms()?.Where(a => a.RoomTypeId == rtId).Select(a => a).ToList();
             //var selected = rooms != null ? rooms.Where(a => a.RoomTypeId == rtId).Select(a => a) : null;
 
             ViewBag.RoomList = rooms;
@@ -82,7 +82,7 @@ namespace HM.WebApp.Controllers
         public ActionResult DeleteRoom(int rId)
         {
             var deleteSuccess = DataContext.Instance.DeleteRoom(rId);
-            if(deleteSuccess)
+            if (deleteSuccess)
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
@@ -99,7 +99,7 @@ namespace HM.WebApp.Controllers
         public ActionResult UpdateRoom(Room r)
         {
             var updatesuccess = DataContext.Instance.UpdateRoom(r);
-            if(updatesuccess)
+            if (updatesuccess)
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }

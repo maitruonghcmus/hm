@@ -222,6 +222,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PaymentModel.cs" />
     <Compile Include="Models\RoomModel.cs" />
+    <Compile Include="Models\RoomTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils.cs" />
