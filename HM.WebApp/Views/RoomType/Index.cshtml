@@ -24,7 +24,7 @@
         $("#btnAddRoomType").text("Thêm");
         editRoomType = null;
         clearControl();
-    }   
+    }
 
     function clearControl() {
         $("#txtRoomTypeName").val("");
@@ -69,7 +69,7 @@
         var Price2 = parseInt($("#txtRoomTypePriceHour2").val());
         var Price3 = parseInt($("#txtRoomTypePriceHour3").val());
 
-        if (editRoomType == null) { //editRoomType ko có, nên là trường hợp tạo mới
+        if (editRoomType == null) {
             console.log("create");
 
             $.ajax({
@@ -262,7 +262,8 @@
             type: "POST", // <== Method = POST
             success: function (data) {
                 if (data) {
-                    $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId)
+                    $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId);
+                    $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
                     toastr.success("Xóa thành công");
                 }
             },
