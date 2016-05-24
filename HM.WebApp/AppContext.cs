@@ -90,7 +90,7 @@ namespace HM.WebApp
         /// <returns></returns>
         public Dictionary<Room, double> GetRoomUseDensityByWeek()
         {
-            return this.GetRoomUseDensity(DateTime.Today.AddDays(-6), DateTime.Today.AddDays(1));
+            return this.GetRoomUseDensity(DateTime.Today.AddDays(-7), DateTime.Today.AddDays(1));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace HM.WebApp
         /// <returns></returns>
         public Dictionary<Room, double> GetRoomUseDensityByMonth()
         {
-            return this.GetRoomUseDensity(DateTime.Today.AddMonths(-1).AddDays(1), DateTime.Today.AddDays(1));
+            return this.GetRoomUseDensity(DateTime.Today.AddMonths(-1), DateTime.Today.AddDays(1));
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace HM.WebApp
         public double GetRevenueByWeek()
         {
             var payments = DataContext.Instance.GetPayments()?
-                            .Where(a => a.CheckOutDate >= DateTime.Today.AddDays(-6) && a.CheckOutDate <= DateTime.Today.AddDays(1))?
+                            .Where(a => a.CheckOutDate >= DateTime.Today.AddDays(-7) && a.CheckOutDate <= DateTime.Today.AddDays(1))?
                             .Select(a => a);
 
             var rev = 0.0;
@@ -196,7 +196,7 @@ namespace HM.WebApp
         public double GetRevenueByMonth()
         {
             var payments = DataContext.Instance.GetPayments()?
-                            .Where(a => a.CheckOutDate >= DateTime.Today.AddMonths(-1).AddDays(1) && a.CheckOutDate <= DateTime.Today.AddDays(1))?
+                            .Where(a => a.CheckOutDate >= DateTime.Today.AddMonths(-1) && a.CheckOutDate <= DateTime.Today.AddDays(1))?
                             .Select(a => a);
 
             var rev = 0.0;
@@ -212,7 +212,7 @@ namespace HM.WebApp
         public double GetRevenueByYear()
         {
             var payments = DataContext.Instance.GetPayments()?
-                            .Where(a => a.CheckOutDate >= DateTime.Today.AddYears(-1).AddDays(1) && a.CheckOutDate <= DateTime.Today.AddDays(1))?
+                            .Where(a => a.CheckOutDate >= DateTime.Today.AddYears(-1) && a.CheckOutDate <= DateTime.Today.AddDays(1))?
                             .Select(a => a);
 
             var rev = 0.0;
@@ -224,7 +224,6 @@ namespace HM.WebApp
 
             return rev;
         }
-
 
         //public Dictionary<ExtraService, double> ExtraServiceDensity(DateTime fromDate, DateTime toDate)
         //{
