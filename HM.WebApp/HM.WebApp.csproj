@@ -207,6 +207,7 @@
     <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\OrderDetailController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -625,6 +626,11 @@
     <Content Include="Content\assets\img\avatar8.jpg" />
     <Content Include="Content\assets\img\avatar9.jpg" />
     <Content Include="Content\assets\img\LICENSE.txt" />
+    <Content Include="Content\assets\js\alertable\gulpfile.js" />
+    <Content Include="Content\assets\js\alertable\index.html" />
+    <Content Include="Content\assets\js\alertable\jquery.alertable.css" />
+    <Content Include="Content\assets\js\alertable\jquery.alertable.js" />
+    <Content Include="Content\assets\js\alertable\jquery.alertable.min.js" />
     <Content Include="Content\assets\js\alertify\css\alertify.css" />
     <Content Include="Content\assets\js\alertify\js\alertify.js" />
     <Content Include="Content\assets\js\core\demo\Demo.js" />
@@ -1975,6 +1981,7 @@
     <Content Include="Content\assets\less\shared\themes\theme-5.less" />
     <Content Include="Content\assets\less\shared\themes\theme-default.less" />
     <Content Include="Content\assets\less\shared\variables.less" />
+    <Content Include="Content\assets\js\alertable\package.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -2043,10 +2050,12 @@
     <Content Include="Views\Room\_ModalBooking.cshtml" />
     <Content Include="Views\Room\_ShowRooms.cshtml" />
     <Content Include="Views\Room\_ModalRoomInfo.cshtml" />
+    <Content Include="Views\Room\_ModalAddService.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\js\core\cache\" />
+    <Folder Include="Views\OrderDetail\" />
     <Folder Include="Views\Order\" />
   </ItemGroup>
   <ItemGroup>

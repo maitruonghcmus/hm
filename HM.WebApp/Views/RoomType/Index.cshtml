@@ -115,7 +115,27 @@
     }
 
     function deleteRoomType(roomTypeId) {
-        var agreeDelete = confirm("Bạn có chắc chắn muốn xóa loại phòng này?");
+
+        $.alertable.confirm('Bạn có chắc là muốn xóa loại phòng này?').then(function () {
+            $.ajax({
+                url: "@Url.Action("DeleteRoomType", "RoomType")",
+                data: { id: roomTypeId },
+            type: "POST", // <== Method = POST
+            success: function (data) {
+                if (data == true) {
+                    $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
+                    toastr.success("Xóa thành công");
+                }
+            },
+            error: function () {
+                toastr.error("Không lấy được loại phòng");
+            }
+        });
+
+        }, function () { });
+
+
+        @*var agreeDelete = confirm("Bạn có chắc chắn muốn xóa loại phòng này?");
         if (agreeDelete) {
             $.ajax({
                 url: "@Url.Action("DeleteRoomType", "RoomType")",
@@ -131,7 +151,7 @@
                     toastr.error("Không lấy được loại phòng");
                 }
             });
-        }
+        }*@
     }
 
     var roomTypeId = 0;
@@ -232,7 +252,25 @@
     }
 
     function deleteRoom(id) {
-        var agreeDelete = confirm("Bạn có chắc chắn muốn xóa phòng này?");
+        $.alertable.confirm('Bạn có chắc là muốn xóa phòng này?').then(function () {
+            $.ajax({
+                url: "@Url.Action("DeleteRoom", "RoomType")",
+                data: { rId: id },
+            type: "POST", // <== Method = POST
+            success: function (data) {
+                if (data) {
+                    $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId)
+                    toastr.success("Xóa thành công");
+                }
+            },
+            error: function () {
+                alertify.error("Không lấy được mã phòng");
+            }
+        });
+
+        }, function () { });
+
+        @*var agreeDelete = confirm("Bạn có chắc chắn muốn xóa phòng này?");
         if (agreeDelete) {
             $.ajax({
                 url: "@Url.Action("DeleteRoom", "RoomType")",
@@ -248,6 +286,6 @@
                     alertify.error("Không lấy được mã phòng");
                 }
             });
-        }
+        }*@
     }
 </script>

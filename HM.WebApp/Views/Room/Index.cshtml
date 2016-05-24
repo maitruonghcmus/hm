@@ -3,6 +3,7 @@
     var rooms = ViewBag.Rooms as IEnumerable<HM.WebApp.Models.RoomModel>;
     var group = rooms?.GroupBy(a => a.RoomTypeName).Select(a => a);
     var customers = ViewBag.Customers as IEnumerable<HM.DataModels.Customer>;
+    var services = ViewBag.Services as IEnumerable<HM.DataModels.ExtraService>;
 }
 
 <section>
@@ -10,6 +11,7 @@
         <div id="toLoadRooms">@Html.Partial("_ShowRooms")</div>
         @Html.Partial("_ModalBooking")
         @Html.Partial("_ModalRoomInfo")
+        @Html.Partial("_ModalAddService")
     </div>
 </section>
 
@@ -17,15 +19,42 @@
 <script>
     var roomId;
     var roomTypeId;
+    var roomName;
+
     function openModalBooking(rId, rtId)
     {
         roomId = rId;
         roomTypeId = rtId;
+        clearControl();
     }
 
-    function openModalRoomInfo(roomId, roomName)
+    function clearControl()
     {
-        $("#RoomNameLabel").text(roomName);
+        $("#lbCustomerName").text("Chưa có thông tin");
+        $("#lbCustomerInfo").text("");
+        $("#lbCheckInDate").text("");
+    }
+
+    function openModalRoomInfo(roomId)
+    {
+        $("#lbRoomName").text(roomId);
+
+        $.ajax({
+            url: "@Url.Action("GetRoomInfo","Room")",
+            data: { rId: roomId },
+        type: "GET",
+        success: function (data) {
+            if (data != null) {
+          
+                $("#lbCustomerName").text(data.Customer.Name);
+                $("#lbCustomerInfo").text(data.Customer.CardId + ", " + data.Customer.Address + ", " + data.Customer.Phone);
+                $("#lbCheckInDate").text(data.CheckInDate);
+
+            }
+        },
+        error: function () { toastr.error("Có lỗi xảy ra!") }
+    })
+
     }
     function createOrder()
     {
@@ -33,6 +62,7 @@
         var order = new Object({
             CustomerId: $("#cbbCustomers").val(),
             RoomId: roomId,
+
             //CheckInDate: new Date()
         });
 

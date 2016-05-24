@@ -29,6 +29,8 @@ namespace HM.DataModels
         public int? Status { get; set; } = 0;
         public int? CurrentCustomerId { get; set; }
 
+        public DateTime? CheckInDate { get; set; }
+
         public int HotelId { get; set; }
         public bool Inactive { get; set; }
         public int CreatedBy { get; set; }

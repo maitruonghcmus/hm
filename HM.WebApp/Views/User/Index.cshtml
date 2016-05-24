@@ -45,7 +45,7 @@
 
     function addUser()
     {
-       
+
 
         var usernew = new Object({
             Username: $("#txtUsername").val(),
@@ -84,7 +84,7 @@
             userTemp.Fullname = $("#txtUserFullName").val();
             userTemp.Password= $("#txtUserPassword").val();
             userTemp.RoleId= $("#cbbUserRole").val();
-   
+
 
             $.ajax({
                 url: '@Url.Action("UpdateUser", "User")',
@@ -106,7 +106,7 @@
                 }
             })
         }
-        
+
     }
 
 
@@ -133,11 +133,31 @@
         error: function () { alert("Loi oi") }
     })
     }
-  
+
 
     function deleteUser(id)
     {
-        var agreeDelete = confirm("Bạn có chắc chắn muốn xóa ?");
+        $.alertable.confirm('Bạn có chắc là muốn xóa?').then(function () {
+
+            $.ajax({
+                url: "@Url.Action("DeleteUser", "User")",
+                data: { userId: id },
+            type: "POST", // <== Method = POST
+            success: function (data) {
+                if (data) {
+                    $("#usersTable").dataTable().fnDraw();
+                    toastr.success("Xóa thành công");
+                }
+            },
+            error: function () {
+                toastr.error("Có lỗi xảy ra");
+            }
+        });
+        }, function () { });
+
+
+
+        @*var agreeDelete = confirm("Bạn có chắc chắn muốn xóa ?");
         if (agreeDelete) {
             $.ajax({
                 url: "@Url.Action("DeleteUser", "User")",
@@ -153,7 +173,7 @@
                 toastr.error("Có lỗi xảy ra");
             }
         });
-    }
+    }*@
     }
 
 
