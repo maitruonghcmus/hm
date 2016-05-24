@@ -102,7 +102,7 @@
                 }
             })
         }
-        
+
     }
 
 
@@ -130,19 +130,18 @@
         error: function () { toastr.error("Loi oi") }
     })
     }
-  
+
 
     function deleteCustomer(id)
     {
-        var agreeDelete = confirm("Bạn có chắc chắn muốn xóa khách hàng này?");
-        if (agreeDelete) {
+        $.alertable.confirm('Bạn có chắc là muốn xóa?').then(function () {
             $.ajax({
                 url: "@Url.Action("DeleteCustomer", "Customer")",
                 data: { ctmId: id },
             type: "POST", // <== Method = POST
             success: function (data) {
                 if (data) {
-     
+
                     $('#customersTable').dataTable().fnDraw();
                     toastr.success("Xóa thành công");
                 }
@@ -151,7 +150,28 @@
                 toastr.error("Có lỗi xảy ra");
             }
         });
-    }
+
+
+        }, function () { });
+
+        @*var agreeDelete = confirm("Bạn có chắc chắn muốn xóa khách hàng này?");
+        if (agreeDelete) {
+            $.ajax({
+                url: "@Url.Action("DeleteCustomer", "Customer")",
+                data: { ctmId: id },
+            type: "POST", // <== Method = POST
+            success: function (data) {
+                if (data) {
+
+                    $('#customersTable').dataTable().fnDraw();
+                    toastr.success("Xóa thành công");
+                }
+            },
+            error: function () {
+                toastr.error("Có lỗi xảy ra");
+            }
+        });
+        }*@
     }
 
 

@@ -11,6 +11,7 @@ namespace HM.WebApp.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int? Status { get; set; }
+        public string CheckInDate { get; set; }
 
         public int RoomTypeId { get; set; }
         public RoomType RoomType { get; set; }
@@ -29,7 +30,9 @@ namespace HM.WebApp.Models
             this.RoomType = DataContext.Instance.GetRoomType(r.RoomTypeId);
             this.RoomTypeName = RoomType?.Name ?? "Chưa rõ";
             this.Price = RoomType?.Price[3].ToString(NumberUtils.NumberFormatByComma) ?? "0";
-            this.Customer = DataContext.Instance.GetCustomer(r.CurrentCustomerId??-1);
+            Customer = DataContext.Instance.GetCustomer(r.CurrentCustomerId??-1);
+            this.CheckInDate = r.CheckInDate?.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM) ?? "Phòng trống";
+            
         }
     }
 }

@@ -16,9 +16,11 @@ namespace HM.WebApp.Controllers
             var rooms = DataContext.Instance.GetRooms();
             var roomModels = rooms?.Select(a => new RoomModel(a));
             var customers = DataContext.Instance.GetCustomers();
+            var services = DataContext.Instance.GetExtraServices();
             ViewBag.Customers = customers;
             ViewBag.Rooms = roomModels;
-
+            ViewBag.Services = services;
+            
 
             return View();
         }
@@ -28,8 +30,10 @@ namespace HM.WebApp.Controllers
             var rooms = DataContext.Instance.GetRooms();
             var roomModels = rooms?.Select(a => new RoomModel(a));
             var customers = DataContext.Instance.GetCustomers();
+            var services = DataContext.Instance.GetExtraServices();
             ViewBag.Customers = customers;
             ViewBag.Rooms = roomModels;
+            ViewBag.Services = services;
 
 
             return PartialView("_ShowRooms");
@@ -45,11 +49,12 @@ namespace HM.WebApp.Controllers
         public ActionResult BookNewRoom(Order ord)
         {
             ord.CheckInDate = DateTime.Now;
-            var createsuccess = DataContext.Instance.CreateOrder(ord);
-
+            
             var r = DataContext.Instance.GetRoom(ord.RoomId);
-            r.Status = 1;
-            r.CurrentCustomerId = ord.CustomerId; 
+            if(r != null) { r.Status = 1; r.CurrentCustomerId = ord.CustomerId; r.CheckInDate = ord.CheckInDate; }
+            else { return Json(false, JsonRequestBehavior.AllowGet); }
+
+            var createsuccess = DataContext.Instance.CreateOrder(ord);
             if (createsuccess)
             {
                 var updatesuccess = DataContext.Instance.UpdateRoom(r);

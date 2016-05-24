@@ -133,7 +133,29 @@
         })
     }
     function deleteHotel(id) {
-        var agreeDelete = confirm("Bạn có chắc chắn muốn xóa khách sạn này?");
+        $.alertable.confirm('Bạn có chắc là muốn xóa?').then(function () {
+
+            $.ajax({
+                url: "@Url.Action("DeleteHotel", "Hotel")",
+                data: { htId: id },
+            type: "POST", // <== Method = POST
+            success: function (data) {
+                if (data) {
+                    //$("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
+                    $('#hotelsTable').dataTable().fnDraw();
+                    toastr.success("Xóa thành công");
+                }
+            },
+            error: function () {
+                toastr.error("Có lỗi xảy ra");
+            }
+        });
+
+
+        }, function () { });
+
+
+        @*var agreeDelete = confirm("Bạn có chắc chắn muốn xóa khách sạn này?");
         if (agreeDelete) {
             $.ajax({
                 url: "@Url.Action("DeleteHotel", "Hotel")",
@@ -150,7 +172,7 @@
                     toastr.error("Có lỗi xảy ra");
                 }
             });
-        }
+        }*@
     }
 
 </script>
