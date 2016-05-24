@@ -208,6 +208,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderDetailController.cs" />
+    <Compile Include="Controllers\OrderedCustomerController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -2052,6 +2053,8 @@
     <Content Include="Views\Room\_ShowRooms.cshtml" />
     <Content Include="Views\Room\_ModalRoomInfo.cshtml" />
     <Content Include="Views\Room\_ModalAddService.cshtml" />
+    <Content Include="Views\OrderedCustomer.cshtml" />
+    <Content Include="Views\OrderedCustomer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

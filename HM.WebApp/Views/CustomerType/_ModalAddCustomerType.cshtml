@@ -9,22 +9,22 @@
 
             <div class="modal-body">
 
-                <form class="form" role="form">
+                <form class="form" role="form" id="formAddCustomerType">
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtCustomerTypeName">
+                        <input type="text" class="form-control" id="txtCustomerTypeName" name="txtCustomerTypeName">
                         <label for="txtCustomerTypeName">Tên loại khách</label>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtCustomerTypeCoefficient">
+                        <input type="text" class="form-control" id="txtCustomerTypeCoefficient" name="txtCustomerTypeCoefficient">
                         <label for="txtCustomerTypeCoefficient">Hệ số</label>
                     </div>
 
 
                     <br />
                     <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                        <a class="btn btn-primary" role="button" onclick="addCustomerType();" id="btnAddCustomerType">Thêm</a>
+                        <a class="btn btn-primary" role="button" onclick="validateForm();" id="btnAddCustomerType">Thêm</a>
                         <a class="btn btn-default" role="button" onclick="clearControl();" id="btnClear">Nhập lại</a>
                     </div>
                 </form>
@@ -35,3 +35,32 @@
     </div><!-- modal-dialog -->
 </div><!-- modal -->
 
+<script>
+    $(document).ready(function () {
+        $("#formAddCustomerType").validate({
+            rules: {
+                txtCustomerTypeName: "required",
+                txtCustomerTypeCoefficient: {
+                    required: true,
+                    number: true
+                }
+            },
+            messages: {
+                txtCustomerTypeName: "Không được để trống",
+                 txtCustomerTypeCoefficient: {
+                    required: "Không được để trống",
+                    number: "Hệ số không được có chữ"
+                }
+            }
+
+        });
+
+
+    });
+
+    function validateForm() {
+
+        if ($("#formAddCustomerType").valid() == true) { addCustomerType(); }
+        else { }
+    }
+</script>

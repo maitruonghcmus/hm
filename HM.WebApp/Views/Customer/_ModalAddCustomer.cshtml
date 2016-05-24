@@ -13,15 +13,15 @@
 
             <div class="modal-body">
 
-                <form class="form" role="form">
+                <form class="form" role="form" id="formAddCustomer">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtCustomerName">
+                        <input type="text" class="form-control" id="txtCustomerName" name="txtCustomerName" required>
                         <label for="txtCustomerName">Họ tên khách hàng</label>
                     </div>
 
                     <div class="form-group">
 
-                        <select id="cbbCtmType" name="cbbCtmType" class="form-control">
+                        <select id="cbbCtmType" name="cbbCtmType" class="form-control" required>
 
                             @{
                                 <option value="">Chọn loại khách</option>
@@ -39,24 +39,29 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" id="txtCustomerCardId">
+                            <input type="text" class="form-control" id="txtCustomerCardId" name="txtCustomerCardId" required>
                             <label for="txtCustomerCardId">CMND/Hộ Chiếu</label>
                         </div>
 
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="txtCustomerPhone">
-                            <label for="txtCustomerPhone">Điện thoại</label>
-                        </div>
+                    
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtCustomerPhone" name="txtCustomerPhone" required>
+                        
+                        <label for="txtCustomerPhone">Number</label>
+         
+                    </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" id="txtCustomerAddress">
+                            <input type="text" class="form-control" id="txtCustomerAddress" name="txtCustomerAddress" required>
                             <label for="txtCustomerAddress">Địa chỉ</label>
                         </div>
 
 
                         <br />
+               
                         <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                            <a class="btn btn-primary" role="button" onclick="addCustomer();" id="btnAddCustomer">Thêm</a>
+                            
+                            <a class="btn btn-primary" role="button" onclick="validateForm();" id="btnAddCustomer">Thêm</a>
                             <a class="btn btn-default" role="button" onclick="clearControl();" id="btnClear">Nhập lại</a>
                         </div>
                     </form>
@@ -66,3 +71,55 @@
             </div><!-- modal-content -->
         </div><!-- modal-dialog -->
     </div><!-- modal -->
+
+<script>
+  
+
+
+
+    $(document).ready(function () {
+        $("#formAddCustomer").validate({
+            rules: {
+                txtCustomerName: "required",
+                txtCustomerCardId: {
+                    required: true,
+                    digits: true
+                },
+                txtCustomerPhone :{
+                    required: true,
+                    digits:true,
+                    maxlength: 15
+                },
+                txtCustomerAddress: "required",
+                cbbCtmType: "required"
+                
+            },
+            messages: {
+                txtCustomerName: "Không được để trống",
+                txtCustomerCardId: {
+                    required: "Không được để trống",
+                    digits: "Phải là số không âm"
+                },
+                txtCustomerPhone: {
+                    required: "Không được để trống",
+                    digits: "Phải là số không âm",
+                    maxlength: "Không được dài quá 15 ký tự"
+                },
+                txtCustomerAddress: "Không được để trống",
+                cbbCtmType: "Chưa chọn loại khách"
+            }
+
+        });
+
+
+    });
+
+    function validateForm() {
+
+        if ($("#formAddCustomer").valid() == true) { addCustomer(); }
+        else { }
+    }
+
+
+
+</script>

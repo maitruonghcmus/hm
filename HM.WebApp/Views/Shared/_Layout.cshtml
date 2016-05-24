@@ -23,7 +23,7 @@
     <link href="~/Content/assets/css/theme-default/libs/toastr/toastr.css" rel="stylesheet" />
     <link href="~/Content/Site.css" rel="stylesheet" />
 
-    <link href="~/Content/assets/js/alertify/css/alertify.css" rel="stylesheet" />
+
     <link href="~/Content/assets/js/alertable/jquery.alertable.css" rel="stylesheet" />
     <!-- END STYLESHEETS -->
     <!-- BEGIN JAVASCRIPT -->
@@ -51,7 +51,11 @@
     <script src="~/Content/assets/js/listjs/list.js"></script>
 
     <script src="~/Content/assets/js/alertable/jquery.alertable.js"></script>
-    <script src="~/Content/assets/js/alertify/js/alertify.js"></script>
+    <!--Begin validate-->
+    <script src="~/Content/assets/js/libs/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/Content/assets/js/libs/jquery-validation/dist/additional-methods.js"></script>
+    <!--End validate-->
+    
     <!-- END JAVASCRIPT -->
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -234,6 +238,7 @@
                         </a>
                         <!--start submenu -->
                         <ul>
+                            <li><a href="@Url.Action("Index", "OrderedCustomer")"><span class="title">Khách hàng đã đặt phòng</span></a></li>
                             <li><a href="@Url.Action("Index", "Customer")"><span class="title">Khách hàng</span></a></li>
                             <li><a href="@Url.Action("Index", "CustomerType")"><span class="title">Loại khách hàng</span></a></li>
                         </ul><!--end /submenu -->

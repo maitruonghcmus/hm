@@ -131,8 +131,8 @@ if(jQuery) (function($) {
 
             // Templates
             
-            okButton: '<button class="alertable-ok" type="button">Có</button>',
-            cancelButton: '<button class="alertable-cancel" type="button">Không</button>',
+            okButton: '<button class="alertable-ok" type="button">C&#243;</button>',
+            cancelButton: '<button class="alertable-cancel" type="button">Kh&#244;ng</button>',
             overlay: '<div class="alertable-overlay"></div>',
             modal:
                 '<div class="alertable">' +

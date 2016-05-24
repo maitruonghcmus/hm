@@ -8,6 +8,7 @@
 
 <section>
     <div class="section-body">
+        
         <div id="toLoadRooms">@Html.Partial("_ShowRooms")</div>
         @Html.Partial("_ModalBooking")
         @Html.Partial("_ModalRoomInfo")
@@ -90,6 +91,7 @@
 
     function displayUnavailableRoom()
     {
+        toastr.options.positionClass = 'toast-bottom-full-width';
         toastr.warning("Phòng đang sử dụng");
     }
 </script>
