@@ -9,6 +9,7 @@ namespace HM.WebApp.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
             var revByDay = AppContext.Instance.GetRevenueByDay();
