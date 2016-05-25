@@ -250,15 +250,15 @@ namespace HM.WebApp
 
         #region Role
 
-        public enum Role
-        {
-            Administrator = 0,  //Admin của ứng dụng
-            HotelManager = 1,   //Quản lý khách sạn
-            Cashier = 2,        //Thu ngân
-            Staff = 3           //Nhân viên
-        }
+        //public enum Role
+        //{
+        //    Administrator = 0,  //Admin của ứng dụng
+        //    HotelManager = 1,   //Quản lý khách sạn
+        //    Cashier = 2,        //Thu ngân
+        //    Staff = 3           //Nhân viên
+        //}
 
-        //TODO: định nghĩa hàm kiểm tra quyền, nếu quyền là administrator
+        ////TODO: định nghĩa hàm kiểm tra quyền, nếu quyền là administrator
 
         #endregion
 
