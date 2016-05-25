@@ -16,14 +16,22 @@ namespace HM.WebApp.Controllers
                 return RedirectToAction("Expired", "Error");
 
             var revByDay = AppContext.Instance.GetRevenueByDay();
-            var revByWeek = AppContext.Instance.GetRevenueByWeek();
-            var revByMonth = AppContext.Instance.GetRevenueByMonth();
-            var revByYear = AppContext.Instance.GetRevenueByYear();
-
             ViewBag.RevByDay = revByDay;
+
+            var revByWeek = AppContext.Instance.GetRevenueByWeek();
             ViewBag.RevByWeek = revByWeek;
+
+            var revByMonth = AppContext.Instance.GetRevenueByMonth();
             ViewBag.RevByMonth = revByMonth;
+
+            var revByYear = AppContext.Instance.GetRevenueByYear();
             ViewBag.RevByYear = revByYear;
+
+            var newCustomer = AppContext.Instance.Get5NewestCustomers();
+            ViewBag.NewCustomer = newCustomer;
+
+            var customerCheckoutRecent = AppContext.Instance.Get5CusomerCheckedOutRecent();
+            ViewBag.CheckOutRecent = customerCheckoutRecent;
 
             return View();
         }

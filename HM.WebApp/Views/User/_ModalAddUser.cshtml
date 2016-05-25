@@ -1,6 +1,6 @@
 ﻿@{
-   
     var roles = ViewBag.Roles as IEnumerable<HM.DataModels.Role>;
+    var hotels = ViewBag.Hotels as IEnumerable<HM.DataModels.Hotel>;
 }
 
 <div class="modal right fade" id="modalAddUser" tabindex="-1" role="dialog" aria-labelledby="modalUserLabel">
@@ -18,6 +18,24 @@
                     <div class="form-group">
                         <input type="text" class="form-control" id="txtUserFullName">
                         <label for="txtUserFullName">Tên người dùng</label>
+                    </div>
+
+                    <div class="form-group">
+
+                        <select id="cbbUserHotel" name="cbbUserHotel" class="form-control">
+
+                            @{
+                                <option value="">Khách sạn</option>
+                                if (hotels != null)
+                                {
+                                    foreach (var item in hotels)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <label for="cbbUserRole">Chọn</label>
                     </div>
 
                     <div class="form-group">

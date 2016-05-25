@@ -13,6 +13,8 @@ namespace HM.WebApp
     {
         public static AppContext Instance = new AppContext();
 
+        #region Permission
+
         public int GetLoggedUserId()
         {
             var id = HttpContext.Current.User.Identity.GetUserId();
@@ -49,6 +51,8 @@ namespace HM.WebApp
             return days;
         }
 
+        #endregion
+
         #region Reporting - Charting
 
         /// <summary>
@@ -61,7 +65,7 @@ namespace HM.WebApp
                             .OrderByDescending(c => c.CreatedOn)?
                             .Take(5);
             return customers;
-        }
+        }   
 
         /// <summary>
         /// Hàm thống kê 5 khách hàng vừa trả phòng gần nhất
@@ -262,41 +266,7 @@ namespace HM.WebApp
             return rev;
         }
 
-        //public Dictionary<ExtraService, double> ExtraServiceDensity(DateTime fromDate, DateTime toDate)
-        //{
-        //    var 
-        //    return null;
-        //}
-
-        //public Dictionary<ExtraService, double> ExtraServiceDensityByDay()
-        //{
-        //    return null;
-        //}
-
-        //public Dictionary<ExtraService, double> ExtraServiceDensityByWeek()
-        //{
-        //    return null;
-        //}
-
-        //public Dictionary<ExtraService, double> ExtraServiceDensityByMonth()
-        //{
-        //    return null;
-        //}
-
         #endregion
 
-        #region Role
-
-        //public enum Role
-        //{
-        //    Administrator = 0,  //Admin của ứng dụng
-        //    HotelManager = 1,   //Quản lý khách sạn
-        //    Cashier = 2,        //Thu ngân
-        //    Staff = 3           //Nhân viên
-        //}
-
-        ////TODO: định nghĩa hàm kiểm tra quyền, nếu quyền là administrator
-
-        #endregion
     }
 }

@@ -19,8 +19,11 @@ namespace HM.WebApp.Controllers
 
             var users = DataContext.Instance.GetUsers();
             var roles = DataContext.Instance.GetRoles();
+            var hotels = DataContext.Instance.GetHotels();
+
             ViewBag.Roles = roles;
             ViewBag.Users = users;
+            ViewBag.Hotels = hotels;
             return View();
         }
 
@@ -43,7 +46,6 @@ namespace HM.WebApp.Controllers
                     user.Password,
                     user.Username,
                     user.RoleId,
-
                 };
 
                 return Json(obj, JsonRequestBehavior.AllowGet);
@@ -104,6 +106,7 @@ namespace HM.WebApp.Controllers
                         u.Id,
                         Name = "<b>" + u.Fullname + "</b>",
                         u.Username,
+                        Hotel = DataContext.Instance.GetHotel(u.HotelId)?.Name ?? "Chưa rõ",
                         Role = (DataContext.Instance.GetRole(u.RoleId)?.Name ?? "Chưa rõ"),
                         CreatedBy = "<i class='fa fa-user'></i> " + (DataContext.Instance.GetUser(u.CreatedBy)?.Fullname ?? "Đang cập nhật") + "<br/><i class='fa fa-clock-o'></i> " + u.CreatedOn.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
                         ModifiedBy = "<i class='fa fa-user'></i> " + (DataContext.Instance.GetUser(u.ModifiedBy ?? 0)?.Fullname ?? "Chưa chỉnh sửa") + "<br/><i class='fa fa-clock-o'></i> " + u.ModifiedOn?.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM) ?? "Chưa chỉnh sửa",

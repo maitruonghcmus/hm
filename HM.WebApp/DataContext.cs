@@ -66,7 +66,7 @@ namespace HM.WebApp
         public IEnumerable<User> GetUsers()
         {
             var us = HttpClientHelper.Instance.GetObjects<IEnumerable<User>>(ApiUtils.USER, ApiUtils.GETALL);
-            return us != null ? us.Where(a => !a.Inactive && a.HotelId == AppContext.Instance.GetLoggedHotelId()).Select(a => a) : null;
+            return us != null ? us.Where(a => !a.Inactive).Select(a => a) : null;
         }
 
         public User GetUser(int id)
@@ -78,7 +78,7 @@ namespace HM.WebApp
         public bool CreateUser(User u)
         {
             u.Id = 0;
-            u.HotelId = AppContext.Instance.GetLoggedHotelId();
+            //u.HotelId = AppContext.Instance.GetLoggedHotelId();
             u.CreatedBy = AppContext.Instance.GetLoggedUserId();
             u.CreatedOn = DateTime.Now;
 

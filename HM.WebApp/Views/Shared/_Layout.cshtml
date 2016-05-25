@@ -101,66 +101,6 @@
                             <button type="submit" class="btn btn-icon-toggle ink-reaction"><i class="fa fa-search"></i></button>
                         </form>
                     </li>
-                    @*<li class="dropdown hidden-xs">
-                            <a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-                                <i class="fa fa-bell"></i><sup class="badge style-danger">4</sup>
-                            </a>
-                            <ul class="dropdown-menu animation-expand">
-                                <li class="dropdown-header">Today's messages</li>
-                                <li>
-                                    <a class="alert alert-callout alert-warning" href="javascript:void(0);">
-                                        <img class="pull-right img-circle dropdown-avatar" src="~/Content/assets/img/avatar2.jpg?1404026449" alt="" />
-                                        <strong>Alex Anistor</strong><br />
-                                        <small>Testing functionality...</small>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="alert alert-callout alert-info" href="javascript:void(0);">
-                                        <img class="pull-right img-circle dropdown-avatar" src="~/Content/assets/img/avatar3.jpg?1404026799" alt="" />
-                                        <strong>Alicia Adell</strong><br />
-                                        <small>Reviewing last changes...</small>
-                                    </a>
-                                </li>
-                                <li class="dropdown-header">Options</li>
-                                <li><a href="html/pages/login.html">View all messages <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
-                                <li><a href="html/pages/login.html">Mark as read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown hidden-xs">
-                            <a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-                                <i class="fa fa-area-chart"></i>
-                            </a>
-                            <ul class="dropdown-menu animation-expand">
-                                <li class="dropdown-header">Server load</li>
-                                <li class="dropdown-progress">
-                                    <a href="javascript:void(0);">
-                                        <div class="dropdown-label">
-                                            <span class="text-light">Server load <strong>Today</strong></span>
-                                            <strong class="pull-right">93%</strong>
-                                        </div>
-                                        <div class="progress"><div class="progress-bar progress-bar-danger" style="width: 93%"></div></div>
-                                    </a>
-                                </li><!--end .dropdown-progress -->
-                                <li class="dropdown-progress">
-                                    <a href="javascript:void(0);">
-                                        <div class="dropdown-label">
-                                            <span class="text-light">Server load <strong>Yesterday</strong></span>
-                                            <strong class="pull-right">30%</strong>
-                                        </div>
-                                        <div class="progress"><div class="progress-bar progress-bar-success" style="width: 30%"></div></div>
-                                    </a>
-                                </li><!--end .dropdown-progress -->
-                                <li class="dropdown-progress">
-                                    <a href="javascript:void(0);">
-                                        <div class="dropdown-label">
-                                            <span class="text-light">Server load <strong>Lastweek</strong></span>
-                                            <strong class="pull-right">74%</strong>
-                                        </div>
-                                        <div class="progress"><div class="progress-bar progress-bar-warning" style="width: 74%"></div></div>
-                                    </a>
-                                </li><!--end .dropdown-progress -->
-                            </ul><!--end .dropdown-menu -->
-                        </li>*@
                 </ul><!--end .header-nav-options -->
                 <ul class="header-nav header-nav-profile">
                     <li class="dropdown">
@@ -173,22 +113,12 @@
                         </a>
                         <ul class="dropdown-menu animation-dock">
                             <li class="dropdown-header">Config</li>
-                            @*<li><a href="html/pages/profile.html">My profile</a></li>
-                                <li><a href="html/pages/blog/post.html">My blog <span class="badge style-danger pull-right">16</span></a></li>
-                                <li><a href="html/pages/calendar.html">My appointments</a></li>
-                                <li class="divider"></li>*@
                             <li><a href="#"><i class="fa fa-clock-o"></i> Còn @(HM.WebApp.AppContext.Instance.GetDayRemains()) ngày dùng thử</a></li>
                             <li><a href="@Url.Content("~/Account/LogOff")"><i class="fa fa-fw fa-power-off text-danger"></i> Đăng xuất</a></li>
                         </ul><!--end .dropdown-menu -->
                     </li><!--end .dropdown -->
                 </ul><!--end .header-nav-profile -->
-                <ul class="header-nav header-nav-toggle">
-                    <li>
-                        <a class="btn btn-icon-toggle btn-default" href="#offcanvas-search" data-toggle="offcanvas" data-backdrop="false">
-                            <i class="fa fa-ellipsis-v"></i>
-                        </a>
-                    </li>
-                </ul><!--end .header-nav-toggle -->
+                
             </div><!--end #header-navbar-collapse -->
         </div>
     </header>
@@ -269,7 +199,7 @@
                         </a>
                     </li><!--end /menu-li -->
 
-                    <li class="gui-folder">
+                    @*<li class="gui-folder">
                         <a>
                             <div class="gui-icon"><i class="fa fa-gear"></i></div>
                             <span class="title">Thiết lập</span>
@@ -278,7 +208,7 @@
                             <li><a href="#"><span class="title">Tài khoản</span></a></li>
                             <li><a href="#"><span class="title">Cài đặt khác</span></a></li>
                         </ul><!--end /submenu -->
-                    </li><!--end /menu-li -->
+                    </li><!--end /menu-li -->*@
 
                     <li class="gui-folder" @(!HM.WebApp.AppContext.Instance.IsAdministrator() ? "hidden" : "")>
                         <a>
@@ -288,7 +218,6 @@
                         <ul>
                             <li><a href="@Url.Action("Index", "Hotel")"><span class="title">Khách sạn</span></a></li>
                             <li><a href="@Url.Action("Index", "User")"><span class="title">Người dùng</span></a></li>
-                            <li><a href="othersetting.html"><span class="title">Cài đặt khác</span></a></li>
                         </ul><!--end /submenu -->
                     </li><!--end /menu-li -->
                 </ul><!--end .main-menu -->

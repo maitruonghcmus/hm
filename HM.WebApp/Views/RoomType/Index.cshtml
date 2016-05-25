@@ -3,7 +3,12 @@
 }
 
 <section>
+    <div class="section-header">
+        <h2 class="text-primary">Loại phòng</h2>
+    </div>
+
     <div class="section-body">
+
         <!-- BEGIN ROOMTYPE -->
         <div id="roomTypeToLoadPartial">
             @Html.Partial("_RoomTypePartial")
@@ -120,17 +125,17 @@
             $.ajax({
                 url: "@Url.Action("DeleteRoomType", "RoomType")",
                 data: { id: roomTypeId },
-            type: "POST", // <== Method = POST
-            success: function (data) {
-                if (data == true) {
-                    $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
-                    toastr.success("Xóa thành công");
+                type: "POST", // <== Method = POST
+                success: function (data) {
+                    if (data == true) {
+                        $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
+                        toastr.success("Xóa thành công");
+                    }
+                },
+                error: function () {
+                    toastr.error("Không lấy được loại phòng");
                 }
-            },
-            error: function () {
-                toastr.error("Không lấy được loại phòng");
-            }
-        });
+            });
 
         }, function () { });
 
@@ -259,18 +264,18 @@
             $.ajax({
                 url: "@Url.Action("DeleteRoom", "RoomType")",
                 data: { rId: id },
-            type: "POST", // <== Method = POST
-            success: function (data) {
-                if (data) {
-                    $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId);
-                    $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
-                    toastr.success("Xóa thành công");
+                type: "POST", // <== Method = POST
+                success: function (data) {
+                    if (data) {
+                        $("#idToLoadroom").load('@Url.Action("GetRoomList", "RoomType")' + "?rtId=" + roomTypeId);
+                        $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
+                        toastr.success("Xóa thành công");
+                    }
+                },
+                error: function () {
+                    alertify.error("Không lấy được mã phòng");
                 }
-            },
-            error: function () {
-                alertify.error("Không lấy được mã phòng");
-            }
-        });
+            });
 
         }, function () { });
 
