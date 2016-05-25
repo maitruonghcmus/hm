@@ -190,6 +190,22 @@ namespace HM.WebApp
             return roomtype;
         }
 
+        public double GetRevenueFromTo(DateTime from, DateTime to)
+        {
+            var payments = DataContext.Instance.GetPayments()?
+                            .Where(a => a.CheckOutDate >= from && a.CheckOutDate <= to.AddDays(1))?
+                            .Select(a => a);
+
+            var rev = 0.0;
+            if (payments != null)
+            {
+                foreach (var item in payments)
+                    rev += item.Total;
+            }
+
+            return rev;
+        }
+
         /// <summary>
         /// Hàm thống kê doanh thu trong ngày
         /// </summary>
@@ -267,6 +283,5 @@ namespace HM.WebApp
         }
 
         #endregion
-
     }
 }

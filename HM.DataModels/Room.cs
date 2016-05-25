@@ -32,6 +32,7 @@ namespace HM.DataModels
         /// </summary>
         public int? Status { get; set; } = 0;
         public int? CurrentCustomerId { get; set; }
+        public int? CurrentOrderId { get; set; }
 
         public DateTime? CheckInDate { get; set; }
 

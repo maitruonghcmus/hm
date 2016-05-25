@@ -29,7 +29,7 @@ namespace HM.DataModels
         /// <summary>
         /// Danh sách những chi tiết hóa đơn cho một lần thanh toán
         /// </summary>
-        public int[] OrderDetailIds { get; set; }
+        //public int[] OrderDetailIds { get; set; }
         
         /// <summary>
         /// Tiền dịch vụ (của orderdetails)

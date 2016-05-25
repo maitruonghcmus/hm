@@ -61,10 +61,11 @@
                 success: function myfunction(data) {
                     if (data) {
                         toastr.success('Thêm thành công')
+                        clearControl();
                         $("#toLoadCustomerType").load('@Url.Action("LoadCustomerTypes", "CustomerType")');
                     }
                     else
-                        toastr.error('Thêm thành công')
+                        toastr.error('Thêm không thành công')
                 },
                 error: function myfunction() {
 
@@ -132,6 +133,8 @@
                     $("#toLoadCustomerType").load('@Url.Action("LoadCustomerTypes", "CustomerType")');
                     toastr.success("Xóa thành công");
                 }
+                else
+                    toastr.error("Không thể xóa loại khách này");
             },
             error: function () {
                 toastr.error("Có lỗi xảy ra");

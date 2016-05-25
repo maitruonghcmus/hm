@@ -65,6 +65,7 @@
                     if (data) {
                         toastr.success("Thêm thành công");
                         $('#usersTable').dataTable().fnDraw();
+                        clearControl();
                     }
                     else
                         toastr.error("Thêm không thành công");

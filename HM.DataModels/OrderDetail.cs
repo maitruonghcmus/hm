@@ -21,13 +21,14 @@ namespace HM.DataModels
         /// int: ExtraServiceId
         /// int: số lượng
         /// </summary>
-        public Dictionary<int, int> ExtraServices { get; set; }
+        //public Dictionary<int, int> ExtraServices { get; set; }
+        public int ServiceId { get; set; }
+        public int Number { get; set; }
 
         /// <summary>
         /// Tổng tiền cho tất cả các dịch vụ trên
         /// </summary>
-        [Required]
-        public long Total { get; set; }
+        public long? Total { get; set; }
 
         [Required]
         public int HotelId { get; set; }

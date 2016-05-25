@@ -1,7 +1,8 @@
 ﻿@{
     var loggedUsername = HM.WebApp.AppContext.Instance.GetLoggedUser()?.Fullname ?? "Fullname";
     var loggedHotelName = HM.WebApp.AppContext.Instance.GetLoggedHotel()?.Name ?? "Khách sạn";
-}
+    var controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+}	
 
 <!DOCTYPE html>
 <html lang="en">
@@ -147,7 +148,7 @@
                 <!-- BEGIN MAIN MENU -->
                 <ul id="main-menu" class="gui-controls">
                     <li>
-                        <a href="/" class="active">
+                        <a href="/" class=@(controllerName == "Home" ? "active" : "")>
                             <div class="gui-icon"><i class="md md-home"></i></div>
                             <span class="title">Home</span>
                         </a>
@@ -160,8 +161,8 @@
                         </a>
                         <!--start submenu -->
                         <ul>
-                            <li><a href="@Url.Action("Index", "Room")"><span class="title">Danh sách Phòng</span></a></li>
-                            <li><a href="@Url.Action("Index", "RoomType")"><span class="title">Loại phòng</span></a></li>
+                            <li><a href="@Url.Action("Index", "Room")" class=@(controllerName == "Room" ? "active" : "")><span class="title">Danh sách Phòng</span></a></li>
+                            <li><a href="@Url.Action("Index", "RoomType")" class=@(controllerName == "RoomType" ? "active" : "")><span class="title">Loại phòng</span></a></li>
                         </ul><!--end /submenu -->
                     </li><!--end /menu-li -->
 
@@ -172,9 +173,9 @@
                         </a>
                         <!--start submenu -->
                         <ul>
-                            <li><a href="@Url.Action("Index", "OrderedCustomer")"><span class="title">Khách hàng đã đặt phòng</span></a></li>
-                            <li><a href="@Url.Action("Index", "Customer")"><span class="title">Khách hàng</span></a></li>
-                            <li><a href="@Url.Action("Index", "CustomerType")"><span class="title">Loại khách hàng</span></a></li>
+                            <li><a href="@Url.Action("Index", "OrderedCustomer")" class=@(controllerName == "OrderedCustomer" ? "active" : "")><span class="title">Khách hàng đã đặt phòng</span></a></li>
+                            <li><a href="@Url.Action("Index", "Customer")" class=@(controllerName == "Customer" ? "active" : "")><span class="title">Khách hàng</span></a></li>
+                            <li><a href="@Url.Action("Index", "CustomerType")" class=@(controllerName == "CustomerType" ? "active" : "")><span class="title">Loại khách hàng</span></a></li>
                         </ul><!--end /submenu -->
                     </li><!--end /menu-li -->
 
@@ -186,7 +187,7 @@
                     </li><!--end /menu-li -->
 
                     <li>
-                        <a href="@Url.Action("Index","ExtraService")">
+                        <a href="@Url.Action("Index","ExtraService")" class=@(controllerName == "ExtraService" ? "active" : "")>
                             <div class="gui-icon"><i class="fa fa-star-o"></i></div>
                             <span class="title">Dịch vụ</span>
                         </a>
@@ -197,7 +198,7 @@
                             <div class="gui-icon"><i class="fa fa-bar-chart"></i></div>
                             <span class="title">Thống kê</span>
                         </a>
-                    </li><!--end /menu-li -->
+                    </li>
 
                     @*<li class="gui-folder">
                         <a>
@@ -216,8 +217,8 @@
                             <span class="title">Quản trị</span>
                         </a>
                         <ul>
-                            <li><a href="@Url.Action("Index", "Hotel")"><span class="title">Khách sạn</span></a></li>
-                            <li><a href="@Url.Action("Index", "User")"><span class="title">Người dùng</span></a></li>
+                            <li><a href="@Url.Action("Index", "Hotel")" class=@(controllerName == "Hotel" ? "active" : "")><span class="title">Khách sạn</span></a></li>
+                            <li><a href="@Url.Action("Index", "User")" class=@(controllerName == "User" ? "active" : "")><span class="title">Người dùng</span></a></li>
                         </ul><!--end /submenu -->
                     </li><!--end /menu-li -->
                 </ul><!--end .main-menu -->

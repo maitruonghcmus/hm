@@ -45,6 +45,8 @@ namespace HM.WebApp.Controllers
 
             ViewBag.RevenueByRoomType = revByRoomType;
 
+            //var a = AppContext.Instance.GetRevenueFromTo(DateTime.Today);
+
             return View();
         }
     }
