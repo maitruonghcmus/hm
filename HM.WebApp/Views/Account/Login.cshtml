@@ -2,62 +2,125 @@
 @model LoginViewModel
 @{
     ViewBag.Title = "Log in";
+    Layout = null;
 }
 
-<h2>@ViewBag.Title.</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hoteler - Login</title>
+
+    <!-- BEGIN META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="your,keywords">
+    <meta name="description" content="Short explanation about this website">
+    <!-- END META -->
+    <!-- BEGIN STYLESHEETS -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css' />
+    <link type="text/css" rel="stylesheet" href="~/Content/assets/css/theme-default/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/assets/css/theme-default/materialadmin.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/assets/css/theme-default/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/assets/css/theme-default/material-design-iconic-font.min.css" />
+    <!-- END STYLESHEETS -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="~/Content/assets/js/libs/utils/html5shiv.js?1403934957"></script>
+    <script type="text/javascript" src="~/Content/assets/js/libs/utils/respond.min.js?1403934956"></script>
+    <![endif]-->
+</head>
+<body class="menubar-hoverable header-fixed ">
+
+    <!-- BEGIN LOGIN SECTION -->
+    <section class="section-account">
+        <div class="img-backdrop" style="background-image: url('../../assets/img/img16.jpg')"></div>
+        <div class="spacer"></div>
+        <div class="card contain-sm style-transparent">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 hidden-sm hidden-xs"></div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form floating-label" accept-charset="utf-8" method="post">
+                                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        <h2 class="text-lg text-bold text-primary">HOTELER</h2>
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                            <label for="username">Email</label>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                            <label for="password">Mật khẩu</label>
+                                            <p class="help-block"><a href="@Url.Action("Forgot your password?", "ForgotPassword")">Quên mật khẩu?</a></p>
+                                        </div>
+
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-xs-6 text-left">
+                                                <div class="checkbox checkbox-inline checkbox-styled">
+                                                    <label>
+                                                        <input type="checkbox" id="RememberMe" Name="Remeberme"> <span>Ghi nhớ</span>
+                                                        
+                                                    </label>
+                                                </div>
+                                            </div><!--end .col -->
+
+                                            <div class="col-xs-6 text-right">
+                                                <button class="btn btn-primary btn-raised" type="submit">Đăng nhập</button>
+                                            </div><!--end .col -->
+                                        </div><!--end .row -->
+
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    }
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
-            }
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+                    </div><!--end .col -->
+                    <div class="col-md-3 hidden-sm hidden-xs"></div>
+                    @*<div class="col-sm-5 col-sm-offset-1 text-center">
+                            <br><br>
+                            <h3 class="text-light">
+                                No account yet?
+                            </h3>
+                            <a class="btn btn-block btn-raised btn-primary" href="#">Sign up here</a>
+                            <br><br>
+                            <h3 class="text-light">
+                                or
+                            </h3>
+                            <p>
+                                <a href="#" class="btn btn-block btn-raised btn-info"><i class="fa fa-facebook pull-left"></i>Login with Facebook</a>
+                            </p>
+                            <p>
+                                <a href="#" class="btn btn-block btn-raised btn-info"><i class="fa fa-twitter pull-left"></i>Login with Twitter</a>
+                            </p>
+                        </div>*@
+                </div><!--end .row -->
+            </div><!--end .card-body -->
+        </div><!--end .card -->
+    </section>
+    <!-- END LOGIN SECTION -->
+    <!-- BEGIN JAVASCRIPT -->
+    <script src="~/Content/assets/js/libs/jquery/jquery-1.11.2.min.js"></script>
+    <script src="~/Content/assets/js/libs/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script src="~/Content/assets/js/libs/bootstrap/bootstrap.min.js"></script>
+    <script src="~/Content/assets/js/libs/spin.js/spin.min.js"></script>
+    <script src="~/Content/assets/js/libs/autosize/jquery.autosize.min.js"></script>
+    <script src="~/Content/assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script>
+    <script src="~/Content/assets/js/core/source/App.js"></script>
+    <script src="~/Content/assets/js/core/source/AppNavigation.js"></script>
+    <script src="~/Content/assets/js/core/source/AppOffcanvas.js"></script>
+    <script src="~/Content/assets/js/core/source/AppCard.js"></script>
+    <script src="~/Content/assets/js/core/source/AppForm.js"></script>
+    <script src="~/Content/assets/js/core/source/AppNavSearch.js"></script>
+    <script src="~/Content/assets/js/core/source/AppVendor.js"></script>
+    <script src="~/Content/assets/js/core/demo/Demo.js"></script>
+    <!-- END JAVASCRIPT -->
+</body>
+</html>

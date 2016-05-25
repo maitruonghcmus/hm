@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HM.WebApp.Models;
+using System.Collections.Generic;
+using HM.DataModels;
 
 namespace HM.WebApp.Controllers
 {
@@ -71,10 +73,15 @@ namespace HM.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = DataContext.Instance.GetUsers()?.Where(a => a.Username.ToLower() == model.Email.ToLower())?.FirstOrDefault();
-                var hotelUser = new HotelUser();
-                if (user != null)
+                var list = new List<KeyValuePair<string, string>>();
+                var key = new KeyValuePair<string, string>("Username", model.Email);
+                list.Add(key);
+                var user = HttpClientHelper.Instance.GetObjectsByParams<User>("User", "GetByUsername", list);
+
+                var passwordHashed = System.Text.Encoding.UTF8.GetBytes(model.Password);
+                if (user != null && user.Password == Convert.ToBase64String(passwordHashed))
                 {
+                    var hotelUser = new HotelUser();
                     hotelUser.Id = user.Id.ToString();
                     hotelUser.UserName = user.Username;
                     hotelUser.PasswordHash = user.Password;
@@ -84,16 +91,11 @@ namespace HM.WebApp.Controllers
                     return RedirectToLocal(returnUrl);
                 }
                 else
-                {
-                    ModelState.AddModelError("", "Invalid username or password.");
-                }
+                    ModelState.AddModelError("", "Sai tên đăng nhập hoặc mật khẩu");
             }
             return View(model);
         }
-        //
-        // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();

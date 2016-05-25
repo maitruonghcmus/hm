@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace HM.DataModels
 {
     public class Room
@@ -8,11 +10,13 @@ namespace HM.DataModels
         /// <summary>
         /// Loại phòng
         /// </summary>
+        [Required]
         public int RoomTypeId { get; set; }
 
         /// <summary>
         /// Tên hoặc mã phòng
         /// </summary>
+        [Required]
         public string Name { get; set; }
 
         /// <summary>
@@ -31,6 +35,7 @@ namespace HM.DataModels
 
         public DateTime? CheckInDate { get; set; }
 
+        [Required]
         public int HotelId { get; set; }
         public bool Inactive { get; set; }
         public int CreatedBy { get; set; }

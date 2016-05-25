@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var loggedUsername = HM.WebApp.AppContext.Instance.GetLoggedUser()?.Fullname ?? "Fullname";
+    var loggedHotelName = HM.WebApp.AppContext.Instance.GetLoggedHotel()?.Name ?? "Khách sạn";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>@ViewBag.Title</title>
@@ -20,9 +25,9 @@
     <link type="text/css" rel="stylesheet" href="~/Content/assets/css/theme-default/libs/DataTables/jquery.dataTables.css" />
     <link type="text/css" rel="stylesheet" href="~/Content/assets/css/theme-default/libs/DataTables/extensions/dataTables.colVis.css" />
     <link type="text/css" rel="stylesheet" href="~/Content/assets/css/theme-default/libs/DataTables/extensions/dataTables.tableTools.css" />
+
     <link href="~/Content/assets/css/theme-default/libs/toastr/toastr.css" rel="stylesheet" />
     <link href="~/Content/Site.css" rel="stylesheet" />
-
 
     <link href="~/Content/assets/js/alertable/jquery.alertable.css" rel="stylesheet" />
     <!-- END STYLESHEETS -->
@@ -55,7 +60,6 @@
     <script src="~/Content/assets/js/libs/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/Content/assets/js/libs/jquery-validation/dist/additional-methods.js"></script>
     <!--End validate-->
-    
     <!-- END JAVASCRIPT -->
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -73,7 +77,7 @@
                 <ul class="header-nav header-nav-options">
                     <li class="header-nav-brand">
                         <div class="brand-holder">
-                            <a href="html/dashboards/dashboard.html">
+                            <a href="/">
                                 <span class="text-lg text-bold text-primary">HOTLER</span>
                             </a>
                         </div>
@@ -163,18 +167,18 @@
                         <a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
                             <img src="~/Content/assets/img/avatar1.jpg?1403934956" alt="" />
                             <span class="profile-info">
-                                Daniel Johnson
-                                <small>Administrator</small>
+                                @(loggedUsername)
+                                <small>@(loggedHotelName)</small>
                             </span>
                         </a>
                         <ul class="dropdown-menu animation-dock">
                             <li class="dropdown-header">Config</li>
-                            <li><a href="html/pages/profile.html">My profile</a></li>
-                            <li><a href="html/pages/blog/post.html">My blog <span class="badge style-danger pull-right">16</span></a></li>
-                            <li><a href="html/pages/calendar.html">My appointments</a></li>
-                            <li class="divider"></li>
-                            <li><a href="html/pages/locked.html"><i class="fa fa-fw fa-lock"></i> Lock</a></li>
-                            <li><a href="html/pages/login.html"><i class="fa fa-fw fa-power-off text-danger"></i> Logout</a></li>
+                            @*<li><a href="html/pages/profile.html">My profile</a></li>
+                                <li><a href="html/pages/blog/post.html">My blog <span class="badge style-danger pull-right">16</span></a></li>
+                                <li><a href="html/pages/calendar.html">My appointments</a></li>
+                                <li class="divider"></li>*@
+                            <li><a href="#"><i class="fa fa-clock-o"></i> Còn @(HM.WebApp.AppContext.Instance.GetDayRemains()) ngày dùng thử</a></li>
+                            <li><a href="@Url.Content("~/Account/LogOff")"><i class="fa fa-fw fa-power-off text-danger"></i> Đăng xuất</a></li>
                         </ul><!--end .dropdown-menu -->
                     </li><!--end .dropdown -->
                 </ul><!--end .header-nav-profile -->
@@ -276,7 +280,7 @@
                         </ul><!--end /submenu -->
                     </li><!--end /menu-li -->
 
-                    <li class="gui-folder">
+                    <li class="gui-folder" @(!HM.WebApp.AppContext.Instance.IsAdministrator() ? "hidden" : "")>
                         <a>
                             <div class="gui-icon"><i class="fa fa-user"></i></div>
                             <span class="title">Quản trị</span>
@@ -297,248 +301,6 @@
             </div><!--end .menubar-scroll-panel-->
         </div><!--end #menubar-->
         <!-- END MENUBAR -->
-        <!-- BEGIN OFFCANVAS RIGHT -->
-        <div class="offcanvas">
-
-            <!-- BEGIN OFFCANVAS SEARCH -->
-            <div id="offcanvas-search" class="offcanvas-pane width-8">
-                <div class="offcanvas-head">
-                    <header class="text-primary">Search</header>
-                    <div class="offcanvas-tools">
-                        <a class="btn btn-icon-toggle btn-default-light pull-right" data-dismiss="offcanvas">
-                            <i class="md md-close"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="offcanvas-body no-padding">
-                    <ul class="list ">
-                        <li class="tile divider-full-bleed">
-                            <div class="tile-content">
-                                <div class="tile-text"><strong>A</strong></div>
-                            </div>
-                        </li>
-                        <li class="tile">
-                            <a class="tile-content ink-reaction" href="#offcanvas-chat" data-toggle="offcanvas" data-backdrop="false">
-                                <div class="tile-icon">
-                                    <img src="~/Content/assets/img/avatar4.jpg?1404026791" alt="" />
-                                </div>
-                                <div class="tile-text">
-                                    Alex Nelson
-                                    <small>123-123-3210</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="tile">
-                            <a class="tile-content ink-reaction" href="#offcanvas-chat" data-toggle="offcanvas" data-backdrop="false">
-                                <div class="tile-icon">
-                                    <img src="~/Content/assets/img/avatar9.jpg?1404026744" alt="" />
-                                </div>
-                                <div class="tile-text">
-                                    Ann Laurens
-                                    <small>123-123-3210</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="tile divider-full-bleed">
-                            <div class="tile-content">
-                                <div class="tile-text"><strong>J</strong></div>
-                            </div>
-                        </li>
-                        <li class="tile">
-                            <a class="tile-content ink-reaction" href="#offcanvas-chat" data-toggle="offcanvas" data-backdrop="false">
-                                <div class="tile-icon">
-                                    <img src="~/Content/assets/img/avatar2.jpg?1404026449" alt="" />
-                                </div>
-                                <div class="tile-text">
-                                    Jessica Cruise
-                                    <small>123-123-3210</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="tile">
-                            <a class="tile-content ink-reaction" href="#offcanvas-chat" data-toggle="offcanvas" data-backdrop="false">
-                                <div class="tile-icon">
-                                    <img src="~/Content/assets/img/avatar8.jpg?1404026729" alt="" />
-                                </div>
-                                <div class="tile-text">
-                                    Jim Peters
-                                    <small>123-123-3210</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="tile divider-full-bleed">
-                            <div class="tile-content">
-                                <div class="tile-text"><strong>M</strong></div>
-                            </div>
-                        </li>
-                        <li class="tile">
-                            <a class="tile-content ink-reaction" href="#offcanvas-chat" data-toggle="offcanvas" data-backdrop="false">
-                                <div class="tile-icon">
-                                    <img src="~/Content/assets/img/avatar5.jpg?1404026513" alt="" />
-                                </div>
-                                <div class="tile-text">
-                                    Mabel Logan
-                                    <small>123-123-3210</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="tile">
-                            <a class="tile-content ink-reaction" href="#offcanvas-chat" data-toggle="offcanvas" data-backdrop="false">
-                                <div class="tile-icon">
-                                    <img src="~/Content/assets/img/avatar11.jpg?1404026774" alt="" />
-                                </div>
-                                <div class="tile-text">
-                                    Mary Peterson
-                                    <small>123-123-3210</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="tile">
-                            <a class="tile-content ink-reaction" href="#offcanvas-chat" data-toggle="offcanvas" data-backdrop="false">
-                                <div class="tile-icon">
-                                    <img src="~/Content/assets/img/avatar3.jpg?1404026799" alt="" />
-                                </div>
-                                <div class="tile-text">
-                                    Mike Alba
-                                    <small>123-123-3210</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="tile divider-full-bleed">
-                            <div class="tile-content">
-                                <div class="tile-text"><strong>N</strong></div>
-                            </div>
-                        </li>
-                        <li class="tile">
-                            <a class="tile-content ink-reaction" href="#offcanvas-chat" data-toggle="offcanvas" data-backdrop="false">
-                                <div class="tile-icon">
-                                    <img src="~/Content/assets/img/avatar6.jpg?1404026572" alt="" />
-                                </div>
-                                <div class="tile-text">
-                                    Nathan Peterson
-                                    <small>123-123-3210</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="tile divider-full-bleed">
-                            <div class="tile-content">
-                                <div class="tile-text"><strong>P</strong></div>
-                            </div>
-                        </li>
-                        <li class="tile">
-                            <a class="tile-content ink-reaction" href="#offcanvas-chat" data-toggle="offcanvas" data-backdrop="false">
-                                <div class="tile-icon">
-                                    <img src="~/Content/assets/img/avatar7.jpg?1404026721" alt="" />
-                                </div>
-                                <div class="tile-text">
-                                    Philip Ericsson
-                                    <small>123-123-3210</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="tile divider-full-bleed">
-                            <div class="tile-content">
-                                <div class="tile-text"><strong>S</strong></div>
-                            </div>
-                        </li>
-                        <li class="tile">
-                            <a class="tile-content ink-reaction" href="#offcanvas-chat" data-toggle="offcanvas" data-backdrop="false">
-                                <div class="tile-icon">
-                                    <img src="~/Content/assets/img/avatar10.jpg?1404026762" alt="" />
-                                </div>
-                                <div class="tile-text">
-                                    Samuel Parsons
-                                    <small>123-123-3210</small>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div><!--end .offcanvas-body -->
-            </div><!--end .offcanvas-pane -->
-            <!-- END OFFCANVAS SEARCH -->
-            <!-- BEGIN OFFCANVAS CHAT -->
-            <div id="offcanvas-chat" class="offcanvas-pane style-default-light width-12">
-                <div class="offcanvas-head style-default-bright">
-                    <header class="text-primary">Chat with Ann Laurens</header>
-                    <div class="offcanvas-tools">
-                        <a class="btn btn-icon-toggle btn-default-light pull-right" data-dismiss="offcanvas">
-                            <i class="md md-close"></i>
-                        </a>
-                        <a class="btn btn-icon-toggle btn-default-light pull-right" href="#offcanvas-search" data-toggle="offcanvas" data-backdrop="false">
-                            <i class="md md-arrow-back"></i>
-                        </a>
-                    </div>
-                    <form class="form">
-                        <div class="form-group floating-label">
-                            <textarea name="sidebarChatMessage" id="sidebarChatMessage" class="form-control autosize" rows="1"></textarea>
-                            <label for="sidebarChatMessage">Leave a message</label>
-                        </div>
-                    </form>
-                </div>
-                <div class="offcanvas-body">
-                    <ul class="list-chats">
-                        <li>
-                            <div class="chat">
-                                <div class="chat-avatar"><img class="img-circle" src="~/Content/assets/img/avatar1.jpg?1403934956" alt="" /></div>
-                                <div class="chat-body">
-                                    Yes, it is indeed very beautiful.
-                                    <small>10:03 pm</small>
-                                </div>
-                            </div><!--end .chat -->
-                        </li>
-                        <li class="chat-left">
-                            <div class="chat">
-                                <div class="chat-avatar"><img class="img-circle" src="~/Content/assets/img/avatar9.jpg?1404026744" alt="" /></div>
-                                <div class="chat-body">
-                                    Did you see the changes?
-                                    <small>10:02 pm</small>
-                                </div>
-                            </div><!--end .chat -->
-                        </li>
-                        <li>
-                            <div class="chat">
-                                <div class="chat-avatar"><img class="img-circle" src="~/Content/assets/img/avatar1.jpg?1403934956" alt="" /></div>
-                                <div class="chat-body">
-                                    I just arrived at work, it was quite busy.
-                                    <small>06:44pm</small>
-                                </div>
-                                <div class="chat-body">
-                                    I will take look in a minute.
-                                    <small>06:45pm</small>
-                                </div>
-                            </div><!--end .chat -->
-                        </li>
-                        <li class="chat-left">
-                            <div class="chat">
-                                <div class="chat-avatar"><img class="img-circle" src="~/Content/assets/img/avatar9.jpg?1404026744" alt="" /></div>
-                                <div class="chat-body">
-                                    The colors are much better now.
-                                </div>
-                                <div class="chat-body">
-                                    The colors are brighter than before.
-                                    I have already sent an example.
-                                    This will make it look sharper.
-                                    <small>Mon</small>
-                                </div>
-                            </div><!--end .chat -->
-                        </li>
-                        <li>
-                            <div class="chat">
-                                <div class="chat-avatar"><img class="img-circle" src="~/Content/assets/img/avatar1.jpg?1403934956" alt="" /></div>
-                                <div class="chat-body">
-                                    Are the colors of the logo already adapted?
-                                    <small>Last week</small>
-                                </div>
-                            </div><!--end .chat -->
-                        </li>
-                    </ul>
-                </div><!--end .offcanvas-body -->
-            </div><!--end .offcanvas-pane -->
-            <!-- END OFFCANVAS CHAT -->
-
-        </div><!--end .offcanvas-->
-        <!-- END OFFCANVAS RIGHT -->
-
     </div><!--end #base-->
     <!-- END BASE -->
 

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace HM.WebApp.Controllers
 {
+    [Authorize]
     public class OrderedCustomerController : Controller
     {
         // GET: OrderedCustomer
@@ -14,7 +15,6 @@ namespace HM.WebApp.Controllers
         {
             return View();
         }
-
 
         [HttpPost]
         public ActionResult LoadOrderedCustomersTable(int? start, int? length)

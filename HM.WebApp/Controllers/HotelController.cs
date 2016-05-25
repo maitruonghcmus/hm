@@ -8,10 +8,14 @@ using System.Web.Mvc;
 
 namespace HM.WebApp.Controllers
 {
+    [Authorize]
     public class HotelController : Controller
     {
         public ActionResult Index()
         {
+            if (!AppContext.Instance.IsAdministrator())
+                return RedirectToAction("Index", "Error");
+
             var hotels = DataContext.Instance.GetHotels();
             ViewBag.Hotels = hotels;
 
@@ -21,16 +25,16 @@ namespace HM.WebApp.Controllers
         [HttpPost]
         public ActionResult LoadHotelsTable(int? start, int? length)
         {
-            var tableSearchText = Request.Params["search[value]"]; //lấy text từ khung search của table nè
+            var tableSearchText = Request.Params["search[value]"];
 
-            var hotels = DataContext.Instance.GetHotels() // lấy danh sách hotel nè
-                         ?.Where(h => //check null rồi đem where để lọc dữ liệu nè
-                                (h.Name + h.Address + h.Contact + h.ContactMail + h.ContactPhone + h.CreatedBy + h.CreatedOn + h.TaxCode).ToLower() // cộng chuỗi các field của hotel để đem so sánh với tableSearchText nè
-                                    .Contains(tableSearchText.ToLower()) //so nếu chuỗi trên có chứa tableSearchText nè
+            var hotels = DataContext.Instance.GetHotels()
+                         ?.Where(h =>
+                                (h.Name + h.Address + h.Contact + h.ContactMail + h.ContactPhone + h.CreatedBy + h.CreatedOn + h.TaxCode).ToLower()
+                                    .Contains(tableSearchText.ToLower())
                                 )
                          .Select(h => h);
 
-            var dataFiltered = hotels?.Skip(start ?? 0).Take(Math.Min(length ?? 0, hotels.Count() - start ?? 0)) //xong lấy 10 record từ start đến length để show lên trên table nè
+            var dataFiltered = hotels?.Skip(start ?? 0).Take(Math.Min(length ?? 0, hotels.Count() - start ?? 0))
                     .Select(h => new
                     {
                         h.Id,

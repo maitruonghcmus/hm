@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -35,5 +36,15 @@ namespace HM.WebApp
     {
         public static readonly string NumberFormatByComma = "#,##0";
         public static readonly string NumberByFormatSpacing = "# ##0";
+    }
+
+    public class AppUtils
+    {
+        public static bool IsValidObject<T>(T obj)
+        {
+            var context = new ValidationContext(obj, serviceProvider: null, items: null);
+            var results = new List<ValidationResult>();
+            return Validator.TryValidateObject(obj, context, results, true);
+        }
     }
 }

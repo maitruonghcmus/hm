@@ -189,9 +189,16 @@ namespace HM.WebApp
             return this.Get<T>(controller, action, indexKey).Data;
         }
 
+        public T GetObjectsByParams<T>(string controller, string action, List<KeyValuePair<string, string>> _params)
+        {
+            return this.Get<T>(controller, action, _params).Data;
+        }
+
         public T GetObject<T>(string controller, string action, int id)
         {
             return this.Get<T>(controller, action, id).Data;
         }
+
+
     }
 }

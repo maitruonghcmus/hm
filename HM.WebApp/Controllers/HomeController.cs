@@ -7,11 +7,14 @@ using HM.DataModels;
 
 namespace HM.WebApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        [Authorize]
         public ActionResult Index()
         {
+            if (AppContext.Instance.GetDayRemains() <= 0)
+                return RedirectToAction("Expired", "Error");
+
             var revByDay = AppContext.Instance.GetRevenueByDay();
             var revByWeek = AppContext.Instance.GetRevenueByWeek();
             var revByMonth = AppContext.Instance.GetRevenueByMonth();

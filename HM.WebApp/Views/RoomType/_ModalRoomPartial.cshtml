@@ -17,7 +17,7 @@
                         <input type="text" class="form-control" id="roomRemark" placeholder="Ghi chú">
                     </div>
                     <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                        <a class="btn btn-primary" role="button" id="btnAddRoom" onclick="validateForm();">Thêm</a>
+                        <a class="btn btn-primary" role="button" id="btnAddRoom" onclick="validateFormAddRoom();">Thêm</a>
                         <a class="btn btn-default" role="button" id="btnClear" onclick="clearRoomField()">Nhập lại</a>
                     </div>
                 </form>
@@ -37,20 +37,14 @@
         $("#formAddRoom").validate({
             rules: {
                 roomName: "required",
-            
             },
             messages: {
                 roomName: "Không được để trống",
-                
             }
-
         });
-
-
     });
 
-    function validateForm() {
-
+    function validateFormAddRoom() {
         if ($("#formAddRoom").valid() == true) { createRoom(); }
         else {  }
     }

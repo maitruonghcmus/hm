@@ -43,7 +43,7 @@
 
                     <br />
                     <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                        <a class="btn btn-primary" role="button" onclick="validateForm();" id="btnAddRoomType">Thêm</a>
+                        <a class="btn btn-primary" role="button" onclick="validateFormAddRoomType();" id="btnAddRoomType">Thêm</a>
                         <a class="btn btn-default" role="button" onclick="clearControl();">Nhập lại</a>
                     </div>
                 </form>
@@ -54,14 +54,7 @@
     </div><!-- modal-dialog -->
 </div><!-- modal -->
 
-
-
-
 <script>
-
-
-
-
     $(document).ready(function () {
         $("#formAddRoomType").validate({
             rules: {
@@ -122,12 +115,9 @@
 
     });
 
-    function validateForm() {
+    function validateFormAddRoomType() {
 
         if ($("#formAddRoomType").valid() == true) { addRoomType(); }
         else { }
     }
-
-
-
 </script>

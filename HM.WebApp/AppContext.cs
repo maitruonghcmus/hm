@@ -1,5 +1,6 @@
 ﻿using HM.DataModels;
 using HM.WebApp.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,42 @@ namespace HM.WebApp
     public class AppContext
     {
         public static AppContext Instance = new AppContext();
+
+        public int GetLoggedUserId()
+        {
+            var id = HttpContext.Current.User.Identity.GetUserId();
+            return int.Parse(id ?? "-1");
+        }
+
+        public User GetLoggedUser()
+        {
+            return DataContext.Instance.GetUser(this.GetLoggedUserId());
+        }
+
+        public int GetLoggedHotelId()
+        {
+            var user = DataContext.Instance.GetUser(this.GetLoggedUserId());
+            return user != null ? user.HotelId : -1;
+        }
+
+        public Hotel GetLoggedHotel()
+        {
+            return DataContext.Instance.GetHotel(this.GetLoggedHotelId());
+        }
+
+        public bool IsAdministrator()
+        {
+            var isAdmin = this.GetLoggedUser()?.RoleId == 1;
+            return isAdmin;
+        }
+
+        public double GetDayRemains()
+        {
+            var createdDate = this.GetLoggedHotel()?.CreatedOn ?? DateTime.Today;
+
+            var days = Math.Round(90 - (DateTime.Today - createdDate).TotalDays);
+            return days;
+        }
 
         #region Reporting - Charting
 

@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace HM.DataModels
 {
     public class OrderDetail
     {
+        [Required]
         public int Id { get; set; }
 
         /// <summary>
         /// Order mà tương ứng mà khách đã đặt (1 order - n order detail)
         /// </summary>
+        [Required]
         public int OrderId { get; set; }
 
         /// <summary>
@@ -23,8 +26,10 @@ namespace HM.DataModels
         /// <summary>
         /// Tổng tiền cho tất cả các dịch vụ trên
         /// </summary>
+        [Required]
         public long Total { get; set; }
 
+        [Required]
         public int HotelId { get; set; }
         public bool Inactive { get; set; }
         public int CreatedBy { get; set; }

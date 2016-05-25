@@ -8,11 +8,15 @@ using System.Web.Mvc;
 
 namespace HM.WebApp.Controllers
 {
+    [Authorize]
     public class CustomerTypeController : Controller
     {
 
         public ActionResult Index()
         {
+            if (AppContext.Instance.GetDayRemains() <= 0)
+                return RedirectToAction("Expired", "Error");
+
             var ctmTypes = DataContext.Instance.GetCustomerTypes();
             ViewBag.CustomerTypes = ctmTypes;
             return View();

@@ -8,11 +8,15 @@ using System.Web.Mvc;
 
 namespace HM.WebApp.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         // GET: User
         public ActionResult Index()
         {
+            if (!AppContext.Instance.IsAdministrator())
+                return RedirectToAction("Index", "Error");
+
             var users = DataContext.Instance.GetUsers();
             var roles = DataContext.Instance.GetRoles();
             ViewBag.Roles = roles;
@@ -39,7 +43,7 @@ namespace HM.WebApp.Controllers
                     user.Password,
                     user.Username,
                     user.RoleId,
-                   
+
                 };
 
                 return Json(obj, JsonRequestBehavior.AllowGet);
