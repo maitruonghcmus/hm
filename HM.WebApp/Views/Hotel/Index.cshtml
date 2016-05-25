@@ -67,7 +67,7 @@
                 success: function myfunction(data) {
                     if (data) {
                         toastr.success("Thêm thành công");
-                        //$("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
+                         clearControl();
                         $('#hotelsTable').dataTable().fnDraw();
                     }
                     else

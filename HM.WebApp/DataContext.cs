@@ -345,6 +345,16 @@ namespace HM.WebApp
             return HttpClientHelper.Instance.Post<Order>(ApiUtils.ORDER, ApiUtils.CREATE, ord).IsSuccess();
         }
 
+        public int CreateOrderReturnOrderId(Order ord)
+        {
+            ord.Id = 0;
+            ord.HotelId = GetLoggedHotelId();
+            ord.CreatedBy = GetLoggedUserId();
+            ord.CreatedOn = DateTime.Now;
+
+            return HttpClientHelper.Instance.Post<Order>(ApiUtils.ORDER, ApiUtils.CREATE, ord)?.Data?.Id ?? -1;
+        }
+
         public bool UpdateOrder(Order ord)
         {
             ord.ModifiedBy = GetLoggedUserId();
@@ -358,6 +368,44 @@ namespace HM.WebApp
             return HttpClientHelper.Instance.Delete<Order>(ApiUtils.ORDER, ApiUtils.DELETE, id).IsSuccess();
         }
         #endregion
+        #region OrderDetail
+
+        public IEnumerable<OrderDetail> GetOrderDetails()
+        {
+            var ordDetails = HttpClientHelper.Instance.GetObjects<IEnumerable<OrderDetail>>(ApiUtils.ORDERDETAIL, ApiUtils.GETALL);
+            return ordDetails != null ? ordDetails.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
+        }
+
+        public OrderDetail GetOrderDetail(int id)
+        {
+            var ordDetail = HttpClientHelper.Instance.GetObject<OrderDetail>(ApiUtils.ORDERDETAIL, ApiUtils.GETBYID, id);
+            return ordDetail != null && !ordDetail.Inactive ? ordDetail : null;
+        }
+
+        public bool CreateOderDetail(OrderDetail ordDetail)
+        {
+            ordDetail.Id = 0;
+            ordDetail.HotelId = GetLoggedHotelId();
+            ordDetail.CreatedBy = GetLoggedUserId();
+            ordDetail.CreatedOn = DateTime.Now;
+
+            
+
+            return HttpClientHelper.Instance.Post<OrderDetail>(ApiUtils.ORDERDETAIL, ApiUtils.CREATE, ordDetail).IsSuccess();
+        }
+
+        public bool UpdateOrderDetail(OrderDetail ordDetail)
+        {
+            ordDetail.ModifiedBy = GetLoggedUserId();
+            ordDetail.ModifiedOn = DateTime.Now;
+
+            return HttpClientHelper.Instance.Post<OrderDetail>(ApiUtils.ORDER, ApiUtils.UPDATE, ordDetail).IsSuccess();
+        }
+
+
+
+        #endregion
+
 
         #region Payment
         public IEnumerable<Payment> GetPayments()

@@ -58,6 +58,7 @@
                 success: function myfunction(data) {
                     if (data) {
                         toastr.success("Thêm thành công");
+                        clearControl()
                         $("#toLoadServices").load('@Url.Action("LoadExtraServices", "ExtraService")');
                     }
                     else

@@ -62,10 +62,11 @@
                 success: function myfunction(data) {
                     if (data) {
                         toastr.success('Thêm thành công')
+                        clearControl();
                         $("#toLoadCustomerType").load('@Url.Action("LoadCustomerTypes", "CustomerType")');
                     }
                     else
-                        toastr.error('Thêm thành công')
+                        toastr.error('Thêm không thành công')
                 },
                 error: function myfunction() {
 

@@ -1,0 +1,44 @@
+﻿@{
+    var detaillist = ViewBag.OrderDetailList as IEnumerable<HM.WebApp.Models.OrderDetailModel>;
+  
+} 
+
+
+
+    @{
+        if (detaillist != null)
+        {
+            long total = 0;
+            <ul class="list divider-full-bleed">
+                @foreach (var item in detaillist)
+                {
+                <li class="tile">
+                    <a class="tile-content ink-reaction">
+                        
+                        <div class="tile-text">
+
+                            @item.ServiceName
+                            <small id="lbNumber">Số lượng: @item.Number
+                            <br />
+                                Tổng cộng
+                                <label id="lbTotal">@item.Total</label>
+                            </small>
+                            
+                        </div>
+                    </a>
+                </li>
+                    total += @item.Total;
+                }
+
+            </ul>
+            <div class="text-divider"><span>Tổng tiền dịch vụ</span></div>
+       
+            <h2 class="text-medium text-primary center " >@total đ</h2>
+        }
+        else
+        {
+            <h4>Danh sách dịch vụ còn trống</h4>
+              }
+
+    }
+

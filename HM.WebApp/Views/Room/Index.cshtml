@@ -13,6 +13,7 @@
         @Html.Partial("_ModalBooking")
         @Html.Partial("_ModalRoomInfo")
         @Html.Partial("_ModalAddService")
+        @Html.Partial("_ModalPayment")
     </div>
 </section>
 
@@ -20,12 +21,14 @@
 <script>
     var roomId;
     var roomTypeId;
-    var roomName;
+    var orderId;
 
     function openModalBooking(rId, rtId)
     {
         roomId = rId;
         roomTypeId = rtId;
+        
+
         clearControl();
     }
 
@@ -38,6 +41,7 @@
 
     function openModalRoomInfo(roomId)
     {
+     
         $("#lbRoomName").text(roomId);
 
         $.ajax({
@@ -46,10 +50,11 @@
         type: "GET",
         success: function (data) {
             if (data != null) {
-          
+
                 $("#lbCustomerName").text(data.Customer.Name);
                 $("#lbCustomerInfo").text(data.Customer.CardId + ", " + data.Customer.Address + ", " + data.Customer.Phone);
-                $("#lbCheckInDate").text(data.CheckInDate);
+                $("#lbCheckInDate").text(data.currentCheckInDate);
+           
 
             }
         },
@@ -63,8 +68,6 @@
         var order = new Object({
             CustomerId: $("#cbbCustomers").val(),
             RoomId: roomId,
-
-            //CheckInDate: new Date()
         });
 
 
@@ -74,11 +77,14 @@
         type: "POST",
         success: function myfunction(data) {
             if (data) {
-                toastr.success("Thêm thành công");
+                toastr.success("Đặt phòng thành công");
                 $("#toLoadRooms").load('@Url.Action("LoadRooms", "Room")');
+                clearControl();
+                roomId = null;
+                roomTypeId = null;
             }
             else
-                toastr.error("Thêm không thành công");
+                toastr.error("Đặt phòng không thành công");
         },
         error: function myfunction() {
 
@@ -94,4 +100,50 @@
         toastr.options.positionClass = 'toast-bottom-full-width';
         toastr.warning("Phòng đang sử dụng");
     }
+
+    function addService() {
+
+        var ordDetail = new Object({
+            OrderId : orderId,
+            ServiceId: $("#cbbService").val(),
+            Number: $("#txtNumber").val(),
+        })
+
+
+        $.ajax({
+            url: '@Url.Action("CreateOrderDetail","OrderDetail")',
+            type: "POST",
+            data: {
+                orderDetail: ordDetail
+
+            },
+            success: function myfunction(data) {
+                if (data) {
+                    toastr.success("Thêm thành công");
+                    $("#toLoadServices").load('@Url.Action("GetOrderDetails", "Room")' + "?ordId=" + orderId);
+                    $("#toLoadRooms").load('@Url.Action("LoadRooms", "Room")');
+                }
+                else
+                    toastr.error("Thêm không thành công");
+            },
+            error: function myfunction() {
+
+            }
+        })
+
+    }
+
+    function showService(id) {
+
+        orderId = id;
+
+        if (orderId != null && orderId != "" && !isNaN(orderId)) {
+             $("#toLoadServices").load('@Url.Action("GetOrderDetails", "Room")'+"?ordId="+orderId);
+        }
+
+        //clearControl();
+    }
+
+
+
 </script>

@@ -84,6 +84,7 @@
                     if (data == true) {
                         $("#roomTypeToLoadPartial").load('@Url.Action("LoadRoomTypePartial", "RoomType")');
                         toastr.success("Thêm thành công!");
+                        clearControl();
                     }
                 },
                 error: function () {

@@ -1,65 +1,61 @@
 ﻿@{
     var services = ViewBag.Services as IEnumerable<HM.DataModels.ExtraService>;
 }
+
 <div class="modal right fade" id="modalAddService" tabindex="-1" role="dialog" aria-labelledby="ModalServiceName">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="ModalServiceName">Thêm dịch vụ</h4>
+                <h4 class="modal-title" id="ModalServiceName">Thêm dịch vụ phòng <label id="lbRoomId">Phòng</label></h4>
             </div>
 
             <div class="modal-body">
 
-                <br />
-                <div class="form-group">
+                <form class="form">
+                    <div class="form-group">
 
-                    <select id="cbbService" name="cbbService" class="form-control">
+                        <select id="cbbService" name="cbbService" class="form-control">
 
-                        @{
-                            <option value="">Dịch vụ</option>
-                            if (services != null)
-                            {
-                                foreach (var item in services)
+                            @{
+                                <option value="">Dịch vụ</option>
+                                if (services != null)
                                 {
-                                    <option value="@item.Id">@item.Name</option>
+                                    foreach (var item in services)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
                                 }
+
                             }
+                        </select>
+                        <label for="cbbCustomers">Chọn dịch vụ</label>
+                    </div>
 
-                        }
-                    </select>
-                    <!--<label for="cbbCustomers">Chọn khách</label>-->
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="txtNumber">
-                    <label for="txtNumber">Số lượng</label>
-                </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtNumber" name="txtNumer" required>
+                        <label for="txtNumber">Số lượng</label>
+                    </div>
 
 
-                <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                    <a class="btn btn-primary" role="button" id="btnAddService" onclick="addService();">Thêm dịch vụ</a>
-   
-                </div>
-                <ul class="list">
-                    
-                   <li class="tile">
-                        <a class="tile-content ink-reaction">
-                            <div class="tile-icon">
-                                <i class="md md-add-circle-outline"></i>
-                            </div>
-                            <div class="tile-text">
 
-                                Dịch vụ thêm
-                                <small></small>
-                            </div>
-                        </a>
-                        <a class="btn btn-flat ink-reaction">
-                            <i class="fa fa-remove"></i>
-                        </a>
-                    </li>
-                </ul>
 
+
+
+                    <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+                        <a class="btn btn-primary" role="button" id="btnAddService" onclick="addService();">Thêm dịch vụ</a>
+
+                    </div>
+
+                    <div id="toLoadServices">
+                        @Html.Partial("_ShowOrderDetail")
+                    </div>
+
+
+                </form>
+                
 
             </div>
 

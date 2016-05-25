@@ -63,6 +63,7 @@
                 success: function myfunction(data) {
                     if (data) {
                         toastr.success("Thêm thành công");
+                        clearControl();
                         $('#customersTable').dataTable().fnDraw();
                     }
                     else

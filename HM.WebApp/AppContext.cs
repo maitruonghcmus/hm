@@ -261,5 +261,8 @@ namespace HM.WebApp
         //TODO: định nghĩa hàm kiểm tra quyền, nếu quyền là administrator
 
         #endregion
+
+
+        public A
     }
 }

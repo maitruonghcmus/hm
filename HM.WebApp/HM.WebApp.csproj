@@ -221,6 +221,7 @@
     <Compile Include="Models\DataTable.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\OrderDetailModel.cs" />
     <Compile Include="Models\PaymentModel.cs" />
     <Compile Include="Models\RoomModel.cs" />
     <Compile Include="Models\RoomTypeModel.cs" />
@@ -2055,6 +2056,8 @@
     <Content Include="Views\Room\_ModalAddService.cshtml" />
     <Content Include="Views\OrderedCustomer.cshtml" />
     <Content Include="Views\OrderedCustomer\Index.cshtml" />
+    <Content Include="Views\Room\_ShowOrderDetail.cshtml" />
+    <Content Include="Views\Room\_ModalPayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
