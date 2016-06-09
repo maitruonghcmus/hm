@@ -262,7 +262,11 @@ namespace HM.WebApp
 
         #endregion
 
-
-        public A
+        public PayModel Calculate(int roomId, int customerId, int ordId)
+        {
+            var topay = new PayModel( roomId,  customerId,  ordId);
+            return topay;
+        }
+        
     }
 }

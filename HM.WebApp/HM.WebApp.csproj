@@ -209,6 +209,7 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderDetailController.cs" />
     <Compile Include="Controllers\OrderedCustomerController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OrderDetailModel.cs" />
     <Compile Include="Models\PaymentModel.cs" />
+    <Compile Include="Models\PayModel.cs" />
     <Compile Include="Models\RoomModel.cs" />
     <Compile Include="Models\RoomTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2064,6 +2066,8 @@
     <Folder Include="Content\assets\js\core\cache\" />
     <Folder Include="Views\OrderDetail\" />
     <Folder Include="Views\Order\" />
+    <Folder Include="Views\Payment\" />
+    <Folder Include="Views\PayModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

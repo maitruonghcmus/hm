@@ -27,7 +27,7 @@
     {
         roomId = rId;
         roomTypeId = rtId;
-        
+
 
         clearControl();
     }
@@ -39,10 +39,10 @@
         $("#lbCheckInDate").text("");
     }
 
-    function openModalRoomInfo(roomId)
+    function openModalRoomInfo(roomId, roomName)
     {
-     
-        $("#lbRoomName").text(roomId);
+
+        $("#lbRoomName").text(roomName);
 
         $.ajax({
             url: "@Url.Action("GetRoomInfo","Room")",
@@ -54,7 +54,7 @@
                 $("#lbCustomerName").text(data.Customer.Name);
                 $("#lbCustomerInfo").text(data.Customer.CardId + ", " + data.Customer.Address + ", " + data.Customer.Phone);
                 $("#lbCheckInDate").text(data.currentCheckInDate);
-           
+
 
             }
         },
@@ -101,6 +101,35 @@
         toastr.warning("Phòng đang sử dụng");
     }
 
+    function displayCleaningRoom()
+    {
+        toastr.options.positionClass = 'toast-bottom-full-width';
+        toastr.error("Phòng đang dọn dẹp");
+    }
+
+    function checkRoomAvailable(rId) {
+        $.ajax({
+            url: '@Url.Action("CheckRoomAvailable", "Room")',
+            type: "POST",
+            data: {
+                roomId: rId
+
+            },
+            success: function myfunction(data) {
+                if (data) {
+
+                    toastr.info("Phòng đã sẵn sàng!");
+                    $("#toLoadRooms").load('@Url.Action("LoadRooms", "Room")'); //Load lại rooms
+                }
+                else
+                    toastr.error("Có lỗi xảy ra");
+            },
+            error: function myfunction() {
+
+            }
+        })
+    }
+
     function addService() {
 
         var ordDetail = new Object({
@@ -144,6 +173,254 @@
         //clearControl();
     }
 
+    function calculatePrice(day, hour, oneHour, twoHours, threeHours, days, coe, svTotal)
+    {
+        //console.log(coe);
+        var oddHour = hour - (day * 24);
+        var priceHour = 0;
+        var priceDay = 0;
+        var total = 0;
+        var final = 0;
+        var VAT = 0;
+        var otherCharge = 0;
+        var discount = 0;
+        var discounttotal = 0;
+        var boolVAT = false;
+
+        if (day == 0)
+        {
+            if (hour >= 0 || hour <= 1) {
+                priceHour = oneHour;
+            } else if (hour <= 2) {
+                priceHour = twoHours;
+            } else if (hour <= 3) {
+                priceHour = threeHours;
+            }
+            else
+            {
+                priceHour = days;
+            }
+        }
+        else
+        {
+            priceDay = day * days;
+        }
+
+        total = (priceDay + priceHour) * coe;
+        final = total + svTotal
+
+        var hourToShow = "";
+        if((hour-(day*24) < 0))
+        {
+            hourToShow = "thiếu " + Math.abs(hour - (day * 24));
+        }
+        else
+        {
+            hourToShow = hour - (day * 24);
+        }
+
+        var finaltemp = final;
+        $("#cbVAT").click(function () {
+
+            finaltemp = final;
+            if($(this).is(':checked'))
+            {
+
+                VAT = finaltemp * 0.1;
+
+                final = finaltemp + VAT;
+                $("#finalPrice").text(formatNumber(final) + " đ");
+                $("#lbV").text("+ " + formatNumber(VAT) + " đ");
+                boolVAT = true;
+
+            }
+            else {
+                final = finaltemp - VAT;
+                $("#finalPrice").text(formatNumber(final) + " đ");
+                $("#lbV").text("0");
+                boolVAT = false;
+            }
+        })
+
+        $("#btnDiscount").click(function DC() {
+            if ($("#txtDiscount").val() != "")
+            {
+                finaltemp = final;
+                discount = $("#txtDiscount").val();
+                discount = discount / 100;
+                //console.log(discount);
+                discounttotal = final * discount;
+                $("#lbDiscount").text(formatNumber(discounttotal) + " đ");
+
+                $("#lbDC").text("- " + formatNumber(discounttotal) + " đ");
+                final = finaltemp - (discounttotal);
+                $("#finalPrice").text(formatNumber(final) + " đ");
+            }
+            else {
+                toastr.error("Phải nhập dữ liệu vào!");
+            }
 
 
+        })
+
+        $("#btnAddOtherCharge").click(function addOC() {
+            if ($("#txtOtherCharge").val() != "")
+            {
+                finaltemp = final;
+                var value = $("#txtOtherCharge").val();
+                otherCharge = parseInt(value);
+                $("#lbOtherCharge").text(formatNumber(otherCharge) + " đ");
+
+                final = finaltemp + otherCharge;
+                $("#finalPrice").text(formatNumber(final) + " đ");
+                $("#lbOC").text("+ " + formatNumber(otherCharge) + " đ");
+            }
+            else
+            {
+                toastr.error("Phải nhập dữ liệu vào!");
+            }
+
+
+        })
+
+        $("#lbRoomPrice").text(formatNumber(total) + " đ");
+        $("#lbDay").text("Đã ở: " + day + " ngày, " + hourToShow + " giờ");
+
+        var current = final
+        $("#finalPriceCur").text(formatNumber(current) + " đ");
+        $("#finalPrice").text(formatNumber(final) + " đ");
+
+
+
+        //Create Payment
+        $("#btnCreatePayment").click(function createPayment() {
+            var payment = new Object({
+                CustomerId: gb_ctmId,
+                OrderId: gb_oId,
+
+                Quantity: hour,
+                Amount: final,
+                ServiceCharge: svTotal,
+                OtherCharge: otherCharge,
+                DiscountPercent: $("#txtDiscount").val(),
+                DiscountTotal: discounttotal,
+                VAT: boolVAT,
+                Total: final
+            });
+
+
+            $.ajax({
+                url: '@Url.Action("CreatePayment","Payment")',
+                type: "POST",
+                data: {
+                    pm: payment
+
+                },
+                success: function myfunction(data) {
+                    if (data) {
+                        toastr.success("Thanh toán thành công");
+                        updateRoomToClean(gb_rId);
+
+                    }
+                    else
+                        toastr.error("Thanh toán không thành công");
+                },
+                error: function myfunction() {
+
+                }
+            })
+
+        })
+
+
+    }
+    function formatNumber(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    }
+
+
+    var gb_ctmId;
+    var gb_oId;
+    var gb_rId;
+
+    function bindPayment(rid, ctmId, oId, rName)
+    {
+
+        gb_ctmId = ctmId;
+        gb_oId = oId;
+        gb_rId = rid;
+
+        clearControl(); // clear control
+        $('#cbVAT').attr("checked", false);
+        $("#rName").text(rName);
+
+        $.ajax({
+            url: '@Url.Action("Calculate","Room")',
+            type: "GET",
+            data: {
+                roomId : rid,
+                customerId : ctmId,
+                ordId : oId
+
+            },
+            success: function myfunction(data) {
+                if (data) {
+                    toastr.success("Lấy thông tin thành công");
+                    $("#ctmText").val(data.CustomerName);
+                    $("#ctmCoe").val(data.Coe);
+                    $("#lbServicePrice").text(formatNumber(data.SvTotal) + " đ");
+                    $("#lbCheckIn").text(data.strCheckIn);
+                    $("#lbCheckOut").text(data.strCheckOut);
+                    //$("#lbRoomPrice").text(data.RoomType);
+                    calculatePrice(data.Day, data.Hour, data.RoomType.Price[0], data.RoomType.Price[1], data.RoomType.Price[2], data.RoomType.Price[3], data.Coe, data.SvTotal);
+
+                }
+                else
+                    toastr.error("Có lỗi xảy ra! Thử lại sau");
+            },
+            error: function myfunction() {
+
+            }
+        })
+
+    }
+
+    function updateRoomToClean(rId)
+    {
+
+        $.ajax({
+            url: '@Url.Action("UpdateRoomToClean", "Room")',
+            type: "POST",
+            data: {
+                roomId: rId
+
+            },
+            success: function myfunction(data) {
+                if (data) {
+
+                    toastr.info("Phòng đã đánh dấu sẽ dọn dẹp");
+                    $("#toLoadRooms").load('@Url.Action("LoadRooms", "Room")'); //Load lại rooms
+                }
+                else
+                    toastr.error("Có lỗi xảy ra");
+            },
+            error: function myfunction() {
+
+            }
+        })
+    }
+
+    function clearControl()
+    {
+        $("#lbOC").text("0");
+        $("#lbDC").text("0");
+        $("#lbV").text("0");
+
+        $("#lbDiscount").text("0");
+        $("#lbOtherCharge").text("0");
+
+        $("#txtDiscount").val("");
+        $("#txtOtherCharge").val("");
+
+    }
 </script>
