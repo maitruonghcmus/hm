@@ -223,6 +223,7 @@
     <Compile Include="Controllers\OrderDetailController.cs" />
     <Compile Include="Controllers\OrderedCustomerController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\PaymentReportController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -2001,6 +2002,7 @@
     <Content Include="Content\assets\less\shared\variables.less" />
     <Content Include="Content\assets\js\alertable\package.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\chartjs\chart.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -2077,6 +2079,7 @@
     <Content Include="Views\Error\Expired.cshtml" />
     <Content Include="Views\Room\_ModalPayment.cshtml" />
     <Content Include="Views\Room\_ShowOrderDetail.cshtml" />
+    <Content Include="Views\PaymentReport\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

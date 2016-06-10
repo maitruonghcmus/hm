@@ -247,6 +247,78 @@ namespace HM.WebApp
             return rev;
         }
 
+        public double GetRevenueByTime(DateTime from, DateTime to)
+        {
+            var payments = DataContext.Instance.GetPayments()?
+                            .Where(a => a.CheckOutDate >= from && a.CheckOutDate <= to)?
+                            .Select(a => a);
+
+            var rev = 0.0;
+            if (payments != null)
+            {
+                foreach (var item in payments)
+                    rev += item.Total;
+            }
+
+            return rev;
+        }
+
+        public Dictionary<int, double> GetMonthlyRevenue(int year)
+        {
+            var result = new Dictionary<int, double>();
+            try
+            {
+                for (int i = 1; i <= 12; i++)
+                {
+                    var rev = GetRevenueByTime(new DateTime(year, i, 1), new DateTime(year, i, DateTime.DaysInMonth(year, i)));
+                    result.Add(i, rev);
+                }
+
+                //var month1 = GetRevenueByTime(new DateTime(year, 1, 1), new DateTime(year, 1, 31));
+                //result.Add(1, month1);
+
+                //var month2 = GetRevenueByTime(new DateTime(year, 2, 1), new DateTime(year, 2, 28));
+                //result.Add(2, month2);
+
+                //var month3 = GetRevenueByTime(new DateTime(year, 3, 1), new DateTime(year, 3, 31));
+                //result.Add(3, month3);
+
+                //var month4 = GetRevenueByTime(new DateTime(year, 4, 1), new DateTime(year, 4, 30));
+                //result.Add(4, month4);
+
+                //var month5 = GetRevenueByTime(new DateTime(year, 5, 1), new DateTime(year, 5, 31));
+                //result.Add(5, month1);
+
+                //var month6 = GetRevenueByTime(new DateTime(year, 6, 1), new DateTime(year, 6, 30));
+                //result.Add(6, month1);
+
+                //var month7 = GetRevenueByTime(new DateTime(year, 7, 1), new DateTime(year, 7, 31));
+                //result.Add(7, month1);
+
+                //var month8 = GetRevenueByTime(new DateTime(year, 8, 1), new DateTime(year, 8, 31));
+                //result.Add(8, month1);
+
+                //var month9 = GetRevenueByTime(new DateTime(year, 9, 1), new DateTime(year, 9, 30));
+                //result.Add(9, month1);
+
+                //var month10 = GetRevenueByTime(new DateTime(year, 10, 1), new DateTime(year, 10, 31));
+                //result.Add(10, month1);
+
+                //var month11 = GetRevenueByTime(new DateTime(year, 11, 1), new DateTime(year, 11, 30));
+                //result.Add(11, month1);
+
+                //var month12 = GetRevenueByTime(new DateTime(year, 12, 1), new DateTime(year, 12, 31));
+                //result.Add(12, month1);
+
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return result;
+        }
+
         public double GetRevenueByYear()
         {
             var payments = DataContext.Instance.GetPayments()?
@@ -302,9 +374,9 @@ namespace HM.WebApp
 
         public PayModel Calculate(int roomId, int customerId, int ordId)
         {
-            var topay = new PayModel( roomId,  customerId,  ordId);
+            var topay = new PayModel(roomId, customerId, ordId);
             return topay;
         }
-        
+
     }
 }

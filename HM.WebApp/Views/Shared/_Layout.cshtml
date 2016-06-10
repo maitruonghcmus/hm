@@ -58,6 +58,7 @@
     <script src="~/Content/assets/js/listjs/list.js"></script>
     <script src="~/Content/assets/js/libs/select2/select2.min.js"></script>
     <script src="~/Content/assets/js/alertable/jquery.alertable.js"></script>
+
     <!--Begin validate-->
     <script src="~/Content/assets/js/libs/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/Content/assets/js/libs/jquery-validation/dist/additional-methods.js"></script>
@@ -180,12 +181,12 @@
                         </ul><!--end /submenu -->
                     </li><!--end /menu-li -->
 
-                    <li>
+                    @*<li>
                         <a href="#" data-toggle="offcanvas" data-backdrop="true">
                             <div class="gui-icon"><i class="fa fa-credit-card"></i></div>
                             <span class="title">Thanh toán</span>
                         </a>
-                    </li><!--end /menu-li -->
+                    </li>*@
 
                     <li>
                         <a href="@Url.Action("Index","ExtraService")" class=@(controllerName == "ExtraService" ? "active" : "")>

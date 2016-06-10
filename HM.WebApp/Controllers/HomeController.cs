@@ -33,19 +33,20 @@ namespace HM.WebApp.Controllers
             var customerCheckoutRecent = AppContext.Instance.Get5CusomerCheckedOutRecent();
             ViewBag.CheckOutRecent = customerCheckoutRecent;
 
-            var result = AppContext.Instance.GetRevenueByRoomType(DateTime.Today.AddMonths(-1), DateTime.Today.AddDays(1));
-            var revByRoomType = new Dictionary<string, double>();
-            if (result != null)
-            {
-                foreach (var item in result)
-                {
-                    revByRoomType.Add(item.Key?.Name ?? "Chưa rõ", item.Value);
-                }
-            }
+            //var result = AppContext.Instance.GetRevenueByRoomType(DateTime.Today.AddMonths(-1), DateTime.Today.AddDays(1));
+            //var revByRoomType = new Dictionary<string, double>();
+            //if (result != null)
+            //{
+            //    foreach (var item in result)
+            //    {
+            //        revByRoomType.Add(item.Key?.Name ?? "Chưa rõ", item.Value);
+            //    }
+            //}
 
-            ViewBag.RevenueByRoomType = revByRoomType;
+            //ViewBag.RevenueByRoomType = revByRoomType;
 
-            //var a = AppContext.Instance.GetRevenueFromTo(DateTime.Today);
+            var monthlyRev = AppContext.Instance.GetMonthlyRevenue(DateTime.Now.Year);
+            ViewBag.MonthlyRev = monthlyRev;
 
             return View();
         }

@@ -7,11 +7,15 @@
 
     var newCustomer = ViewBag.NewCustomer as IEnumerable<HM.DataModels.Customer>;
     var checkoutRecent = ViewBag.CheckOutRecent as IEnumerable<HM.DataModels.Customer>;
-    var revByRoomType = ViewBag.RevenueByRoomType as Dictionary<string, double>;
+    
+    //var revByRoomType = ViewBag.RevenueByRoomType as Dictionary<string, double>;
+
+    var monthlyRev = ViewBag.MonthlyRev as Dictionary<int, double>;
 }
 
 <section>
     <div class="section-body">
+
         <div class="row">
             <!-- BEGIN ALERT - REVENUE -->
             <div class="col-md-3 col-sm-6">
@@ -74,10 +78,12 @@
                 <div class="card">
                     <div class="card-head">
                         <header>Doanh thu từng tháng</header>
-                    </div><!--end .card-head -->
-                    <div class="card-body height-9">
-                        <div id="visitor-chart" class="flot height-6" data-title="Doanh thu" data-color="#9C27B0"></div>
-                    </div><!--end .card-body -->
+                    </div>
+
+                    <div class="card-body">
+                        <div id="morris-bar-graph" class="height-7" data-colors="#9C27B0,#2196F3,#0aa89e"></div>
+                    </div>
+
                 </div><!--end .card -->
             </div><!--end .col -->
 
@@ -85,7 +91,7 @@
 
         <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card ">
                     <div class="card-head">
                         <header>Khách hàng mới</header>
@@ -97,13 +103,13 @@
                                 {
                                     foreach (var item in newCustomer)
                                     {
-                                        <li class="tile">
-                                            <div class="checkbox checkbox-styled tile-text">
-                                                <label>
-                                                    <span>@item.Name - @item.Phone</span>
-                                                </label>
-                                            </div>
-                                        </li>
+                            <li class="tile">
+                                <div class="checkbox checkbox-styled tile-text">
+                                    <label>
+                                        <span>@item.Name - @item.Phone</span>
+                                    </label>
+                                </div>
+                            </li>
                                     }
                                 }
                             }
@@ -112,7 +118,7 @@
                 </div><!--end .card -->
             </div><!--end .col -->
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card ">
                     <div class="card-head">
                         <header>Khách vừa trả phòng</header>
@@ -124,13 +130,13 @@
                                 {
                                     foreach (var item in checkoutRecent)
                                     {
-                                        <li class="tile">
-                                            <div class="checkbox checkbox-styled tile-text">
-                                                <label>
-                                                    <span>@item.Name - @item.Phone</span>
-                                                </label>
-                                            </div>
-                                        </li>
+                            <li class="tile">
+                                <div class="checkbox checkbox-styled tile-text">
+                                    <label>
+                                        <span>@item.Name - @item.Phone</span>
+                                    </label>
+                                </div>
+                            </li>
                                     }
                                 }
                             }
@@ -139,7 +145,7 @@
                 </div><!--end .card -->
             </div><!--end .col -->
 
-            <div class="col-md-4">
+            @*<div class="col-md-4">
                 <div class="card ">
                     <div class="card-head">
                         <header>Doanh thu theo loại phòng</header>
@@ -152,17 +158,17 @@
                                     var sum = revByRoomType.Values.Sum();
                                     foreach (var item in revByRoomType)
                                     {
-                                        <strong>@item.Key</strong>
-                                        <div class="progress progress-hairline">
-                                            <div class="progress-bar progress-bar-primary-dark" style="width:@(item.Value / sum * 100)%"></div>
-                                        </div>
+                        <strong>@item.Key</strong>
+                        <div class="progress progress-hairline">
+                            <div class="progress-bar progress-bar-primary-dark" style="width:@(item.Value / sum * 100)%"></div>
+                        </div>
                                     }
                                 }
                             }
                         </div><!--end .card-body -->
                     </div><!--end .card-body -->
                 </div><!--end .card -->
-            </div><!--end .col -->
+            </div>*@
 
         </div><!--end .row -->
 
@@ -183,89 +189,33 @@
 <script src="~/Content/assets/js/libs/rickshaw/rickshaw.min.js"></script>
 <script src="~/Content/assets/js/libs/morris.js/morris.min.js"></script>
 <script src="~/Content/assets/js/libs/chartjs/chart.min.js"></script>
+<script src="~/Content/assets/js/libs/raphael/raphael-min.js"></script>
 
-<script type="text/javascript">
+<script>
 
-    $(document).ready(function () {
-        var chart = $("#visitor-chart");
-        var o = this;
-        var labelColor = chart.css('color');
-        var data = [
-			{
-			    label: 'VND',
-			    data: [
-					//[1, 1100],
-					//[2, 2450],
-					//[3, 3800],
-					//[4, 3400],
-					//[5, 3000],
-					//[6, 5250],
-					//[7, 7500],
-			    ],
-			    last: true
-			}			
-        ];
 
-        var options = {
-            colors: chart.data('color').split(','),
-            series: {
-                shadowSize: 0,
-                lines: {
-                    show: true,
-                    lineWidth: 2
-                },
-                points: {
-                    show: true,
-                    radius: 3,
-                    lineWidth: 2
-                }
-            },
-            legend: {
-                show: false
-            },
-            xaxis: {
-                mode: "time",
-                timeformat: "%b",
-                color: 'rgba(0, 0, 0, 0)',
-                font: { color: labelColor }
-            },
-            yaxis: {
-                font: { color: labelColor }
-            },
-            grid: {
-                borderWidth: 0,
-                color: labelColor,
-                hoverable: true
-            }
-        };
 
-        chart.width('100%');
-        var plot = $.plot(chart, data, options);
-
-        var tip, previousPoint = null;
-        chart.bind("plothover", function (event, pos, item) {
-            if (item) {
-                if (previousPoint !== item.dataIndex) {
-                    previousPoint = item.dataIndex;
-
-                    var x = item.datapoint[0];
-                    var y = item.datapoint[1];
-                    var tipLabel = '<strong>' + $(this).data('title') + '</strong>';
-                    var tipContent = y + " " + item.series.label.toLowerCase() + " on " + moment(x).format('dddd');
-
-                    if (tip !== undefined) {
-                        $(tip).popover('destroy');
-                    }
-                    tip = $('<div></div>').appendTo('body').css({ left: item.pageX, top: item.pageY - 5, position: 'absolute' });
-                    tip.popover({ html: true, title: tipLabel, content: tipContent, placement: 'top' }).popover('show');
-                }
-            }
-            else {
-                if (tip !== undefined) {
-                    $(tip).popover('destroy');
-                }
-                previousPoint = null;
-            }
+    $(function () {
+        Morris.Bar({
+            element: 'morris-bar-graph',
+            data: [
+                { x: 'Tháng 1', y: @monthlyRev[1] },
+                { x: 'Tháng 2', y: @monthlyRev[2] },
+                { x: 'Tháng 3', y: @monthlyRev[3] },
+                { x: 'Tháng 4', y: @monthlyRev[4] },
+                { x: 'Tháng 5', y: @monthlyRev[5] },
+                { x: 'Tháng 6', y: @monthlyRev[6] },
+                { x: 'Tháng 7', y: @monthlyRev[7] },
+                { x: 'Tháng 8', y: @monthlyRev[8] },
+                { x: 'Tháng 9', y: @monthlyRev[9] },
+                { x: 'Tháng 10', y: @monthlyRev[10] },
+                { x: 'Tháng 11', y: @monthlyRev[11] },
+                { x: 'Tháng 12', y: @monthlyRev[12] }
+            ],
+            xkey: 'x',
+            ykeys: ['y'],
+            labels: ['Doanh thu'],
+            barColors: ["#0aa89e"]
         });
-    });
+    })
 </script>
