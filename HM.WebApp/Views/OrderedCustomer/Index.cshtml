@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Index";
-   
+
 }
 
 <section class="style-default-bright">
@@ -21,9 +21,9 @@
                                 <th>Tên khách hàng</th>
                                 <th>Tên phòng</th>
                                 <th>Ngày vào</th>
-                           
+
                                 <th>Tạo bởi</th>
-                                
+
                             </tr>
                         </thead>
                     </table>
@@ -37,7 +37,6 @@
     $('#orderedCustomersTable').dataTable({
         destroy: true,
         serverSide: true,
-        dom: 'T<"clear">lfrtip',
         language: {
             lengthMenu: '_MENU_ entries per page',
             search: '<i class="fa fa-search"></i>',
@@ -56,7 +55,7 @@
             { data: "RoomName", "orderable": false },
             { data: "CheckInDate", "orderable": false },
             { data: "CreatedBy", "orderable": false }
-          
+
         ]
     });
 </script>
