@@ -17,7 +17,7 @@
                             <div class="card-head">
                                 <div class="tools">
                                     <div class="btn-group">
-                                        
+
                                         @{
                                             if (r.Status.HasValue && r.Status == 1)
                                             {
@@ -28,12 +28,12 @@
                                                 <a class="btn btn-icon-toggle" onclick="checkRoomAvailable(@r.Id);"> <i class="fa fa-refresh"></i></a>
                                             }
                                         }
-                                      
+
                                         <a class="btn btn-icon-toggle" onclick="@(r.Status.HasValue && r.Status == 0 ? ("openModalBooking(" + @r.Id + "," + @r.RoomTypeId + ");") : (r.Status == 1 ? "displayUnavailableRoom();" : "displayCleaningRoom();") )" href="@(r.Status.HasValue && r.Status == 0 ? ("#modalBooking") : (r.Status == 1 ? "#" : "#"))" data-toggle="modal" data-backdrop="true"><i class="fa fa-check"></i></a>
                                         <a class="btn btn-icon-toggle btn-collapse"><i class="fa fa-angle-down"></i></a>
                                     </div>
                                 </div>
-                                <header><i class="fa fa-fw fa-tag"></i><label  id="txtRoomName">@r.Name</label></header>
+                                <header><i class="fa fa-fw fa-tag"></i><label id="txtRoomName">@r.Name</label></header>
                             </div><!--end .card-head -->
                             <div class="card-body style-default-bright" style="display: block;">
                                 <ul class="list">
@@ -43,7 +43,7 @@
                                                 <i class="glyphicon glyphicon-user"></i>
                                             </div>
                                             <div class="tile-text">
-                                               
+
                                                 @( r?.Customer?.Name ?? "Phòng trống" )
                                             </div>
                                         </a>
@@ -54,43 +54,43 @@
                                                 <i class="fa fa-calendar"></i>
                                             </div>
                                             <div class="tile-text">
-                                         
+
                                                 @(r?.currentCheckInDate ?? "Phòng trống")
                                             </div>
                                         </a>
                                     </li>
 
-                                    @{
-                                        long total = 0;
-                                        if (r.Status.HasValue && r.Status == 1)
-                                        {
+                                    @*@{
+                                            long total = 0;
+                                            if (r.Status.HasValue && r.Status == 1)
+                                            {
 
-                                            <li class="tile">
-                                                <a class="tile-content ink-reaction" data-toggle="modal" data-target="#modalAddService" onclick="showService(@r.Order.Id);">
-                                                    <div class="tile-icon">
-                                                        <i class="fa fa-plus-square-o"></i>
-                                                    </div>
-                                                    <div class="tile-text">
-                                                        Danh sách dịch vụ: 
-                                                        @{
-                                                            if (r.OrderDetail != null)
-                                                            {
-                                                                foreach (var item in r.OrderDetail)
+                                                <li class="tile">
+                                                    <a class="tile-content ink-reaction" data-toggle="modal" data-target="#modalAddService" onclick="showService(@r.Order.Id);">
+                                                        <div class="tile-icon">
+                                                            <i class="fa fa-plus-square-o"></i>
+                                                        </div>
+                                                        <div class="tile-text">
+                                                            Danh sách dịch vụ:
+                                                            @{
+                                                                if (r.OrderDetail != null)
                                                                 {
-                                                                  
-                                                                   <small>@item.ServiceName : @item.Number</small>
-                                                                   total += @item.Total;
-                                                                }
-                                                            }
+                                                                    foreach (var item in r.OrderDetail)
+                                                                    {
 
-                                                        }
-                                                        Tổng tiền: <label id="lbTotal">@total.ToString("#,##0") đ</label>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                         }
-                                    }
-                                   
+                                                                       <small>@item.ServiceName : @item.Number</small>
+                                                                       total += @item.Total;
+                                                                    }
+                                                                }
+
+                                                            }
+                                                            Tổng tiền: <label id="lbTotal">@total.ToString("#,##0") đ</label>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                             }
+                                        }*@
+
                                     <li class="tile">
                                         <a class="tile-content ink-reaction">
                                             <div class="tile-icon">
@@ -112,14 +112,14 @@
                                             }
                                         }
 
-                                      
+
                                     </li>
                                 </ul>
                             </div><!--end .card-body -->
                         </div>
                     </div>
-                }
+                                            }
             </div>
-        }
-    }
+                                                }
+                                            }
 }

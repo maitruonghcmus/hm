@@ -35,10 +35,10 @@ namespace HM.WebApp.Controllers
                     o.Id,
                     CustomerName = "<i class='fa fa-user'></i> " + (DataContext.Instance.GetCustomer(o.CustomerId)?.Name ?? "Không lấy được tên khách hàng"),
                     RoomName = "<i class='fa fa-bed'></i> " + (DataContext.Instance.GetRoom(o.RoomId)?.Name ?? "Không lấy được tên phòng"),
-                    CheckInDate = "<i class='fa fa-calendar'></i> " + o.CheckInDate.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
+                    CheckInDate = "<i class='fa fa-calendar'></i> " + o.CheckInDate.ToLocalTime().ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
 
 
-                    CreatedBy = "<i class='fa fa-user'></i> " + (DataContext.Instance.GetUser(o.CreatedBy)?.Fullname ?? "Đang cập nhật") + "<br/><i class='fa fa-clock-o'></i> " + o.CreatedOn.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM)
+                    CreatedBy = "<i class='fa fa-user'></i> " + (DataContext.Instance.GetUser(o.CreatedBy)?.Fullname ?? "Đang cập nhật") + "<br/><i class='fa fa-clock-o'></i> " + o.CreatedOn.ToLocalTime().ToString(DateTimeUtils.YYYY_MM_DD_HH_MM)
                    
                 });
 

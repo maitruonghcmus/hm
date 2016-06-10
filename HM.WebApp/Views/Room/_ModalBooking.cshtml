@@ -17,7 +17,7 @@
                 <br />
                 <div class="form-group">
 
-                    <select id="cbbCustomers" name="cbbCustomers" class="form-control">
+                    <select id="cbbCustomers" name="cbbCustomers" class="form-control select2-list">
 
                         @{
                             <option value="">Khách hàng</option>
@@ -28,7 +28,6 @@
                                     <option value="@item.Id">@item.Name</option>
                                 }
                             }
-
                         }
                     </select>
                     <!--<label for="cbbCustomers">Chọn khách</label>-->
@@ -39,10 +38,14 @@
                     <a class="btn btn-default" role="button" id="btnClear" onclick="clearRoomField()">Nhập lại</a>
                 </div>
 
-              
-
             </div>
 
         </div><!-- modal-content -->
     </div><!-- modal-dialog -->
 </div><!-- modal -->
+
+<script>
+    $(".select2-list").select2({
+        allowClear: true
+    });
+</script>

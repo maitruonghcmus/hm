@@ -42,9 +42,9 @@ namespace HM.WebApp.Controllers
                         h.TaxCode,
                         Contact = h.Contact + "<br/><i class='fa fa-phone'></i> " + h.ContactPhone + "<br/><i class='fa fa-envelope-o'></i>  " + h.ContactMail,
                         CreatedBy = DataContext.Instance.GetUser(h.CreatedBy)?.Fullname ?? "Đang cập nhật",
-                        CreatedOn = h.CreatedOn.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
+                        CreatedOn = h.CreatedOn.ToLocalTime().ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
                         ModifiedBy = DataContext.Instance.GetUser(h.ModifiedBy ?? 0)?.Fullname ?? "",
-                        ModifiedOn = h.ModifiedOn?.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM) ?? "",
+                        ModifiedOn = h.ModifiedOn?.ToLocalTime().ToString(DateTimeUtils.YYYY_MM_DD_HH_MM) ?? "",
                         Command = "<button type='button' onclick='editHotel(" + h.Id + ")' class='btn btn-icon-toggle' data-toggle='modal' data-target='#modalAddHotel'><i class='fa fa-pencil'></i></button>"
                                 + "<button type='button' onclick='deleteHotel(" + h.Id + ")' class='btn btn-icon-toggle'><i class='fa fa-trash-o'></i></button>"
                     });
@@ -73,10 +73,10 @@ namespace HM.WebApp.Controllers
                     hotel.ContactMail,
                     hotel.ContactPhone,
                     hotel.CreatedBy,
-                    CreatedOn = hotel.CreatedOn.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
+                    CreatedOn = hotel.CreatedOn.ToLocalTime().ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
                     hotel.Inactive,
                     hotel.ModifiedBy,
-                    ModifiedOn = hotel.ModifiedOn?.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM) ?? string.Empty,
+                    ModifiedOn = hotel.ModifiedOn?.ToLocalTime().ToString(DateTimeUtils.YYYY_MM_DD_HH_MM) ?? string.Empty,
                     hotel.Name,
                     hotel.TaxCode
                 };

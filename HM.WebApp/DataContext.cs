@@ -78,7 +78,7 @@ namespace HM.WebApp
         public bool CreateUser(User u)
         {
             u.Id = 0;
-            //u.HotelId = AppContext.Instance.GetLoggedHotelId();
+            u.Username = u.Username.ToLower();
             u.CreatedBy = AppContext.Instance.GetLoggedUserId();
             u.CreatedOn = DateTime.Now;
 

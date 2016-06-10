@@ -35,9 +35,9 @@ namespace HM.WebApp.Controllers
                     ctm.HotelId,
                     ctm.Inactive,
                     ctm.ModifiedBy,
-                    ModifiedOn = ctm.ModifiedOn?.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM) ?? string.Empty,
+                    ModifiedOn = ctm.ModifiedOn?.ToLocalTime().ToString(DateTimeUtils.YYYY_MM_DD_HH_MM) ?? string.Empty,
                     ctm.CreatedBy,
-                    CreatedOn = ctm.CreatedOn.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
+                    CreatedOn = ctm.CreatedOn.ToLocalTime().ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
                     ctm.Address,
                     ctm.Name,
                     ctm.CardId,
@@ -102,7 +102,7 @@ namespace HM.WebApp.Controllers
                     c.CardId,
                     c.Phone,
                     c.Address,
-                    CreatedBy = "<i class='fa fa-user'></i> " + (DataContext.Instance.GetUser(c.CreatedBy)?.Fullname ?? "Đang cập nhật") + "<br/><i class='fa fa-clock-o'></i> " + c.CreatedOn.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
+                    CreatedBy = "<i class='fa fa-user'></i> " + (DataContext.Instance.GetUser(c.CreatedBy)?.Fullname ?? "Đang cập nhật") + "<br/><i class='fa fa-clock-o'></i> " + c.CreatedOn.ToLocalTime().ToString(DateTimeUtils.YYYY_MM_DD_HH_MM),
                     ModifiedBy = "<i class='fa fa-user'></i> " + (DataContext.Instance.GetUser(c.ModifiedBy ?? 0)?.Fullname ?? "Chưa chỉnh sửa") + "<br/><i class='fa fa-clock-o'></i> " + c.ModifiedOn?.ToString(DateTimeUtils.YYYY_MM_DD_HH_MM) ?? "Chưa chỉnh sửa",
                     Command = "<button type='button' onclick='editCustomer(" + c.Id + ")' class='btn btn-icon-toggle' data-toggle='modal' data-target='#modalAddCustomer'><i class='fa fa-pencil'></i></button>"
                             + "<button type='button' onclick='deleteCustomer(" + c.Id + ")' class='btn btn-icon-toggle'><i class='fa fa-trash-o'></i></button>"

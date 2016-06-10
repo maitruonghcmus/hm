@@ -74,7 +74,7 @@ namespace HM.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var list = new List<KeyValuePair<string, string>>();
-                var key = new KeyValuePair<string, string>("Username", model.Email);
+                var key = new KeyValuePair<string, string>("Username", model.Email.ToLower());
                 list.Add(key);
                 var user = HttpClientHelper.Instance.GetObjectsByParams<User>("User", "GetByUsername", list);
 
