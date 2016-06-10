@@ -13,3 +13,5 @@
 /HM.WebAppMVC/bin
 /HM.WebAppMVC/App_Data
 /HM.DataModels/bin
+/.vs
+/HM.WebApp/App_Data
