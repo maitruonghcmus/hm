@@ -1,6 +1,5 @@
 ﻿using HM.DataModels;
 using HM.WebApp.Models;
-using Microsoft.AspNet.Identity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,46 +11,6 @@ namespace HM.WebApp
     public class AppContext
     {
         public static AppContext Instance = new AppContext();
-
-        #region Permission
-
-        public int GetLoggedUserId()
-        {
-            var id = HttpContext.Current.User.Identity.GetUserId();
-            return int.Parse(id ?? "-1");
-        }
-
-        public User GetLoggedUser()
-        {
-            return DataContext.Instance.GetUser(this.GetLoggedUserId());
-        }
-
-        public int GetLoggedHotelId()
-        {
-            var user = DataContext.Instance.GetUser(this.GetLoggedUserId());
-            return user != null ? user.HotelId : -1;
-        }
-
-        public Hotel GetLoggedHotel()
-        {
-            return DataContext.Instance.GetHotel(this.GetLoggedHotelId());
-        }
-
-        public bool IsAdministrator()
-        {
-            var isAdmin = this.GetLoggedUser()?.RoleId == 1;
-            return isAdmin;
-        }
-
-        public double GetDayRemains()
-        {
-            var createdDate = this.GetLoggedHotel()?.CreatedOn ?? DateTime.Today;
-
-            var days = Math.Round(90 - (DateTime.Today - createdDate).TotalDays);
-            return days;
-        }
-
-        #endregion
 
         #region Reporting - Charting
 
@@ -65,7 +24,7 @@ namespace HM.WebApp
                             .OrderByDescending(c => c.CreatedOn)?
                             .Take(5);
             return customers;
-        }   
+        }
 
         /// <summary>
         /// Hàm thống kê 5 khách hàng vừa trả phòng gần nhất
@@ -190,22 +149,6 @@ namespace HM.WebApp
             return roomtype;
         }
 
-        public double GetRevenueFromTo(DateTime from, DateTime to)
-        {
-            var payments = DataContext.Instance.GetPayments()?
-                            .Where(a => a.CheckOutDate >= from && a.CheckOutDate <= to.AddDays(1))?
-                            .Select(a => a);
-
-            var rev = 0.0;
-            if (payments != null)
-            {
-                foreach (var item in payments)
-                    rev += item.Total;
-            }
-
-            return rev;
-        }
-
         /// <summary>
         /// Hàm thống kê doanh thu trong ngày
         /// </summary>
@@ -282,6 +225,48 @@ namespace HM.WebApp
             return rev;
         }
 
+        //public Dictionary<ExtraService, double> ExtraServiceDensity(DateTime fromDate, DateTime toDate)
+        //{
+        //    var 
+        //    return null;
+        //}
+
+        //public Dictionary<ExtraService, double> ExtraServiceDensityByDay()
+        //{
+        //    return null;
+        //}
+
+        //public Dictionary<ExtraService, double> ExtraServiceDensityByWeek()
+        //{
+        //    return null;
+        //}
+
+        //public Dictionary<ExtraService, double> ExtraServiceDensityByMonth()
+        //{
+        //    return null;
+        //}
+
         #endregion
+
+        #region Role
+
+        //public enum Role
+        //{
+        //    Administrator = 0,  //Admin của ứng dụng
+        //    HotelManager = 1,   //Quản lý khách sạn
+        //    Cashier = 2,        //Thu ngân
+        //    Staff = 3           //Nhân viên
+        //}
+
+        ////TODO: định nghĩa hàm kiểm tra quyền, nếu quyền là administrator
+
+        #endregion
+
+        public PayModel Calculate(int roomId, int customerId, int ordId)
+        {
+            var topay = new PayModel( roomId,  customerId,  ordId);
+            return topay;
+        }
+        
     }
 }

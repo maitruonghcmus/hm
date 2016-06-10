@@ -1,4 +1,4 @@
-﻿ 
+﻿
 
 
   <!-- BEGIN FORM MODAL PAY -->
@@ -7,20 +7,67 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="ModalPaymentLabel">Thanh toán tiền phòng [Mã Phòng: ]</h4>
+                <h4 class="modal-title" id="ModalPaymentLabel">Thanh toán tiền phòng [Mã Phòng: <label id="rName"></label> ]</h4>
             </div>
             <form class="form-horizontal" role="form">
                 <div class="modal-body">
 
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label for="ctmText" class="control-label">Khách hàng</label>
+                            <label for="ctmText" class="control-label">Khách hàng </label>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" name="ctmText" id="ctmText" class="form-control" placeholder="Tên khách hàng">
+                            <input type="text" name="ctmText" id="ctmText" class="form-control" readonly="readonly">
                         </div>
                     </div>
                     
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label for="ctmCoe" class="control-label">Hệ số </label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" name="ctmCoe" id="ctmCoe" class="form-control" readonly="readonly">
+
+                            
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="cbVAT" class="control-label">Xuất VAT</label>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="input-group-addon">
+                                <div class="checkbox checkbox-inline checkbox-styled left">
+                                    <label>
+                                        <input type="checkbox" id="cbVAT"><span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label for="txtOtherCharge" class="control-label">Phụ thu</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="txtOtherCharge" id="txtOtherCharge" class="form-control">
+                            
+                        </div>
+                        <button type="button" id="btnAddOtherCharge" class="btn">Phụ thu</button>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label for="txtDiscount" class="control-label">Giảm giá (%)</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="txtDiscount" id="txtDiscount" class="form-control">
+                          
+                        </div>
+                        <button type="button" id="btnDiscount" class="btn ">Giảm</button>
+
+                    </div>
+
+                   
                     
                     <div class="text-divider"><span>Chi tiết thanh toán</span></div>
                     <ul class="list">
@@ -33,7 +80,8 @@
 
                                     Tiền phòng: <label id="lbRoomPrice"></label>
                                     <small>
-                                        Từ 29/02 đến 1/3
+                                        Từ <label id="lbCheckIn">Đang xử lý</label> đến <label id="lbCheckOut">Đang xử lý</label><br />
+                                         <label id="lbDay">Đang xử lý</label>
                                     </small>
                                 </div>
                             </a>
@@ -45,8 +93,8 @@
                                 </div>
                                 <div class="tile-text">
 
-                                    Phí dịch vụ <label id="lbServicePrice"></label>
-                                    <small>Nước ngọt, bánh</small>
+                                    Phí dịch vụ <label id="lbServicePrice">Đang xử lý</label>
+                                    <small></small>
                                 </div>
                             </a>
                         </li>
@@ -57,16 +105,33 @@
                                 </div>
                                 <div class="tile-text">
 
-                                    Chiết khẩu:
-                                    <small id="coe"></small>
+                                    Phụ thu: <label id="lbOtherCharge">0</label>
+                                    <br />
+                                    Giảm giá: <label id="lbDiscount">0</label>
                                 </div>
                             </a>
                         </li>
                     </ul>
                 </div>
                 <div class="modal-footer">
+                    <h3>Thành tiền: <label id="finalPriceCur">Đang xử lý</label></h3>
+                   
+                    <small>
+                    Phụ thu: <label id="lbOC">0</label>
+                   
+                    <br />
+                    VAT: <label id="lbV">0</label>
+
+                        <br />
+                        Giảm giá: <label id="lbDC">0</label>
+                    </small>
+                   
+                    
+                     <h2>Tổng cộng: <label id="finalPrice">Đang xử lý</label></h2>
+                    <br />
+
                     <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
-                    <button type="button" class="btn btn-primary">Thanh toán</button>
+                    <button type="button" class="btn btn-primary"  id="btnCreatePayment">Thanh toán</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->

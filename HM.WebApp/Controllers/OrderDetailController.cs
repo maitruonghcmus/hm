@@ -35,6 +35,8 @@ namespace HM.WebApp.Controllers
 
         public ActionResult CreateOrderDetail(OrderDetail orderDetail)
         {
+            var order = new OrderDetailModel(orderDetail);
+            orderDetail.Total = order.Total;
             var createsuccess = DataContext.Instance.CreateOderDetail(orderDetail);
             if (createsuccess) { return Json(true, JsonRequestBehavior.AllowGet); }
             return Json(false, JsonRequestBehavior.AllowGet);

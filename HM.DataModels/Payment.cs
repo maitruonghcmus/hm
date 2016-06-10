@@ -1,21 +1,16 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace HM.DataModels
 {
     public class Payment
     {
-        [Required]
         public int Id { get; set; }
-        [Required]
         public int CustomerId { get; set; }
-        [Required]
         public int OrderId { get; set; }
 
         /// <summary>
         /// Giờ ra
         /// </summary>
-        [Required]
         public DateTime CheckOutDate { get; set; }
         /// <summary>
         /// Số lượng (giờ)
@@ -58,10 +53,9 @@ namespace HM.DataModels
         /// <summary>
         /// Tổng tiền = Amount + ServiceCharge + OtherCharge + DiscountTotal + VAT
         /// </summary>
-        [Required]
         public long Total { get; set; }
 
-        [Required]
+
         public int HotelId { get; set; }
         public bool Inactive { get; set; }
         public int CreatedBy { get; set; }

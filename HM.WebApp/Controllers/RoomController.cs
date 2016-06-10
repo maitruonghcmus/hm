@@ -84,5 +84,55 @@ namespace HM.WebApp.Controllers
             return PartialView("_ShowOrderDetail");
         }
 
+        public ActionResult Calculate(int roomId, int customerId, int ordId)
+        {
+            var topay = AppContext.Instance.Calculate(roomId, customerId, ordId);
+            if (topay != null) {
+                var obj = new
+                {
+                    topay.OrderId,
+                    topay.RoomTypeId,
+                    topay.CustomerId,
+                    topay.CustomerName,
+                    topay.SvTotal,
+                    topay.Day,
+                    topay.Hour,
+                    topay.strCheckIn,
+                    topay.strCheckOut,
+                    topay.RoomType,
+                    topay.Coe
+                 };
+                return Json(obj, JsonRequestBehavior.AllowGet);
+
+            };
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult UpdateRoomToClean(int roomId)
+        {
+            var r = DataContext.Instance.GetRoom(roomId);
+            r.Status = -1;
+            r.CurrentCustomerId = null;
+            r.CurrentOrderId = null;
+            r.CheckInDate = null;
+
+            var updatesuccess = DataContext.Instance.UpdateRoom(r);
+            if(updatesuccess == true)
+            { return Json(true, JsonRequestBehavior.AllowGet); }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CheckRoomAvailable(int roomId)
+        {
+            var r = DataContext.Instance.GetRoom(roomId);
+            r.Status = 0;
+      
+
+            var updatesuccess = DataContext.Instance.UpdateRoom(r);
+            if (updatesuccess == true)
+            { return Json(true, JsonRequestBehavior.AllowGet); }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
