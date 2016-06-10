@@ -67,7 +67,7 @@
                 success: function myfunction(data) {
                     if (data) {
                         toastr.success("Thêm thành công");
-                        //$("#toLoadHotels").load('@Url.Action("LoadHotelsPartial", "Hotel")');
+                         clearControl();
                         $('#hotelsTable').dataTable().fnDraw();
                     }
                     else
@@ -145,6 +145,8 @@
                     $('#hotelsTable').dataTable().fnDraw();
                     toastr.success("Xóa thành công");
                 }
+                else
+                    toastr.error("Không thể xóa khách sạn này");
             },
             error: function () {
                 toastr.error("Có lỗi xảy ra");

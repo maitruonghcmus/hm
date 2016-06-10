@@ -1,6 +1,8 @@
 ﻿using HM.DataModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -11,12 +13,6 @@ namespace HM.WebApp
         public static DataContext Instance = new DataContext();
 
         #region Hotel
-
-        public int GetLoggedHotelId()
-        {
-            var user = this.GetUser(this.GetLoggedUserId());
-            return user != null ? user.HotelId : -1;
-        }
 
         public IEnumerable<Hotel> GetHotels()
         {
@@ -33,16 +29,22 @@ namespace HM.WebApp
         public bool CreateHotel(Hotel h)
         {
             h.Id = 0;
-            h.CreatedBy = this.GetLoggedUserId();
+            h.CreatedBy = AppContext.Instance.GetLoggedUserId();
             h.CreatedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(h))
+                return false;
 
             return HttpClientHelper.Instance.Post<Hotel>(ApiUtils.HOTEL, ApiUtils.CREATE, h).IsSuccess();
         }
 
         public bool UpdateHotel(Hotel h)
         {
-            h.ModifiedBy = this.GetLoggedUserId();
+            h.ModifiedBy = AppContext.Instance.GetLoggedUserId();
             h.ModifiedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(h))
+                return false;
 
             return HttpClientHelper.Instance.Post<Hotel>(ApiUtils.HOTEL, ApiUtils.UPDATE, h).IsSuccess();
         }
@@ -61,16 +63,10 @@ namespace HM.WebApp
 
         #region User
 
-        public int GetLoggedUserId()
-        {
-            //TODO: Truongmv
-            return 1;
-        }
-
         public IEnumerable<User> GetUsers()
         {
             var us = HttpClientHelper.Instance.GetObjects<IEnumerable<User>>(ApiUtils.USER, ApiUtils.GETALL);
-            return us != null ? us.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
+            return us != null ? us.Where(a => !a.Inactive).Select(a => a) : null;
         }
 
         public User GetUser(int id)
@@ -82,17 +78,26 @@ namespace HM.WebApp
         public bool CreateUser(User u)
         {
             u.Id = 0;
-            u.HotelId = GetLoggedHotelId();
-            u.CreatedBy = GetLoggedUserId();
+            //u.HotelId = AppContext.Instance.GetLoggedHotelId();
+            u.CreatedBy = AppContext.Instance.GetLoggedUserId();
             u.CreatedOn = DateTime.Now;
+
+            var passwordHashed = System.Text.Encoding.UTF8.GetBytes(u.Password);
+            u.Password = Convert.ToBase64String(passwordHashed);
+
+            if (!AppUtils.IsValidObject(u))
+                return false;
 
             return HttpClientHelper.Instance.Post<User>(ApiUtils.USER, ApiUtils.CREATE, u).IsSuccess();
         }
 
         public bool UpdateUser(User u)
         {
-            u.ModifiedBy = GetLoggedUserId();
+            u.ModifiedBy = AppContext.Instance.GetLoggedUserId();
             u.ModifiedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(u))
+                return false;
 
             return HttpClientHelper.Instance.Post<User>(ApiUtils.USER, ApiUtils.UPDATE, u).IsSuccess();
         }
@@ -111,7 +116,7 @@ namespace HM.WebApp
 
             if (roomtypes != null)
             {
-                return roomtypes.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+                return roomtypes.Where(a => !a.Inactive && a.HotelId == AppContext.Instance.GetLoggedHotelId()).Select(a => a);
             }
             return null;
         }
@@ -125,17 +130,23 @@ namespace HM.WebApp
         public bool CreateRoomType(RoomType roomType)
         {
             roomType.Id = 0;
-            roomType.HotelId = GetLoggedHotelId();
-            roomType.CreatedBy = GetLoggedUserId();
+            roomType.HotelId = AppContext.Instance.GetLoggedHotelId();
+            roomType.CreatedBy = AppContext.Instance.GetLoggedUserId();
             roomType.CreatedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(roomType))
+                return false;
 
             return HttpClientHelper.Instance.Post<RoomType>(ApiUtils.ROOMTYPE, ApiUtils.CREATE, roomType).IsSuccess();
         }
 
         public bool UpdateRoomType(RoomType roomType)
         {
-            roomType.ModifiedBy = GetLoggedUserId();
+            roomType.ModifiedBy = AppContext.Instance.GetLoggedUserId();
             roomType.ModifiedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(roomType))
+                return false;
 
             return HttpClientHelper.Instance.Post<RoomType>(ApiUtils.ROOMTYPE, ApiUtils.UPDATE, roomType).IsSuccess();
         }
@@ -157,7 +168,7 @@ namespace HM.WebApp
             var rooms = HttpClientHelper.Instance.GetObjects<IEnumerable<Room>>(ApiUtils.ROOM, ApiUtils.GETALL);
             if (rooms != null)
             {
-                return rooms.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+                return rooms.Where(a => !a.Inactive && a.HotelId == AppContext.Instance.GetLoggedHotelId()).Select(a => a);
             }
             return null;
         }
@@ -171,17 +182,23 @@ namespace HM.WebApp
         public bool CreateRoom(Room room)
         {
             room.Id = 0;
-            room.HotelId = GetLoggedHotelId();
-            room.CreatedBy = GetLoggedUserId();
+            room.HotelId = AppContext.Instance.GetLoggedHotelId();
+            room.CreatedBy = AppContext.Instance.GetLoggedUserId();
             room.CreatedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(room))
+                return false;
 
             return HttpClientHelper.Instance.Post<Room>(ApiUtils.ROOM, ApiUtils.CREATE, room).IsSuccess();
         }
 
         public bool UpdateRoom(Room room)
         {
-            room.ModifiedBy = GetLoggedUserId();
+            room.ModifiedBy = AppContext.Instance.GetLoggedUserId();
             room.ModifiedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(room))
+                return false;
 
             return HttpClientHelper.Instance.Post<Room>(ApiUtils.ROOM, ApiUtils.UPDATE, room).IsSuccess();
         }
@@ -203,7 +220,7 @@ namespace HM.WebApp
             var types = HttpClientHelper.Instance.GetObjects<IEnumerable<CustomerType>>(ApiUtils.CUSTOMERTYPE, ApiUtils.GETALL);
             if (types != null)
             {
-                return types.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a);
+                return types.Where(a => !a.Inactive && a.HotelId == AppContext.Instance.GetLoggedHotelId()).Select(a => a);
             }
             return null;
         }
@@ -217,17 +234,23 @@ namespace HM.WebApp
         public bool CreateCustomerType(CustomerType type)
         {
             type.Id = 0;
-            type.HotelId = GetLoggedHotelId();
-            type.CreatedBy = GetLoggedUserId();
+            type.HotelId = AppContext.Instance.GetLoggedHotelId();
+            type.CreatedBy = AppContext.Instance.GetLoggedUserId();
             type.CreatedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(type))
+                return false;
 
             return HttpClientHelper.Instance.Post<CustomerType>(ApiUtils.CUSTOMERTYPE, ApiUtils.CREATE, type).IsSuccess();
         }
 
         public bool UpdateCustomerType(CustomerType type)
         {
-            type.ModifiedBy = GetLoggedUserId();
+            type.ModifiedBy = AppContext.Instance.GetLoggedUserId();
             type.ModifiedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(type))
+                return false;
 
             return HttpClientHelper.Instance.Post<CustomerType>(ApiUtils.CUSTOMERTYPE, ApiUtils.UPDATE, type).IsSuccess();
         }
@@ -247,7 +270,7 @@ namespace HM.WebApp
         public IEnumerable<Customer> GetCustomers()
         {
             var customers = HttpClientHelper.Instance.GetObjects<IEnumerable<Customer>>(ApiUtils.CUSTOMER, ApiUtils.GETALL);
-            return customers != null ? customers.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
+            return customers != null ? customers.Where(a => !a.Inactive && a.HotelId == AppContext.Instance.GetLoggedHotelId()).Select(a => a) : null;
         }
 
         public Customer GetCustomer(int id)
@@ -259,17 +282,23 @@ namespace HM.WebApp
         public bool CreateCustomer(Customer customer)
         {
             customer.Id = 0;
-            customer.HotelId = GetLoggedHotelId();
-            customer.CreatedBy = GetLoggedUserId();
+            customer.HotelId = AppContext.Instance.GetLoggedHotelId();
+            customer.CreatedBy = AppContext.Instance.GetLoggedUserId();
             customer.CreatedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(customer))
+                return false;
 
             return HttpClientHelper.Instance.Post<Customer>(ApiUtils.CUSTOMER, ApiUtils.CREATE, customer).IsSuccess();
         }
 
         public bool UpdateCustomer(Customer customer)
         {
-            customer.ModifiedBy = GetLoggedUserId();
+            customer.ModifiedBy = AppContext.Instance.GetLoggedUserId();
             customer.ModifiedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(customer))
+                return false;
 
             return HttpClientHelper.Instance.Post<Customer>(ApiUtils.CUSTOMER, ApiUtils.UPDATE, customer).IsSuccess();
         }
@@ -289,7 +318,7 @@ namespace HM.WebApp
         public IEnumerable<ExtraService> GetExtraServices()
         {
             var svs = HttpClientHelper.Instance.GetObjects<IEnumerable<ExtraService>>(ApiUtils.EXTRASERVICE, ApiUtils.GETALL);
-            return svs != null ? svs.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
+            return svs != null ? svs.Where(a => !a.Inactive && a.HotelId == AppContext.Instance.GetLoggedHotelId()).Select(a => a) : null;
         }
 
         public ExtraService GetExtraService(int id)
@@ -301,17 +330,23 @@ namespace HM.WebApp
         public bool CreateExtraService(ExtraService sv)
         {
             sv.Id = 0;
-            sv.HotelId = GetLoggedHotelId();
-            sv.CreatedBy = GetLoggedUserId();
+            sv.HotelId = AppContext.Instance.GetLoggedHotelId();
+            sv.CreatedBy = AppContext.Instance.GetLoggedUserId();
             sv.CreatedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(sv))
+                return false;
 
             return HttpClientHelper.Instance.Post<ExtraService>(ApiUtils.EXTRASERVICE, ApiUtils.CREATE, sv).IsSuccess();
         }
 
         public bool UpdateExtraService(ExtraService sv)
         {
-            sv.ModifiedBy = GetLoggedUserId();
+            sv.ModifiedBy = AppContext.Instance.GetLoggedUserId();
             sv.ModifiedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(sv))
+                return false;
 
             return HttpClientHelper.Instance.Post<ExtraService>(ApiUtils.EXTRASERVICE, ApiUtils.UPDATE, sv).IsSuccess();
         }
@@ -326,7 +361,7 @@ namespace HM.WebApp
         public IEnumerable<Order> GetOrders()
         {
             var ords = HttpClientHelper.Instance.GetObjects<IEnumerable<Order>>(ApiUtils.ORDER, ApiUtils.GETALL);
-            return ords != null ? ords.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
+            return ords != null ? ords.Where(a => !a.Inactive && a.HotelId == AppContext.Instance.GetLoggedHotelId()).Select(a => a) : null;
         }
 
         public Order GetOrder(int id)
@@ -338,17 +373,33 @@ namespace HM.WebApp
         public bool CreateOrder(Order ord)
         {
             ord.Id = 0;
-            ord.HotelId = GetLoggedHotelId();
-            ord.CreatedBy = GetLoggedUserId();
+            ord.HotelId = AppContext.Instance.GetLoggedHotelId();
+            ord.CreatedBy = AppContext.Instance.GetLoggedUserId();
             ord.CreatedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(ord))
+                return false;
 
             return HttpClientHelper.Instance.Post<Order>(ApiUtils.ORDER, ApiUtils.CREATE, ord).IsSuccess();
         }
 
+        public int CreateOrderReturnOrderId(Order ord)
+        {
+            ord.Id = 0;
+            ord.HotelId = AppContext.Instance.GetLoggedHotelId();
+            ord.CreatedBy = AppContext.Instance.GetLoggedHotelId();
+            ord.CreatedOn = DateTime.Now;
+
+            return HttpClientHelper.Instance.Post<Order>(ApiUtils.ORDER, ApiUtils.CREATE, ord)?.Data?.Id ?? -1;
+        }
+
         public bool UpdateOrder(Order ord)
         {
-            ord.ModifiedBy = GetLoggedUserId();
+            ord.ModifiedBy = AppContext.Instance.GetLoggedUserId();
             ord.ModifiedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(ord))
+                return false;
 
             return HttpClientHelper.Instance.Post<Order>(ApiUtils.ORDER, ApiUtils.UPDATE, ord).IsSuccess();
         }
@@ -358,12 +409,50 @@ namespace HM.WebApp
             return HttpClientHelper.Instance.Delete<Order>(ApiUtils.ORDER, ApiUtils.DELETE, id).IsSuccess();
         }
         #endregion
+        #region OrderDetail
+
+        public IEnumerable<OrderDetail> GetOrderDetails()
+        {
+            var ordDetails = HttpClientHelper.Instance.GetObjects<IEnumerable<OrderDetail>>(ApiUtils.ORDERDETAIL, ApiUtils.GETALL);
+            return ordDetails != null ? ordDetails.Where(a => !a.Inactive && a.HotelId == AppContext.Instance.GetLoggedHotelId()).Select(a => a) : null;
+        }
+
+        public OrderDetail GetOrderDetail(int id)
+        {
+            var ordDetail = HttpClientHelper.Instance.GetObject<OrderDetail>(ApiUtils.ORDERDETAIL, ApiUtils.GETBYID, id);
+            return ordDetail != null && !ordDetail.Inactive ? ordDetail : null;
+        }
+
+        public bool CreateOderDetail(OrderDetail ordDetail)
+        {
+            ordDetail.Id = 0;
+            ordDetail.HotelId = AppContext.Instance.GetLoggedHotelId();
+            ordDetail.CreatedBy = AppContext.Instance.GetLoggedHotelId();
+            ordDetail.CreatedOn = DateTime.Now;
+
+            
+
+            return HttpClientHelper.Instance.Post<OrderDetail>(ApiUtils.ORDERDETAIL, ApiUtils.CREATE, ordDetail).IsSuccess();
+        }
+
+        public bool UpdateOrderDetail(OrderDetail ordDetail)
+        {
+            ordDetail.ModifiedBy = AppContext.Instance.GetLoggedHotelId();
+            ordDetail.ModifiedOn = DateTime.Now;
+
+            return HttpClientHelper.Instance.Post<OrderDetail>(ApiUtils.ORDER, ApiUtils.UPDATE, ordDetail).IsSuccess();
+        }
+
+
+
+        #endregion
+
 
         #region Payment
         public IEnumerable<Payment> GetPayments()
         {
             var pms = HttpClientHelper.Instance.GetObjects<IEnumerable<Payment>>(ApiUtils.PAYMENT, ApiUtils.GETALL);
-            return pms != null ? pms.Where(a => !a.Inactive && a.HotelId == this.GetLoggedHotelId()).Select(a => a) : null;
+            return pms != null ? pms.Where(a => !a.Inactive && a.HotelId == AppContext.Instance.GetLoggedHotelId()).Select(a => a) : null;
         }
 
         public Payment GetPayment(int id)
@@ -375,17 +464,23 @@ namespace HM.WebApp
         public bool CreatePayment(Payment pm)
         {
             pm.Id = 0;
-            pm.HotelId = GetLoggedHotelId();
-            pm.CreatedBy = GetLoggedUserId();
+            pm.HotelId = AppContext.Instance.GetLoggedHotelId();
+            pm.CreatedBy = AppContext.Instance.GetLoggedUserId();
             pm.CreatedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(pm))
+                return false;
 
             return HttpClientHelper.Instance.Post<Payment>(ApiUtils.PAYMENT, ApiUtils.CREATE, pm).IsSuccess();
         }
 
         public bool UpdatePayment(Payment pm)
         {
-            pm.ModifiedBy = GetLoggedUserId();
+            pm.ModifiedBy = AppContext.Instance.GetLoggedUserId();
             pm.ModifiedOn = DateTime.Now;
+
+            if (!AppUtils.IsValidObject(pm))
+                return false;
 
             return HttpClientHelper.Instance.Post<Payment>(ApiUtils.PAYMENT, ApiUtils.UPDATE, pm).IsSuccess();
         }

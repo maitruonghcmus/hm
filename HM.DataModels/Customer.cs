@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace HM.DataModels
 {
@@ -7,14 +8,17 @@ namespace HM.DataModels
     /// </summary>
     public class Customer
     {
+        [Required]
         public int Id { get; set; }
         /// <summary>
         /// Loại khách hàng
         /// </summary>
+        [Required]
         public int CustomerTypeId { get; set; }
         /// <summary>
         /// Họ tên
         /// </summary>
+        [Required]
         public string Name { get; set; }
         /// <summary>
         /// CMND, Hộ chiếu
@@ -32,6 +36,7 @@ namespace HM.DataModels
         /// <summary>
         /// KH thuộc về KS nào
         /// </summary>
+        [Required]
         public int HotelId { get; set; }
         /// <summary>
         /// Trạng thái đang hoạt động/đã xóa

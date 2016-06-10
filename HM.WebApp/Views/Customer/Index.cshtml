@@ -6,7 +6,7 @@
 
 <section class="style-default-bright">
     <div class="section-header">
-        <h2 class="text-primary">Danh sách khách sạn</h2>
+        <h2 class="text-primary">Danh sách khách hàng</h2>
     </div>
    
     <div class="section-body">
@@ -63,6 +63,7 @@
                 success: function myfunction(data) {
                     if (data) {
                         toastr.success("Thêm thành công");
+                        clearControl();
                         $('#customersTable').dataTable().fnDraw();
                     }
                     else
@@ -145,6 +146,8 @@
                     $('#customersTable').dataTable().fnDraw();
                     toastr.success("Xóa thành công");
                 }
+                else
+                    toastr.error("Không thể xóa khách hàng này");
             },
             error: function () {
                 toastr.error("Có lỗi xảy ra");

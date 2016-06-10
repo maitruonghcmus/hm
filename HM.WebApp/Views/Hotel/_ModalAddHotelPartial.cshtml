@@ -9,41 +9,41 @@
 
             <div class="modal-body">
 
-                <form class="form" role="form">
+                <form class="form" role="form" id="formAddHotel">
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtHotelName">
-                        <label for="txtHotelName">Tên khách sạn</label>
+                        <input type="text" class="form-control" id="txtHotelName" name="txtHotelName">
+                        <label for="txtHotelName">Tên khách sạn</label> 
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtHotelTaxCode">
+                        <input type="text" class="form-control" id="txtHotelTaxCode" name="txtHotelTaxCode">
                         <label for="txtHotelTaxCode">Mã số thuế</label>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtHotelAddress">
+                        <input type="text" class="form-control" id="txtHotelAddress" name="txtHotelAddress">
                         <label for="txtHotelAddress">Địa chỉ</label>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtHotelContact">
+                        <input type="text" class="form-control" id="txtHotelContact" name="txtHotelContact">
                         <label for="txtHotelContact">Người liên hệ</label>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtHotelContactPhone">
+                        <input type="text" class="form-control" id="txtHotelContactPhone" name="txtHotelContactPhone">
                         <label for="txtHotelContactPhone">Điện thoại</label>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtHotelContactMail">
+                        <input type="text" class="form-control" id="txtHotelContactMail" name="txtHotelContactMail">
                         <label for="txtHotelContactMail">Email</label>
                     </div>
 
                     <br />
                     <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                        <a class="btn btn-primary" role="button" onclick="addHotel();" id="btnAddHotel">Thêm</a>
+                        <a class="btn btn-primary" role="button" onclick="validateForm();" id="btnAddHotel">Thêm</a>
                         <a class="btn btn-default" role="button" onclick="clearControl();">Nhập lại</a>
                     </div>
                 </form>
@@ -53,3 +53,64 @@
         </div><!-- modal-content -->
     </div><!-- modal-dialog -->
 </div><!-- modal -->
+
+
+<script>
+
+
+
+
+    $(document).ready(function () {
+        $("#formAddHotel").validate({
+            rules: {
+                txtHotelName: "required",
+                txtHotelContact: "required",
+                txtHotelTaxCode: {
+                    required: true,
+                    digits: true
+                },
+                txtHotelContactPhone: {
+                    required: true,
+                    digits:true,
+                    maxlength: 15
+                },
+                txtHotelAddress: "required",
+                txtHotelContactMail: {
+                    required: true,
+                    email: true
+                }
+
+            },
+            messages: {
+                txtHotelName: "Không được để trống",
+                txtHotelContact: "Không được để trống",
+                txtHotelTaxCode: {
+                    required: "Không được để trống",
+                    digits: "Phải là số không âm"
+                },
+                txtHotelContactPhone: {
+                    required: "Không được để trống",
+                    digits: "Phải là số không âm",
+                    maxlength: "Không được dài quá 15 ký tự"
+                },
+                txtHotelAddress: "Không được để trống",
+                txtHotelContactMail: {
+                    required: "Không được để trống",
+                    email: "Vui lòng nhập đúng định dạng email"
+                }
+            }
+
+        });
+
+
+    });
+
+    function validateForm() {
+
+        if ($("#formAddHotel").valid() == true) { addHotel(); }
+        else { }
+    }
+
+
+
+</script>

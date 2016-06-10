@@ -9,34 +9,70 @@
 
             <div class="modal-body">
 
-                <form class="form" role="form">
+                <!--Form add Service-->
+                <form class="form" id="formAddService" role="form">
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtServiceName">
+                        <input type="text" class="form-control" id="txtServiceName" name="txtServiceName" required>
                         <label for="txtServiceName">Tên dịch vụ</label>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtServiceUnit">
+                        <input type="text" class="form-control" id="txtServiceUnit" name="txtServiceUnit" required>
                         <label for="txtServiceUnit">Đơn vị tính</label>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtServicePrice">
+                        <input type="text" class="form-control" id="txtServicePrice" name="txtServicePrice" required>
                         <label for="txtServicePrice">Giá</label>
                     </div>
 
-      
                     <br />
                     <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                        <a class="btn btn-primary" role="button" onclick="addService();" id="btnAddService">Thêm</a>
+                        <a class="btn btn-primary" role="button" onclick="validateForm();" id="btnAddService">Thêm</a>
                         <a class="btn btn-default" role="button" onclick="clearControl();" id="btnClear">Nhập lại</a>
                     </div>
                 </form>
 
+
+          
             </div>
 
         </div><!-- modal-content -->
+       
     </div><!-- modal-dialog -->
 </div><!-- modal -->
 
+<script>
+    $(document).ready(function () {
+        $("#formAddService").validate({
+            rules: {
+                txtServiceName: "required",
+                txtServiceUnit: "required",
+                txtServicePrice: {
+                    required: true,
+                    digits: true
+                }
+            },
+            messages: {
+                txtServiceName: "Không được để trống",
+                txtServiceUnit: "Không được để trống",
+                txtServicePrice: {
+                    required: "Không được để trống",
+                    digits: "Giá phải là số không âm"
+                }
+            }
+
+        });
+
+
+    });
+
+    function validateForm() {
+ 
+        if ($("#formAddService").valid() == true) { addService(); }
+        else {  }
+    }
+   
+    
+</script>

@@ -9,41 +9,41 @@
 
             <div class="modal-body">
 
-                <form class="form" role="form">
+                <form class="form" role="form" id="formAddRoomType">
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtRoomTypeName">
-                        <label for="txtRoomTypeName">Tên loại phòng</label>
+                        <input type="text" class="form-control" id="txtRoomTypeName" name="txtRoomTypeName">
+                        <label for="txtRoomTypeName">Tên loại phòng</label> 
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtRoomTypeMaxCustomer">
+                        <input type="text" class="form-control" id="txtRoomTypeMaxCustomer" name="txtRoomTypeMaxCustomer">
                         <label for="txtRoomTypeMaxCustomer">Số khách tối đa</label>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtRoomTypePriceDay">
+                        <input type="text" class="form-control" id="txtRoomTypePriceDay" name="txtRoomTypePriceDay">
                         <label for="txtRoomTypePriceDay">Giá phòng/ngày</label>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtRoomTypePriceHour1">
+                        <input type="text" class="form-control" id="txtRoomTypePriceHour1" name="txtRoomTypePriceHour1">
                         <label for="txtRoomTypePriceHour1">Giá phòng/h</label>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtRoomTypePriceHour2">
+                        <input type="text" class="form-control" id="txtRoomTypePriceHour2" name="txtRoomTypePriceHour2">
                         <label for="txtRoomTypePriceHour2">Giá phòng/2h</label>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtRoomTypePriceHour3">
+                        <input type="text" class="form-control" id="txtRoomTypePriceHour3" name="txtRoomTypePriceHour3">
                         <label for="txtRoomTypePriceHour3">Giá phòng/3h</label>
                     </div>
 
                     <br />
                     <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                        <a class="btn btn-primary" role="button" onclick="addRoomType();" id="btnAddRoomType">Thêm</a>
+                        <a class="btn btn-primary" role="button" onclick="validateFormAddRoomType();" id="btnAddRoomType">Thêm</a>
                         <a class="btn btn-default" role="button" onclick="clearControl();">Nhập lại</a>
                     </div>
                 </form>
@@ -53,3 +53,71 @@
         </div><!-- modal-content -->
     </div><!-- modal-dialog -->
 </div><!-- modal -->
+
+<script>
+    $(document).ready(function () {
+        $("#formAddRoomType").validate({
+            rules: {
+                txtRoomTypeName: "required",
+               
+                txtRoomTypeMaxCustomer: {
+                    required: true,
+                    digits: true
+                },
+                txtRoomTypePriceDay: {
+                    required: true,
+                    digits:true,
+            
+                },
+                txtRoomTypePriceHour1:{
+                    required: true,
+                    digits: true,
+                },
+                txtRoomTypePriceHour2:{
+                    required: true,
+                    digits: true,
+                },
+
+                txtRoomTypePriceHour3: {
+                    required: true,
+                    digits: true
+                }
+
+            },
+            messages: {
+                txtRoomTypeName: "Không được để trống",
+        
+                txtRoomTypeMaxCustomer: {
+                    required: "Không được để trống",
+                    digits: "Số người không âm"
+                },
+                txtRoomTypePriceDay: {
+                    required: "Không được để trống",
+                    digits: "Phải là số không âm",
+                },
+                txtRoomTypePriceHour1: {
+                    required: "Không được để trống",
+                    digits: "Phải là số không âm",
+                },
+                txtRoomTypePriceHour2: {
+                    required: "Không được để trống",
+                    digits: "Phải là số không âm",
+                },
+
+                txtRoomTypePriceHour3: {
+                    required: "Không được để trống",
+                    digits: "Phải là số không âm",
+                }
+            }
+
+        });
+
+
+    });
+
+    function validateFormAddRoomType() {
+
+        if ($("#formAddRoomType").valid() == true) { addRoomType(); }
+        else { }
+    }
+</script>

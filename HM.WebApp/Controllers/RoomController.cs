@@ -8,13 +8,18 @@ using System.Web.Mvc;
 
 namespace HM.WebApp.Controllers
 {
+    [Authorize]
     public class RoomController : Controller
     {
         // GET: Room
         public ActionResult Index()
         {
+            if (AppContext.Instance.GetDayRemains() <= 0)
+                return RedirectToAction("Expired", "Error");
+
             var rooms = DataContext.Instance.GetRooms();
             var roomModels = rooms?.Select(a => new RoomModel(a));
+            //var roomModels = rooms?.Select(a => new RoomModel(a))?.Where(a=>a.Customer != null && a.Order != null)?.Select(a=>a).ToList();
             var customers = DataContext.Instance.GetCustomers();
             var services = DataContext.Instance.GetExtraServices();
             ViewBag.Customers = customers;
@@ -51,16 +56,33 @@ namespace HM.WebApp.Controllers
             ord.CheckInDate = DateTime.Now;
             
             var r = DataContext.Instance.GetRoom(ord.RoomId);
-            if(r != null) { r.Status = 1; r.CurrentCustomerId = ord.CustomerId; r.CheckInDate = ord.CheckInDate; }
+            if(r != null) {
+                r.Status = 1;
+                r.CurrentCustomerId = ord.CustomerId;
+                r.CheckInDate = ord.CheckInDate;
+            }
             else { return Json(false, JsonRequestBehavior.AllowGet); }
 
-            var createsuccess = DataContext.Instance.CreateOrder(ord);
-            if (createsuccess)
+            var ordId = DataContext.Instance.CreateOrderReturnOrderId(ord);
+            if (ordId != -1)
             {
+                r.CurrentOrderId = ordId;
+
                 var updatesuccess = DataContext.Instance.UpdateRoom(r);
                 if (updatesuccess) { return Json(true, JsonRequestBehavior.AllowGet); }
             }
             return Json(false, JsonRequestBehavior.AllowGet);
         }
+
+
+        public ActionResult GetOrderDetails(int ordId)
+        {
+            var detail = DataContext.Instance.GetOrderDetails()?.Where(a => a.OrderId == ordId).Select(a => a).ToList();
+            var OrderDetailModel = detail?.Select(a => new OrderDetailModel(a));
+            //var selected = rooms != null ? rooms.Where(a => a.RoomTypeId == rtId).Select(a => a) : null;
+            ViewBag.OrderDetailList = OrderDetailModel;
+            return PartialView("_ShowOrderDetail");
+        }
+
     }
 }

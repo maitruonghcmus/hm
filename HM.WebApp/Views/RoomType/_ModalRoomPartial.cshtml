@@ -8,18 +8,19 @@
             </div>
 
             <div class="modal-body">
-
-                <br />
-                <div class="form-group">
-                    <input type="text" class="form-control" id="roomName" placeholder="Tên phòng">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="roomRemark" placeholder="Ghi chú">
-                </div>
-                <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                    <a class="btn btn-primary" role="button" id="btnAddRoom" onclick="createRoom();">Thêm</a>
-                    <a class="btn btn-default" role="button" id="btnClear" onclick="clearRoomField()">Nhập lại</a>
-                </div>
+                <form id="formAddRoom">
+                    <br />
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="roomName" placeholder="Tên phòng" name="roomName">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="roomRemark" placeholder="Ghi chú">
+                    </div>
+                    <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+                        <a class="btn btn-primary" role="button" id="btnAddRoom" onclick="validateFormAddRoom();">Thêm</a>
+                        <a class="btn btn-default" role="button" id="btnClear" onclick="clearRoomField()">Nhập lại</a>
+                    </div>
+                </form>
 
                 <div id="idToLoadroom">
                     @Html.Partial("_RoomListPartial")
@@ -30,3 +31,23 @@
         </div><!-- modal-content -->
     </div><!-- modal-dialog -->
 </div><!-- modal -->
+
+<script>
+    $(document).ready(function () {
+        $("#formAddRoom").validate({
+            rules: {
+                roomName: "required",
+            },
+            messages: {
+                roomName: "Không được để trống",
+            }
+        });
+    });
+
+    function validateFormAddRoom() {
+        if ($("#formAddRoom").valid() == true) { createRoom(); }
+        else {  }
+    }
+
+
+</script>

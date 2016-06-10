@@ -1,16 +1,21 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace HM.DataModels
 {
     public class User
     {
+        [Required]
         public int Id { get; set; }
+        [Required]
         public string Username { get; set; }
+        
         public string Fullname { get; set; }
 
         /// <summary>
         /// Password cần được mã hóa trước khi lưu
         /// </summary>
+        [Required]
         public string Password { get; set; }
 
         /// <summary>
@@ -21,6 +26,7 @@ namespace HM.DataModels
         /// <summary>
         /// Khách sạn của user
         /// </summary>
+        [Required]
         public int HotelId { get; set; }
 
         /// <summary>
