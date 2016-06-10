@@ -234,6 +234,7 @@
     <Compile Include="Models\DataTable.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\OrderDetailModel.cs" />
     <Compile Include="Models\PaymentModel.cs" />
     <Compile Include="Models\RoomModel.cs" />
     <Compile Include="Models\RoomTypeModel.cs" />
@@ -2009,6 +2010,8 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="swf\copy_csv_xls.swf" />
+    <Content Include="swf\copy_csv_xls_pdf.swf" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2070,6 +2073,8 @@
     <Content Include="Views\OrderedCustomer\Index.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\Expired.cshtml" />
+    <Content Include="Views\Room\_ModalPayment.cshtml" />
+    <Content Include="Views\Room\_ShowOrderDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

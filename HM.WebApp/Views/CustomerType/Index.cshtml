@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
@@ -10,9 +9,9 @@
     </div>
 
     <div class="section-body">
-        
+
         <div id="toLoadCustomerType">@Html.Partial("_ShowCustomerTypes")</div>
- 
+
         <!-- BEGIN OFFCANVAS RIGHT -->
         @Html.Partial("_ModalAddCustomerType")
         <!-- END OFFCANVAS RIGHT -->
@@ -21,9 +20,7 @@
 
 </section>
 
-
 <button type="button" onclick="openModalAddCustomerType()" class="btn ink-reaction btn-floating-action btn-lg btn-primary fix-floating-btn" data-toggle="modal" data-target="#modalAddCustomerType"><i class="md md-add"></i></button>
-
 
 <script>
     var customerTypeTemp = null;
@@ -40,8 +37,7 @@
         $("#txtCustomerTypeCoefficient").val("");
     }
 
-    function addCustomerType()
-    {
+    function addCustomerType() {
         //var coe = parseFloat($("#txtCustomerTypeCoefficient").val());
 
         //var customerType = new Object({
@@ -68,15 +64,12 @@
                         toastr.error('Thêm không thành công')
                 },
                 error: function myfunction() {
-
                 }
             })
         }
         else {
             customerTypeTemp.Name = $("#txtCustomerTypeName").val()
             customerTypeTemp.Coefficient = parseFloat($("#txtCustomerTypeCoefficient").val());
-
-
             $.ajax({
                 url: '@Url.Action("UpdateCustomerType", "CustomerType")',
                 type: "POST",
@@ -86,21 +79,19 @@
                 success: function (data) {
                     if (data) {
                         toastr.success("Cập nhật thành công");
-                         $("#toLoadCustomerType").load('@Url.Action("LoadCustomerTypes", "CustomerType")');
+                        $("#toLoadCustomerType").load('@Url.Action("LoadCustomerTypes", "CustomerType")');
                         openModalAddCustomerType();
                     }
                     else
                         toastr.error("Không thành công");
                 },
                 error: function myfunction() {
-
                 }
             })
         }
 
     }
-    function editCustomerType(id)
-    {
+    function editCustomerType(id) {
         $("#btnAddCustomerType").text("Cập nhật");
         $("#modalCustomerTypeLabel").text("Cập nhật loại khách");
         $("#btnClear").hide();
@@ -108,46 +99,36 @@
         $.ajax({
             url: "@Url.Action("GetCustomerTypeInfo", "CustomerType")",
             data: { ctmTypeId: id },
-        type: "GET",
-        success: function (data) {
-            if (data != null) {
-                customerTypeTemp = data;
+            type: "GET",
+            success: function (data) {
+                if (data != null) {
+                    customerTypeTemp = data;
 
-                $("#txtCustomerTypeName").val(data.Name);
-                $("#txtCustomerTypeCoefficient").val(data.Coefficient);
-
-            }
-        },
-        error: function () { toastr.error("Loi oi") }
-    })
+                    $("#txtCustomerTypeName").val(data.Name);
+                    $("#txtCustomerTypeCoefficient").val(data.Coefficient);
+                }
+            },
+            error: function () { toastr.error("Loi oi") }
+        })
     }
-    function deleteCustomerType(id)
-    {
+    function deleteCustomerType(id) {
         $.alertable.confirm('Bạn có chắc là muốn xóa?').then(function () {
             $.ajax({
                 url: "@Url.Action("DeleteCustomerType", "CustomerType")",
                 data: { ctmTypeId: id },
-            type: "POST", // <== Method = POST
-            success: function (data) {
-                if (data) {
-                    $("#toLoadCustomerType").load('@Url.Action("LoadCustomerTypes", "CustomerType")');
-                    toastr.success("Xóa thành công");
+                type: "POST", // <== Method = POST
+                success: function (data) {
+                    if (data) {
+                        $("#toLoadCustomerType").load('@Url.Action("LoadCustomerTypes", "CustomerType")');
+                        toastr.success("Xóa thành công");
+                    }
+                    else
+                        toastr.error("Không thể xóa loại khách này");
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
                 }
-                else
-                    toastr.error("Không thể xóa loại khách này");
-            },
-            error: function () {
-                toastr.error("Có lỗi xảy ra");
-            }
-        });
-
+            });
         }, function () { });
-
-       
     }
-
-
-
-
 </script>
-
