@@ -350,7 +350,7 @@
         gb_oId = oId;
         gb_rId = rid;
 
-        clearControl(); // clear control
+        clearControlPayment(); // clear control
         $('#cbVAT').attr("checked", false);
         $("#rName").text(rName);
 
@@ -410,7 +410,7 @@
         })
     }
 
-    function clearControl()
+    function clearControlPayment()
     {
         $("#lbOC").text("0");
         $("#lbDC").text("0");
