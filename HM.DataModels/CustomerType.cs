@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace HM.DataModels
 {
@@ -7,7 +8,10 @@ namespace HM.DataModels
     /// </summary>
     public class CustomerType
     {
+        [Required]
         public int Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
 
         /// <summary>
@@ -16,8 +20,10 @@ namespace HM.DataModels
         /// ngoài nước 1.5 hoặc khác, chém cao hơn khách trong nước
         /// cty đặt nhiều phòng thì giảm giá 20% => hệ số = 0.8
         /// </summary>
+        [Required]
         public float Coefficient { get; set; }
 
+        [Required]
         public int HotelId { get; set; }
         public bool Inactive { get; set; }
         public int CreatedBy { get; set; }

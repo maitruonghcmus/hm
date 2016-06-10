@@ -202,6 +202,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\CustomerTypeController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExtraServiceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
@@ -2058,8 +2059,10 @@
     <Content Include="Views\Room\_ModalAddService.cshtml" />
     <Content Include="Views\OrderedCustomer.cshtml" />
     <Content Include="Views\OrderedCustomer\Index.cshtml" />
-    <Content Include="Views\Room\_ShowOrderDetail.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Error\Expired.cshtml" />
     <Content Include="Views\Room\_ModalPayment.cshtml" />
+    <Content Include="Views\Room\_ShowOrderDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

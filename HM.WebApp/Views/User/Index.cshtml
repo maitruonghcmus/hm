@@ -27,8 +27,7 @@
 
 <script>
 
-
-        var userTemp = null;
+    var userTemp = null;
     function openModalAddUser() {
         $("#modalUserLabel").val("Thêm tài khoản");
         $("#btnAddUser").val("Thêm");
@@ -41,22 +40,20 @@
         $("#txtUserFullName").val("");
         $("#txtUsername").val("");
         $("#txtUserPassword").val("");
+
+
     }
 
-    function addUser()
-    {
-
-
+    function addUser() {
         var usernew = new Object({
             Username: $("#txtUsername").val(),
             Fullname: $("#txtUserFullName").val(),
             Password: $("#txtUserPassword").val(),
             RoleId: $("#cbbUserRole").val(),
-
+            HotelId: $("#cbbUserHotel").val(),
         });
 
-        if (userTemp == null)
-        {
+        if (userTemp == null) {
             $.ajax({
                 url: '@Url.Action("CreateUser","User")',
                 type: "POST",
@@ -78,13 +75,12 @@
                 }
             })
         }
-        else
-        {
+        else {
 
             userTemp.Username = $("#txtUsername").val();
             userTemp.Fullname = $("#txtUserFullName").val();
-            userTemp.Password= $("#txtUserPassword").val();
-            userTemp.RoleId= $("#cbbUserRole").val();
+            userTemp.Password = $("#txtUserPassword").val();
+            userTemp.RoleId = $("#cbbUserRole").val();
 
 
             $.ajax({
@@ -111,8 +107,7 @@
     }
 
 
-    function editUser(id)
-    {
+    function editUser(id) {
         $("#btnAddUser").text("Cập nhật");
         $("#modalUserLabel").text("Cập nhật tài khoản");
         $("#btnClear").hide();
@@ -120,40 +115,39 @@
         $.ajax({
             url: "@Url.Action("GetUserInfo","User")",
             data: { userId: id },
-        type: "GET",
-        success: function (data) {
-            if (data != null) {
-                userTemp = data;
-                $("#txtUserFullName").val(data.Fullname);
-                $("#txtUsername").val(data.Username);
-                $("#cbbUserRole").val(data.RoleId);
-                $("#txtUserPassword").val(data.Password);
+            type: "GET",
+            success: function (data) {
+                if (data != null) {
+                    userTemp = data;
+                    $("#txtUserFullName").val(data.Fullname);
+                    $("#txtUsername").val(data.Username);
+                    $("#cbbUserRole").val(data.RoleId);
+                    $("#txtUserPassword").val(data.Password);
 
-            }
-        },
-        error: function () { alert("Loi oi") }
-    })
+                }
+            },
+            error: function () { alert("Loi oi") }
+        })
     }
 
 
-    function deleteUser(id)
-    {
+    function deleteUser(id) {
         $.alertable.confirm('Bạn có chắc là muốn xóa?').then(function () {
 
             $.ajax({
                 url: "@Url.Action("DeleteUser", "User")",
                 data: { userId: id },
-            type: "POST", // <== Method = POST
-            success: function (data) {
-                if (data) {
-                    $("#usersTable").dataTable().fnDraw();
-                    toastr.success("Xóa thành công");
+                type: "POST", // <== Method = POST
+                success: function (data) {
+                    if (data) {
+                        $("#usersTable").dataTable().fnDraw();
+                        toastr.success("Xóa thành công");
+                    }
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
                 }
-            },
-            error: function () {
-                toastr.error("Có lỗi xảy ra");
-            }
-        });
+            });
         }, function () { });
 
 

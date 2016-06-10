@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace HM.DataModels
 {
     public class RoomType
     {
+        [Required]
         public int Id { get; set; }
 
         /// <summary>
         /// Tên loại phòng
         /// </summary>
+        [Required]
         public string Name { get; set; }
         
         /// <summary>
@@ -25,6 +28,7 @@ namespace HM.DataModels
         /// </summary>
         public long[] Price { get; set; }
 
+        [Required]
         public int HotelId { get; set; }
         public bool Inactive { get; set; }
         public int CreatedBy { get; set; }

@@ -8,10 +8,14 @@ using System.Web.Mvc;
 
 namespace HM.WebApp.Controllers
 {
+    [Authorize]
     public class RoomTypeController : Controller
     {
         public ActionResult Index()
         {
+            if (AppContext.Instance.GetDayRemains() <= 0)
+                return RedirectToAction("Expired", "Error");
+
             var roomtypes = DataContext.Instance.GetRoomTypes()?.Select(a => new RoomTypeModel(a));
             ViewBag.RoomTypes = roomtypes;
             return View();

@@ -8,11 +8,15 @@ using System.Web.Mvc;
 
 namespace HM.WebApp.Controllers
 {
+    [Authorize]
     public class RoomController : Controller
     {
         // GET: Room
         public ActionResult Index()
         {
+            if (AppContext.Instance.GetDayRemains() <= 0)
+                return RedirectToAction("Expired", "Error");
+
             var rooms = DataContext.Instance.GetRooms();
             var roomModels = rooms?.Select(a => new RoomModel(a));
             //var roomModels = rooms?.Select(a => new RoomModel(a))?.Where(a=>a.Customer != null && a.Order != null)?.Select(a=>a).ToList();

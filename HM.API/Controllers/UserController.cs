@@ -1,6 +1,7 @@
 ﻿using HM.DataModels;
 using HM.DataModels.Utils;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 
 namespace HM.API.Controllers
@@ -17,6 +18,19 @@ namespace HM.API.Controllers
         public Result<User> GetById(int id)
         {
             return new DBContext<User>(DbUtils.UserCollection).GetObject(id);
+        }
+
+        [HttpGet]
+        public Result<User> GetByUsername(string username)
+        {
+            var re = new DBContext<User>(DbUtils.UserCollection).GetObjectsByIndex("Username", username);
+            var user = new User();
+            if (re.IsSuccess())
+            {
+                user = re.Data?.FirstOrDefault();
+            }
+
+            return new Result<User> { Data = user, Code = re.Code };
         }
 
         [HttpPost]
